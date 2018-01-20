@@ -349,7 +349,7 @@ function upload_image(e,template){
 					alert('uploaded');
 		            window.alert('Error during upload: ' + error.reason);
 		          } else {		          
-            var imagePath = "http://localhost:3000/cdn/storage/Images/" + fileObj._id+"/original/" + fileObj._id+"."+  fileObj.ext;
+            var imagePath = "https://bitovn.herokuapp.com/cdn/storage/Images/" + fileObj._id+"/original/" + fileObj._id+"."+  fileObj.ext;
              Session.setPersistent("imagePath",imagePath);
 
 
@@ -416,7 +416,7 @@ function crop_image(){
       			Session.setPersistent("imageUploaded","true");
             // Session.setPersistent("imagePath",fileObj._id+'.'+  fileObj.ext);
 
-             var imagePath = "http://localhost:3000/cdn/storage/Images/" + fileObj._id+"/original/" + fileObj._id+"."+  fileObj.ext;
+             var imagePath = "https://bitovn.herokuapp.com/cdn/storage/Images/" + fileObj._id+"/original/" + fileObj._id+"."+  fileObj.ext;
              // alert(imagePath);
              Session.setPersistent("imageCropped","true");
              Session.setPersistent("imagePath",imagePath);
