@@ -80,14 +80,14 @@ else {
 
 <template name="messanging">
 
-  <div class="container row margin-tp" style="width: 85%; border: 1px solid #eae7e7; padding:0px; ">
-      <div class="col s3 m3 l3" style="padding: 0px; border-right: 1px solid #f5f5f5; background-color: #fff;">
+  <div class="container row margin-tp contai">
+      <div class="col s12 m12 l3 left_part" >
 
-         <div class="card" style="box-shadow: none; height: 35px; margin-top: 0px; padding-top: 0px;">
+         <div class="card card_two">
 
  <ul class="nav navbar-nav col s12 m12 l12" style="padding: 0px;">
-        <li class="dropdown col s12 m12 l12" style="background-color:   #f9f9f1; padding: 0px; border: none; border-bottom: 1px solid #f5f5f5; border-radius: 0px;">
-          <a href="#" style="background-color: transparent; padding-left: 8px; color: #333;" class="dropdown-toggle" data-toggle="dropdown"><span style="font-size: 18px;">Conversations ({{conversation_count}})</span> <i class="fa fa-ellipsis-v pull-right fa-2x pull-right"></i></a>
+        <li class="dropdown col s12 m12 l12 drop_dwn_tw">
+          <a href="#" class="dropdown-toggle drop_dwn_tw_a" data-toggle="dropdown"><span style="font-size: 18px;">Conversations ({{conversation_count}})</span> <i class="fa fa-ellipsis-v pull-right fa-2x pull-right"></i></a>
           <ul class="dropdown-menu">
             <li><a href="#"> Delete Conversations </a></li>
             <li class="divider"></li>
@@ -99,7 +99,7 @@ else {
 
       <div class="card" style="box-shadow: none;">
     <div class="card-content">
-      <p> <input type="text" class="form-control input-sm chat_input borde_search_user" placeholder="Search Conversation" style="margin-bottom: 0px;" id="search_connection_msg" /></p>
+      <p> <input type="text" class="form-control input-sm chat_input borde_search_user" placeholder="Search Connections" style="margin-bottom: 0px;" id="search_connection_msg" /></p>
     </div>
  
     <div class="card-content">
@@ -195,8 +195,9 @@ else {
   </div>
   </div>
 
-{{#each msg_rightbox}}  
-  <div class="col s9 m9 l9" style="background-color: #fff; padding: 0px; padding-right: 15px;" >
+{{#each msg_rightbox}}
+
+  <div class="col s12 m12 l9 cbg_toofull">
      <div class="row bor_top" style="border-bottom: 1px solid #f5f5f5 !important; background-color: #f9f9f1;">
          <div class="col m1"> <img src={{profile_pic}} width="50" alt="User Avatar" class="img-circle" style="width: 50px;"> </div>
          
@@ -212,7 +213,7 @@ else {
   <div class="card new_card"  style="margin-bottom: 0px;">
       <div id="test4">
             <div class="col-s12">
-                  <div class="chatbody" style="overflow: scroll;" >
+                  <div class="chatbody" >
                   <div class="panel panel-primary new_bg_for_all" style="box-shadow:none !important;">
                     <div class="panel-body msg_container_base"  id="message_container">
                     <div class="row msg_container base_sent">
@@ -223,25 +224,45 @@ else {
         {{#if sentby_other_user}}
     <li class="collection-item avatar">
       <span>
-        <div class="messages messages_us msg_receive text-right">
-            <p>  {{msg_text}}  </p>
+          {{#if equals delivery_status 'read'}} 
+        <div class="messages messages_us msg_receive text-right" style="background-color:green ! important" >
+            <p style="text-align: justify; ">  {{msg_text}}  </p>
             <time datetime="2009-11-13T20:00"><span class="time fo_size_time">
                <p>{{calculate_time_difference sentAt}}</p>
             </span></time>
                             </div>
+          {{else if equals delivery_status 'delivered' }}
+          <div class="messages messages_us msg_receive text-right" style="background-color:yellow ! important" >
+            <p style="text-align: justify">  {{msg_text}}  </p>
+            <time datetime="2009-11-13T20:00"><span class="time fo_size_time">
+               <p>{{calculate_time_difference sentAt}}</p>
+            </span></time>
+          </div>
+           {{else}}
+          <div class="messages messages_us msg_receive text-right" style="background-color:red ! important" >
+            <p style="text-align: justify">  {{msg_text}}  </p>
+            <time datetime="2009-11-13T20:00"><span class="time fo_size_time">
+               <p>{{calculate_time_difference sentAt}}</p>
+            </span></time>
+          </div>
+          {{/if}} 
+
+        
+
+
+
+
       </span>
+       <div style="clear: both;"> </div>
     </li>
     {{else}}
     <li class="collection-item avatar">
     {{#each msg_rightbox}}  
         <span> <img src={{profile_pic}} alt="NO Image" class="circle"> <span class="bottom-left"></span></span> 
-        
     {{/each}}
       <span>
         <div class="messages messages_you msg_receive text-left">
-                                <p>  {{msg_text}} </p>
-                               
-
+                                <p style="text-align: justify" >  {{msg_text}} </p>
                               <time datetime="2009-11-13T20:00">
                                   <span class="time fo_size_time">
                                  <p>{{calculate_time_difference sentAt}}</p>
@@ -249,6 +270,7 @@ else {
                              </time>
                             </div>
                                   </span>
+                                  <div style="clear: both;"> </div>
     </li>
 {{/if}}
 {{else}}
@@ -264,7 +286,7 @@ else {
                      {{/if}}    
 
                 <div class="panel-footer padding_0">
-                    <div class="input-controls-container" style="padding-top: 57px;">
+                    <div class="input-controls-container" style="padding-top: 10px;">
                       
                       <form id="msg_input_form" >
                       <textarea class="form-control " placeholder="Type a message here ..." style="border: none;" id="msg_text" ></textarea>

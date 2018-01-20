@@ -11,13 +11,9 @@ import { Images } from './../../import/config.js';
 import { Base64 } from 'meteor/ostrio:base64';
 
 Template.messanging.onCreated(function(){
-
 this.message_show_limit = new ReactiveVar("");
 this.search_connection_to_message = new ReactiveVar("");
-
-// Session.setPersistent("search_connection_to_message","false");
 Session.setPersistent("updatedStatus","false");
-
 });
 
     Template.registerHelper('equals', function (a, b) {
@@ -25,7 +21,6 @@ Session.setPersistent("updatedStatus","false");
     });
 
     Template.messagingpage.onRendered(function(){
-      
       setTimeout(function() {
       $("#message_container").animate({ scrollTop: $('#message_container').prop("scrollHeight")}, 1);
       makeGifClear();
@@ -34,7 +29,125 @@ Session.setPersistent("updatedStatus","false");
       Session.clear("conversation_input_active");
       $("ul.tabs").tabs();
       Session.clear("msg_img_id"); 
+
+      var sent_by = Session.get("userId");
+  var userOnlineOffline =   UserInfo.find({"user_id":sent_by}).observe({
+    added: function(newDoc) {
+    },
+      removed: function(oldDoc) {
+    },
+      changed: function(newDoc, oldDoc) {
+      if(newDoc.online_status=="online" && newDoc.online_status != oldDoc.online_status){
+
+
+        var connection_details;
+        if(Session.get("userId") == newDoc.user1){
+           connection_details = UserInfo.find({user_id: newDoc.user2}).fetch();
+        }else{
+           connection_details = UserInfo.find({user_id: newDoc.user1}).fetch();
+        }
+  var rightPanelChatRoomId = Session.get("rightPanelChatRoomId");
+  // alert(rightPanelChatRoomId);
+        var openedChatRoomDetails = Chatroom.find({"chatroom_id":rightPanelChatRoomId}).fetch();
+
+        // alert("ChatRoom " +openedChatRoomDetails[0].chatroom_id);
+        if(openedChatRoomDetails[0].last_msg_sent_by != Session.get("userId")){
+          // receipient is online
+            change_last_message_status(openedChatRoomDetails[0].last_msg_id,"read");
+            increase_unread_count(openedChatRoomDetails[0].chatroom_id,"true")
+            // alert("Last message read"); 
+             // update msg status 
+             // no need for updating count
+          }
+
+
+      }
+    }
+  });
+    var userHandle =  Chatroom.find({ 
+            $or:
+             [
+              {
+               user1: sent_by
+              },
+              {
+               user2: sent_by
+              }
+             ]
+           },{last_msg_sent_by:1, user1:1,user2:1,chatroom_id:1,last_msg_time:1}).observe({
+            added: function(newDoc) {
+    },
+      removed: function(oldDoc) {
+    },
+      changed: function(newDoc, oldDoc) {
+        // case 1: both user are online
+        // case 2: one user is online
+      if(newDoc.total_messages != oldDoc.total_messages){
+
+
+        var connection_details;
+        if(Session.get("userId") == newDoc.user1){
+           connection_details = UserInfo.find({user_id: newDoc.user2}).fetch();
+        }else{
+           connection_details = UserInfo.find({user_id: newDoc.user1}).fetch();
+        }
+
+        if(connection_details[0].online_status == "online" 
+          && Session.get("rightPanelChatRoomId") == newDoc.chatroom_id 
+          && connection_details[0].last_msg_sent_by != Session.get("userId")){
+          // receipient is online
+            change_last_message_status(newDoc.last_msg_id,"read");
+            increase_unread_count(newDoc.chatroom_id,"true")
+            // alert("Last message read"); 
+             // update msg status 
+             // no need for updating count
+          }else if(connection_details[0].online_status == "online" && Session.get("rightPanelChatRoomId") != newDoc.chatroom_id){
+            // alert("Last message delivered, but user is chatting with someone else ");
+              // update last message count
+              change_last_message_status(newDoc.last_msg_id,"delivered");
+              increase_unread_count(newDoc.chatroom_id,"false"); 
+              // update msg status
+          }
+          else{
+
+              change_last_message_status(newDoc.last_msg_id,"delivered");
+              increase_unread_count(newDoc.chatroom_id,"false"); 
+               // alert("Last message delivered but user is offline");
+               // update last message count 
+               // update msg status
+          }
+          // receipient is offline
+    }
+    }
     });
+});
+
+        function increase_unread_count(chatroom_id,reset){
+      if(reset == "true"){
+        count=0;
+      }else{  
+        count= 1;
+      }
+
+      Meteor.call('update_chatroom_count',chatroom_id,count,function(error,result){
+              if(error){
+                console.log(error);
+              } else{
+                console.log(result);
+              }
+          });   
+
+    }
+
+    function change_last_message_status(last_msg_id,status){
+         Meteor.call('update_last_msg_status',last_msg_id,status,function(error,result){
+              if(error){
+                console.log(error);
+              }else{
+                console.log(result);
+              }
+          });   
+    }
 
   /*  Meteor.startup(function() {
     Uploader.finished = function(index, fileInfo, templateContext) {
@@ -99,22 +212,22 @@ Template.messanging.events({
  var days = (millis / (1000 * 60 * 60 * 24)).toFixed(1);
 
    if(minutes<1 && seconds<10){
-    return 'Just now';
+    return 'now';
   }else if(minutes <1 && seconds<59 ){
-    return seconds + ' sec ago';
+    return seconds + ' sec';
    } else if(minutes>= 1 && minutes<=59) {
-    return minutes + ' min ago';
+    return minutes + ' m';
   }else if(minutes>=60 && hours<24){
         if(Math.floor(hours)==1 || minutes==60){
-        return Math.floor(hours) + ' hr ago';
+        return Math.floor(hours) + ' h';
         }else{ 
-        return Math.floor(hours) + ' hrs ago';
+        return Math.floor(hours) + ' hrs';
         }
   }else if(hours>24){
     if(Math.floor(days) == 1){
-    return Math.floor(days) +" day ago";
+    return Math.floor(days) +" day";
     }else{
-    return Math.floor(days) +" days ago";
+    return Math.floor(days) +" days";
     }
   }
   else{    
@@ -401,7 +514,10 @@ show_message_array(){
 
 check_unread(){
   var unread_msg_count = this.unread_msg_count;
-  if(unread_msg_count){
+  var last_msg_sent_by = this.last_msg_sent_by;
+  var current_logged_in_user_id = Session.get("userId");
+
+  if(unread_msg_count && last_msg_sent_by != current_logged_in_user_id){
     return true;
   }else{
     return false;
@@ -543,7 +659,42 @@ Template.messanging.events({
 'click .change_msg_onright': function(){
 var show_id = this.user_id;
 Session.setPersistent("msgid_forright",show_id);
+ var check_chatroom = Chatroom.find({ $or: [
+           {
+            $and:
+             [
+              {
+               user1: Session.get("userId")
+              },
+              {
+               user2: Session.get("msgid_forright")
+              }
+             ]
+           } ,
+          { 
+            $and:
+              [
+             {  
+              user1: Session.get("msgid_forright")
+             },
+             {
+              user2: Session.get("userId")
+             }
+            ]   
+           }
+           ] }).fetch();
+ if(check_chatroom[0]){
+    Session.setPersistent("rightPanelChatRoomId",check_chatroom[0].chatroom_id);
+    var openedChatRoomDetails = Chatroom.find({"chatroom_id":check_chatroom[0].chatroom_id}).fetch();
+    if(openedChatRoomDetails[0].last_msg_sent_by != Session.get("userId")){
+            change_last_message_status(openedChatRoomDetails[0].last_msg_id,"read");
+            increase_unread_count(openedChatRoomDetails[0].chatroom_id,"true")
+  }
+}
+
 },
+
+ 
 
 'click #send_msg': function(){
   $("#message_container").animate({ scrollTop: $('#message_container').prop("scrollHeight")}, 1);
@@ -608,7 +759,17 @@ Session.setPersistent("msgid_forright",show_id);
   // var insert_chatroom_once = Session.get("insert_chatroom_once");
   if(check_chatroom == 0){
    var chatroom_id = 'chatroom_'+ Math.floor((Math.random() * 2465789) + 1);
-   var last_msg = msg_text;
+   
+   var length = msg_text.length;
+   // alert(length);
+   if(length > 24){
+   var local_var_msg = msg_text.slice(0, 24);
+   var last_msg = local_var_msg + '...';
+   }else{
+    var last_msg = msg_text;
+   }
+
+   
    var last_msg_sent_by = sent_by;
    var last_msg_id = msg_id;
    var connect_status = 0;
@@ -654,16 +815,22 @@ else if(check_chatroom > 0){
 
    var chatroom_id = check_chatroom[0].chatroom_id;
    // alert('current_chatroom id'+chatroom_id); 
-   var last_msg = msg_text;
+   
+   var length = msg_text.length;
+   // alert(length);
+   if(length > 24){
+   var local_var_msg = msg_text.slice(0, 24);
+   var last_msg = local_var_msg + '...';
+   }else{
+    var last_msg = msg_text;
+   }
+   
    var last_msg_sent_by = sent_by;
    var last_msg_id = msg_id;
    var currently_typing = 0;
    var connect_status = 0;
 
-
-
    var currently_typing_multi = check_chatroom[0].currently_typing;
-
     if(currently_typing_multi == 0 || currently_typing_multi == "" ){
        currently_typing = 0;
     }

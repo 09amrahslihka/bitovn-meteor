@@ -52,7 +52,7 @@ padding:10px;
 .chatperson .lastmsg{
   font-size: 12px;
   padding-left: 5px;
-  color: #ccc;
+  color: #red;
 }
 
 .panel{
@@ -100,15 +100,17 @@ box-shadow: none;
 }
 
 .messages_us {
-  background:#f9f9f1 none repeat scroll 0% 0%;
+  background:#f9f9f1 none repeat scroll 0% 0% !important;
 border-radius: 10px;
 box-shadow: none;
+float: right;
 }
 
 .messages_you {
-  background: #f9f9f9 none repeat scroll 0% 0%;
+  background: #f9f9f9 none repeat scroll 0% 0% !important;
 border-radius: 10px;
 box-shadow: none;
+float: left;
 }
 
 .messages > p {
@@ -207,7 +209,7 @@ border:none;
   }
   .msg_container_base{
 
-    max-height: 400px !important;
+    max-height: 300px !important;
   }
 .send_btn{
       background-color: #338EA7;
@@ -336,7 +338,7 @@ padding-left: 0px !important;
 box-shadow: none;
 margin-top: 20px;
 width: 40%;
-left: 62%;
+left:44% !important;
 top: 65%;
 }
 .dropdown ul.dropdown-menu:before {
@@ -486,6 +488,32 @@ color:#B9B9B9 !important;
 display:none;
 }
 
+.display_hide_conversation{
+  display:none !important;
+}
+.left_part{
+  padding: 0px !important; border-right: 1px solid #E7E7E7; min-height: 550px;  background-color: #fff;
+}
+
+.contai{
+  width: 100%; border: 1px solid #eae7e7; padding:0px; 
+}
+.card_two{
+  box-shadow: none !important; height: 35px !important; margin-top: 0px !important; padding-top: 0px !important;
+}
+.drop_dwn_tw{
+background-color:#f9f9f1 !important; padding: 0px !important; border: none !important; border-bottom: 1px solid #f5f5f5 !important; border-radius: 0px !important;
+}
+
+.drop_dwn_tw_a{
+background-color: transparent !important; padding-left: 8px !important; color: #333 !important;
+}
+
+.cbg_toofull{
+background-color: #fff !important; 
+padding: 0px !important; 
+padding-right: 15px !important;
+}
 .display_hide_conversation{
   display:none !important;
 }
