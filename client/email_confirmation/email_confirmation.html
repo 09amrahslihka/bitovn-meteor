@@ -1,0 +1,30 @@
+
+<template name="email">
+  <head>
+  <title>messanging</title>
+</head>
+  {{> email_template}}
+  {{email_checker}}
+</template>
+
+
+<template name="email_template">
+
+<div style="background-color:#f5f5f5 !important; padding: 20px 50px !important; ">
+    <div class="row">
+      <div class="input-field col s12">
+         <p>Description</p>
+          <p id="edit_grp_discription" class="materialize-textarea frmt_inpt" placeholder="Description" value="">Click on Confirm to continue</p>
+      </div>
+  </div>
+  
+ <div class="row">
+    <div class="col s12 m6 l6"> &nbsp;  </div>
+    <div class="col s12 m6 l6 text-right">
+    <a class="waves-effect waves-light btn blog_button" id="send_mail" > Confirm</a>
+ 
+            
+    </div>
+  </div>
+</div>
+</template>

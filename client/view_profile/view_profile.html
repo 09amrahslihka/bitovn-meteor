@@ -1,0 +1,300 @@
+
+<template name="view_profile">
+<div class="row body_whole">
+    <div class="col s12"><p><img src="https://www.vayuz.com/wp-content/uploads/2015/01/vayuz_slider61.jpg"  height=300 width="1260"></p></div>
+    <div class="col s12 m4 l3">
+      {{#each show_display_name}}
+        <h4>{{name}}</h4>
+      {{/each}}     
+      <p>{{> con_passion}}</p>
+    </div>
+    <div class="col s12 m4 l6">
+      <p>{{> con_heading}}</p>
+       <p>{{> con_summary}}</p>
+        <p>{{> con_professional}}</p>
+        <p>{{> con_edudetails}}</p>
+       
+         <p>{{> con_achievement}}</p>
+         <p>{{> con_skill}}</p>
+         <p>{{> con_health}}</p>
+           <p>{{> con_personalinfo}}</p>
+    </div>
+    
+    <div class="col s12 m4 l3">
+      <p>{{> connectionstatus}}</p>
+      <p>{{> prsinf}}</p>
+      <p>{{> donate}}</p>
+      <p>{{> adds}}</p>
+    </div>
+  </div>
+</template>
+
+<template name="connectionstatus"> 
+<div class="section">
+  <!-- {{#each connected_status}} -->
+<!--       {{#if connected_status}}
+          <p class="con-t"><br/><span> Pending </span></p>
+          <p class="con-t">Connected since <br/><span> September 26, 2017 </span></p>
+        {{else}}
+      <a class="waves-effect waves-light btn-large" id="connect_now" >Connect now</a>
+      {{/if -->
+          
+          <!-- <p class="con-t">Connected since <br/><span> September 26, 2017 </span></p> -->
+        {{#if connected_status_1}}
+      <a class="waves-effect waves-light btn-large" id="connect_now" disabled="disabled">{{connected_status}}</a>
+      {{else}}
+      <a class="waves-effect waves-light btn-large" id="connect_now" >{{connected_status}}</a>     
+      {{/if}}
+
+<!-- {{/each}} -->
+</div>
+
+</template>
+
+<template name="prsinf">
+   <div class="section">
+    <h5>Personal Info   </h5> 
+     <div class="divider"></div>
+    <p class="margin-top"> Special disABILITY</p>
+     <p> 
+      <span style="margin-right: 15px;"><img src="http://bitovn.com/feed/images/ear.png" width=30/> </span>
+      <span style="margin-right: 15px;"><img src="http://bitovn.com/feed/images/physicallly.png" width=30/></span>
+      <span style="margin-right: 15px;"><img src="http://bitovn.com/feed/images/speech.png" width=30/></span>
+      <span style="margin-right: 15px;"><img src="http://bitovn.com/feed/images/visualization.png" width=30/></span>
+    </p>
+  </div>
+</template>
+
+<template name="donate"> 
+    <div class="section">
+       <p class="font-14"> 
+            <span style="font-size:20px;"><strong>Donate to <!--<br/>--> SN <!--Special Neighborhood--></strong></span> 
+              <br> <br> 
+               <span style="font-size:18px; margin-top:10px !important;">
+                  Consider making a donation <br> to protect and sustain <br>Special Neighborhood</span><br>
+                </p>
+               <button type="button" class="btn btn-md add-skill-btn btn-home bg-diff" data-toggle="modal" data-target="#medidetail43">Donate </button>
+     
+  </div>
+
+</template>
+
+
+ <template name="con_passion">
+    <div class="section">
+    <h5>I'm passionate about <span class="pull-right"></span></h5> 
+    <div class="divider"></div>
+
+     <p class="margin-top"> Dancing writing listning music </p>
+  </div>
+</template>
+
+ <template name="con_heading">
+    <div class="section">
+    <h5>Heading <span class="pull-right"></span></h5> 
+   <div class="divider"></div>
+     {{#each show_display_heading}}
+        {{headline}}
+     {{/each}}
+ </div>
+</template>
+
+<template name="con_summary">
+    <div class="section">
+    <h5>Summary </h5> 
+        {{#each show_display_summary}} 
+        <div class="divider"></div>
+          <p> {{summary}} </p>
+        {{/each}}
+      <div class="divider"></div>
+  </div>
+
+</template>
+
+ <template name="con_personalinfo">
+{{> show_display_per_info}}
+ 
+</template>
+
+
+<template name="show_display_per_info">
+  {{#each show_display_info}}
+  <div class="section">
+    <h5>Personal Information</h5> 
+  
+<div class="row section" style="border-bottom: 1px solid #ccc; padding-bottom: 5px;">
+    <div class="col s12 m4 l3"> <p> Name</p></div>
+    <div class="col s12 m4 l9"> <p> {{user_name}}</p></div>
+    <hr style="margin-top: 5px; margin-bottom: 5px;" />   
+    
+</div>
+  
+  <div class="row section" style="border-bottom: 1px solid #ccc; padding-bottom: 5px;">
+    <div class="col s12 m4 l3"> <p> Gender</p></div>
+    <div class="col s12 m4 l9"> <p> {{gender}}</p></div>
+    <hr style="margin-top: 5px; margin-bottom: 5px;" />   
+</div>
+     
+     <div class="row section" style="border-bottom: 1px solid #ccc; padding-bottom: 5px;">
+    <div class="col s12 m4 l3"> <p> Marital Status</p></div>
+    <div class="col s12 m4 l9"> <p> {{marital_status}}</p></div>
+     <hr style="margin-top: 5px; margin-bottom: 5px;" />   
+</div>
+     
+      <div class="row section" style="border-bottom: 1px solid #ccc; padding-bottom: 5px;">
+    <div class="col s12 m4 l3"> <p> DOB</p></div>
+    <div class="col s12 m4 l9"> <p> {{dob}}</p></div>
+    <hr style="margin-top: 5px; margin-bottom: 5px;" />   
+</div>
+      
+<div class="row section" style="border-bottom: 1px solid #ccc; padding-bottom: 5px;">
+    <div class="col s12 m4 l3"> <p> Phone No.</p></div>
+    <div class="col s12 m4 l9"> <p> {{phone}}</p></div>
+     <hr style="margin-top: 5px; margin-bottom: 5px;" />   
+</div>
+      
+<div class="row section" style="border-bottom: 1px solid #ccc; padding-bottom: 5px;">
+    <div class="col s12 m4 l3"> <p> Address</p></div>
+    <div class="col s12 m4 l9"> <p> {{location}}</p></div>
+    <hr style="margin-top: 5px; margin-bottom: 5px;" />     
+</div>
+      
+  </div>
+  {{/each}}
+</template>  
+
+
+ <template name="con_professional">
+    <div class="section">
+          <h5>Professional Details</h5>  
+      {{#each show_show_profjr}}
+    <div class="divider"></div>
+    <div class="row">
+      <div class="col-lg-11 col-md-11 col-xs-12">
+      <h6 class="font18 colo_head_blue">{{company}}</h6>
+      <p  class="font15 p_margin_btom_none">{{title}} | {{start_month}}, {{start_year}} - {{end_month}}, {{end_year}}</p>
+      <p><i class="fa fa-map-marker"></i> {{location}}</p>
+      <p class="p_margin_btom_none colo_head_blue">Skill(s) used: </p>
+      <p>{{skill}} </p>
+      <p class="p_margin_btom_none colo_head_blue">Key Responsibilities: </p>
+      <p>{{key_responsibilities}} </p>
+    </div>
+  </div>
+    {{else}}
+    nothing
+  {{/each}}
+    </div>     
+</template>
+
+ <template name="con_edudetails">
+    <div class="section">
+    <h5>Educational Details</h5>  
+{{#each show_show_education }}
+    <div class="divider"></div>
+    <div class="row">
+      <div class="col-lg-11 col-md-11 col-xs-12">
+      <h6 class="font18 colo_head_blue">{{course}}</h6>
+      <p  class="font15 p_margin_btom_none">{{school}} | 
+      {{show_score score}}
+          {{score}}
+      
+
+    </p>
+      <p>{{edu_start_month}}, {{edu_start_year}} - {{edu_end_month}}, {{edu_end_year}}</p>
+         </div>
+    <div class="col-lg-1 col-md-1 col-xs-12 pull-right" style="padding-right: 0; text-align: right;">
+    </div>
+  </div>
+      {{else}}
+    nothing
+  {{/each}}
+    </div>
+
+
+</template>
+
+ <template name="con_achievement">
+    <div class="section">
+    <h5>Achievement</h5>  
+    <div class="divider"></div>
+   
+   {{#each show_display_award}}
+   
+    <div class="row">
+      <div class="col-lg-11 col-md-11 col-xs-12">
+      <h6 class="font18 colo_head_blue">Achievement ({{type}})
+</h6>
+      
+      <p><i class="fa fa-map-marker"></i> {{location}}</p>
+      <p class="p_margin_btom_none colo_head_blue">Description: </p>
+      <p>{{description}}</p>
+     </div>
+    <div class="col-lg-1 col-md-1 col-xs-12 pull-right" style="padding-right: 0; text-align: right;"> 
+    </div>
+    </div>     
+   
+    {{/each}}
+
+  </div>
+
+
+</template>
+
+
+ <template name="con_skill">
+    <div class="section">
+    <h5>Skill </h5>  
+    <div class="divider"></div>
+    <div class="row">
+   {{#each show_show_skills}} 
+      <div class="col-lg-4 col-md-4 col-xs-12">
+        <p class="font15 p_margin_btom_none text-center">{{skill_name}}</p>
+         <p class="text-center"><img src="http://bitovn.com/feed/profile/images/middle.gif" width="130" /></p>
+         <p>{{last_used}}</p>
+      </div>
+      
+     {{/each}}
+    </div>
+  </div>
+
+
+</template>
+
+<template name="con_health">
+    <div class="section">
+    <h5>Health Check </h5> 
+{{#each show_display_health}}
+<div class="row section" style="border-bottom: 1px solid #ccc; padding-bottom: 5px;">
+    <div class="col s12 m4 l3"> <p>  Hearing Problem: </p></div>
+    <div class="col s12 m4 l9"> <p> {{hearing}}</p></div>
+    <hr style="margin-top: 5px; margin-bottom: 5px;" />   
+    
+</div>
+  
+  <div class="row section" style="border-bottom: 1px solid #ccc; padding-bottom: 5px;">
+    <div class="col s12 m4 l3"> <p> Physical Handicap: </p></div>
+    <div class="col s12 m4 l9"> <p> {{handicap}}</p></div>
+    <hr style="margin-top: 5px; margin-bottom: 5px;" />   
+</div>
+     
+     <div class="row section" style="border-bottom: 1px solid #ccc; padding-bottom: 5px;">
+    <div class="col s12 m4 l3"> <p> Speech Issue</p></div>
+    <div class="col s12 m4 l9"> <p> {{speech}}</p></div>
+     <hr style="margin-top: 5px; margin-bottom: 5px;" />   
+</div>
+     
+      <div class="row section" style="border-bottom: 1px solid #ccc; padding-bottom: 5px;">
+    <div class="col s12 m4 l3"> <p> Visually Impaired: </p></div>
+    <div class="col s12 m4 l9"> <p> {{visual}}</p></div>
+    <hr style="margin-top: 5px; margin-bottom: 5px;" />   
+</div>
+      
+<div class="row section" style="border-bottom: 1px solid #ccc; padding-bottom: 5px;">
+    <div class="col s12 m4 l3"> <p>  Special Note : </p></div>
+    <div class="col s12 m4 l9"> <p> {{special_note}} </p></div>
+     <hr style="margin-top: 5px; margin-bottom: 5px;"/>   
+</div>
+{{/each}}      
+  </div>
+
+</template>

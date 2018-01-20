@@ -1,0 +1,194 @@
+
+<template name="grplisting">
+<head>
+  <title>Group Listing</title>
+</head>
+  {{> header}}            
+  {{> grouplisting}}       
+</template>                
+
+<template name="grouplisting">
+  <div class="body_whole">
+    <div>
+        <ul class="nav nav-pills nav-stacked col-md-2 left_row">
+          <h5 class="margin_bottom_20">Group</h5>
+          <div class="cr_ablog"><a class="font_plus_class_b" href="creategroup">Create Group</a></div>
+          <li class="active"><a href="#allgrp" data-toggle="pill">All ({{grp_list_allcount}})</a></li>
+          <li><a href="#byme" data-toggle="pill">Created by me ({{show_whereadmin_count}})</a></li>
+          <li><a href="#Pending" data-toggle="pill">Pending (20)</a></li>
+        </ul>
+        <div class="tab-content col-md-10 left_row">
+                <div class="tab-pane active" id="allgrp">
+                  <div id="custom-search-input">
+                    <div class="col-md-6">
+                     <h5>All Groups ({{grp_list_allcount}})</h5></div>
+                                    <div class="input-group col-md-6">
+                                        <input type="text" class="  search-query form-control" placeholder="Search Group by Group Title" id="search_all_text" />
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-danger search_btn_frmt search_grp_all"  type="button" id="search_grp_all" >
+                                                <span class=" glyphicon glyphicon-search"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                          <div class="row">
+
+                            {{#each grp_list}}
+                             <div class="col s12 m4">
+                              <span id="show_group_details" >
+                              <div class="card" style="padding-top: 0;">
+                                <div class="card-image">
+                                  <img src={{Show_grp_image}} height="100">
+                                </div>
+                                <div class="card-content">
+                                   <span class="card-title">{{grp_title}} </span>
+                                   <p class="margin_bottom_30"><span class="pull-left"><small>{{grp_type}}</small></span> <span class="pull-right span_frmt" href="#">{{group_join_status}} </span></p>
+                                  <!--<p>I am a very simple card. I am good at containing small bits of information.
+                                  I am convenient because I require little markup to use effectively.</p>-->
+                                </div>
+                                <div class="card-action">
+                                  
+                                  <span style="margin-right: 10px;"><i class="fa fa-object-group" title="group"></i> 100 </span>
+                                  <span><i class="fa fa-comment-o" title="Like"></i> 65 </span>
+                                </div>
+                              </div>
+                            </span>
+                            </div>
+                            {{else}}
+                            <h3>No Groups To Display</h3>
+                            {{/each}}                     
+                      </div>
+                 </div>
+
+                <div class="tab-pane" id="byme">
+                    <div id="custom-search-input">
+                    <div class="col-md-6">
+                     <h5>Created by me ({{show_whereadmin_count}})</h5></div>
+                                    <div class="input-group col-md-6">
+                                        <input type="text" class="  search-query form-control" placeholder="Search Group by Group title" id="search_all_admin_text"/>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-danger search_btn_frmt" type="button" id="search_grp_admin">
+                                                <span class=" glyphicon glyphicon-search"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+
+                        <div class="row">
+                        {{#each show_whereadmin}}
+                            <div class="col s12 m4">
+                              <span id="show_whereadmin" >
+                              <div class="card" style="padding-top: 0;">
+                                <div class="card-image">
+                                  <img src="{{Show_grp_image}}" height="100">
+                                </div>
+                                <div class="card-content">
+                                   <span class="card-title">{{grp_title}} </span>
+                                   <p class="margin_bottom_30"><span class="pull-left"><small>{{grp_type}}</small></span> <span class="pull-right span_frmt" href="#">Admin </span></p>
+                                </div>
+                                <div class="card-action">
+                                  <span style="margin-right: 10px;"><i class="fa fa-object-group" title="group"></i> 100 </span>
+                                  <span><i class="fa fa-comment-o" title="Like"></i> 65 </span>
+                                  <ul class="nav navbar-nav pull-right panel-menu">
+                                    <li class="dropdown">
+                                       <a href="#" class="dropdown-toggle account drop_down_frmt" data-toggle="dropdown">
+                                        <div class="avatar">
+                                          <i class="fa fa-ellipsis-v"></i> <b class="caret"></b>
+                                        </div>
+                                        </a>
+                                  <ul class="dropdown-menu dropdown-menu_pos ">
+                                    <li> <a href="#"><span>Edit Group</span></a> </li>
+                                   </ul>
+                                  </li>
+                                </ul>
+                                <!-- End three dots dropdown -->
+
+                                </div>
+                              </div>
+                            </span>
+                            </div>
+                            {{else}}
+                            <h3>No Groups created yet</h3>
+                         {{/each}}   
+                          </div>
+                </div>
+                <div class="tab-pane" id="Pending">
+                    <div id="custom-search-input">
+                    <div class="col-md-6">
+                     <h5>Pending (20)</h5></div>
+                      <div class="input-group col-md-6">
+                      <input type="text" class="  search-query form-control" placeholder="Search Group by Group title" id="search_all_pending_text" />
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-danger search_btn_frmt" type="button" id="search_grp_pending" >
+                                                <span class=" glyphicon glyphicon-search"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                          <div class="row">
+                            {{#each pending_list}}
+                            {{#if check_join_status}}
+                             <div class="col s12 m4">
+                              <span id="show_pending_details" >
+                              <div class="card" style="padding-top: 0;">
+                                <div class="card-image">
+                                  <img src={{Show_grp_image}} height="100">
+                                </div>
+                                <div class="card-content">
+                                   <span class="card-title">{{grp_title}} </span>
+                                   <p class="margin_bottom_30"><span class="pull-left"><small>{{grp_type}}</small></span> <span class="pull-right span_frmt" href="#">{{group_join_status}} </span></p>
+                                </div>
+                                <div class="card-action">
+                                  <span style="margin-right: 10px;"><i class="fa fa-object-group" title="group"></i> 100 </span>
+                                  <span><i class="fa fa-comment-o" title="Like"></i> 65 </span>
+                                </div>
+                              </div>
+                            </span>
+                             </div>
+                             {{/if}} 
+                             {{else}}
+                             <h3>No Group with Pending Status</h3>
+                            {{/each}} 
+                          </div>
+                </div>
+        </div><!-- tab content -->
+      </div>
+</div>
+<script type="text/javascript">
+  $('.dropdown-button').dropdown({
+      inDuration: 300,
+      outDuration: 225,
+      constrainWidth: false, // Does not change width of dropdown to that of the activator
+      hover: true, // Activate on hover
+      gutter: 0, // Spacing from edge
+      belowOrigin: false, // Displays dropdown below the button
+      alignment: 'left', // Displays dropdown with edge aligned to the left of button
+      stopPropagation: false // Stops event propagation
+    }
+  );
+       
+
+</script>
+<script>
+/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>
+</template>

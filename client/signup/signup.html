@@ -1,0 +1,286 @@
+
+<template name="signup" >
+
+<div class="row" style="background:url(http://bitovn.com/images/back_new.jpg); padding: 5% 10%;">
+    <div class="col s12 m3 l1"><p> &nbsp;</p></div>
+    <div class="col s12 m6 l10"><p> {{> dme}}</p></div>
+     <div class="col s12 m3 l1"><p> &nbsp;</p></div>
+</div>
+
+</template>
+
+<template name="dme" >
+<div class="row">
+    <div class="col s8">
+      <ul class="tabs">
+
+        <li class="tab col s2"><a href="#test3" class="active disableClick" >Step 1</a></li>
+        <li class="tab col s2"><a href="#test5" class="disableClick" >Step 2</a></li>
+         <li class="tab col s2"><a href="#test4" class="disableClick" >Step 3</a></li>
+          <li class="tab col s2"><a href="#test6" class="disableClick">Step 4</a></li>
+           <li class="tab col s2"><a href="#test7" class="disableClick">Step 5</a></li>
+      </ul>
+    </div>
+    <div id="test3" class="col s12">
+    <section class="section">
+        <div class="row">
+          <h5>Let's find some people you know on Special Neighborhood </h5>
+          <p class="">Build your network to unlock exponential potential. </p>
+        </div>
+        <div class="row">
+         <div class="input-field col s1">
+            <p><a class="btn btn-floating pulse"><i class="fa fa-map-marker" style="font-size: 14px;"></i></a></p>
+          </div>
+        
+         <div class="input-field col s11">
+          <label for="title">Map</label><br/>
+            <input placeholder="Enter location"  id="autocomplete10" type="text" class="validate">
+            
+          </div>
+        </div>
+
+<!--          <div class="row">
+          <p>
+            <span class="pull-left"><a href="#">Continue</a></span>
+            <span class="pull-right"><a href="#">Skip</a></span>
+          </p>
+        </div> -->
+         <div class="row">
+          <p>
+            We 'll import your address book to suggest connections ad help you manage your contacts <a href="#">Learn more</a>
+          </p> 
+        </div>
+
+        <hr/>
+        <div class="row">
+       
+<!--           <button class="btn waves-effect waves-light pull-left" type="submit" name="action">Prev
+            
+          </button> -->
+          <button class="btn waves-effect waves-light pull-right" id="adderss_field" type="submit" name="action">Next
+            
+          </button>
+       </div>  
+      </section>
+    </div>
+   
+    <div id="test4" class="col s12">
+    <section class="section">
+        <div class="row">
+          <h5>Let's understand your dis.ABILITY </h5>
+          <p class="">Special Neighborhood is a platform where people with special disability can connect, collaborate and create.</p>
+        </div>
+        <div class="row">
+          <p>How are you differently Abled?</p>
+         <div class="col s12">
+            <form action="#">
+              <p>
+                <input type="checkbox" class="filled-in" id="Hearin"  />
+                <label for="Hearin">Hearing </label>
+              </p>
+              <p>
+                <input type="checkbox"  class="filled-in" id="Speech" />
+                <label for="Speech">Speech</label>
+              </p>
+              <p>
+                <input type="checkbox" class="filled-in" id="Visually"  />
+                <label for="Visually">Visually Impaired </label>
+              </p>
+              <p>
+                <input type="checkbox" class="filled-in" id="Physical" />
+                <label for="Physical">Physical Handicap: </label>
+              </p> 
+              <p>
+                <input type="checkbox" class="filled-in" id="not_disabled" />
+                <label for="not_disabled">Not disabled: </label>
+              </p>
+            </form>
+        
+          </div>
+           <div class="row">
+          <div class="input-field col s12">
+             <label for="textarea1">Special Note</label>
+            <textarea id="special_note" class="materialize-textarea" data-length="120"></textarea>
+           
+          </div>
+        </div>
+        
+
+        </div>
+<!--          <div class="row">
+          <p>
+           
+            <span class="pull-right"><a href="#">Skip</a></span>
+          </p>
+        </div>
+          -->
+
+        <hr/>
+        <div class="row">
+       
+<!--           <button class="btn waves-effect waves-light pull-left" type="submit" name="action">Prev
+            
+          </button> -->
+          <button class="btn waves-effect waves-light pull-right" type="submit" id="disability" name="action">Next
+            
+          </button>
+       </div>  
+      </section>
+    </div>
+     <div id="test5" class="col s12">
+     
+      <section class="section">
+         <br/><br/><br/>
+        <div class="row">
+          <h5>Add Contact Number </h5>
+          <!-- <p class="">Lorem ipsum </p> -->
+        </div>
+        <div class="row">
+         <div class="input-field col s1">
+            <p><a class="btn btn-floating pulse"><i class="fa fa-phone" style="font-size: 14px;"></i></a></p>
+          </div>
+        
+         <div class="input-field col s11">
+           <label for="title">Contact no</label><br/>
+            <input placeholder="+91 0" id="contact_no" type="text"  maxlength="10"  class="validate">
+          </div>
+        </div>
+<!--          <div class="row">
+          <p>
+            
+            <span class="pull-right"><a href="#">Skip</a></span>
+          </p>
+        </div> -->
+        
+
+        <hr/>
+        <div class="row">
+       
+<!--           <button class="btn waves-effect waves-light pull-left" type="submit" name="action">Prev
+            
+          </button> -->
+          <button class="btn waves-effect waves-light pull-right"  id ="contact_no_button" type="submit" name="action">Next
+            
+          </button>
+       </div>  
+      </section>
+      <br/><br/><br/>
+     </div>
+     <div id="test6" class="col s12">
+    <section class="section">
+      <br/><br/><br/>
+        <div class="row">
+          <h5>Add profile picture</h5>
+          <p class="">Build your network to unlock exponential potential. </p>
+        </div>
+        <div class="row">
+         <div class="input-field col s1">
+            <p><a class="btn btn-floating pulse"><i class="fa fa-user" style="font-size: 14px;"></i></a></p>
+          </div>
+        
+        <div class="file-field input-field" >
+      <div class="btn" style="display:none;" >
+      </div >
+      <div class="file-path-wrapper" >
+       
+        <input type="file" id="fileInput" multiple >
+        <input class="file-path validate" type="text" placeholder="click here to upload image" >
+           <div id="defaultbox" >
+              <img id="my_image" src='/uploads/default/Default_group.png' style="height:300px; width:300px;" >
+       
+         </div>
+        <div id="divcrop">
+              <img id="my_image2"   style="height:300px; width:300px;"  >
+         </div>
+        </div>
+    
+    </div>
+    <button id="crop_image">Crop</button>
+    <div id="show_cropping_options">
+    <button id="crop_cancel">Cancel</button>
+    </div>
+  <!-- Modal Structure -->
+  <div id="image_dialog" class="modal">
+    <div class="modal-content">
+      <h4>Modal Header</h4>
+      <p>A bunch of text</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+  </div>
+
+        </div>
+<!--          <div class="row">
+          <p>
+            <span class="pull-left"><a href="#">Continue</a></span>
+            <span class="pull-right"><a href="#">Skip</a></span>
+          </p>
+        </div> -->
+         <div class="row">
+          <p>
+            We 'll import your address book to suggest connections ad help you manage your contacts <a href="#">Learn more</a>
+          </p> 
+        </div>
+<br/><br/><br/>
+        <hr/>
+        <div class="row">
+       
+<!--           <button class="btn waves-effect waves-light pull-left" type="submit" name="action">Prev
+            
+          </button> -->
+          <button class="btn waves-effect waves-light pull-right" type="submit" id="submit_image" name="action">Next
+            
+          </button>
+       </div>  
+      </section>
+    </div>
+    <div id="test7" class="col s12">
+    <section class="section">
+      <br/><br/><br/>
+      
+        <div class="row">
+        
+         <div class="input-field col s6">
+           <p><img src="http://bitovn.com/images/profile-image.png" class="img-responsive"></p>
+          </div>
+        
+         <div class="input-field col s6">
+            <p> Profile Headline</p>
+            <p>The headline is limited to 110 characters and works as a brief biography of who you are and what you do.</p>
+            <div class="input-field ">
+             <label for="textarea1">My Interests</label>
+            <textarea id="textarea1" class="materialize-textarea" data-length="120"></textarea>
+          </div>
+          </div>
+
+        </div>
+         
+         <div class="row">
+          <p>
+            We 'll import your address book to suggest connections ad help you manage your contacts <a href="#">Learn more</a>
+          </p> 
+        </div><br/><br/><br/>
+
+        <hr/>
+        <div class="row">
+       
+<!--           <button class="btn waves-effect waves-light pull-left" type="submit" name="action">Prev
+            
+          </button> -->
+          <button class="btn waves-effect waves-light pull-right" type="submit" id="profile_headline" name="action">Finish
+            
+          </button>
+       </div>  
+      </section>
+    </div>
+    
+
+  </div>
+  <script type="text/javascript">
+    $(document).ready(function(){
+    $('ul.tabs').tabs();
+  });
+  </script>
+ </template>
+

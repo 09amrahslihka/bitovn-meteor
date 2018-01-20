@@ -1,0 +1,491 @@
+/* CSS declarations go here */
+nav{
+
+  background-color: #333 !important;
+}
+.msg-head {
+    background-color: #338EA7;
+    padding: 10px;
+    border: 1px solid #338EA7;
+    color: #FFF;
+   
+}
+.margin-tp{
+  margin-top: 30px;
+}
+.collection .collection-item.avatar {
+    min-height: 64px;
+
+}
+.card .card-content {
+padding:10px;
+}
+
+.chatperson{
+  display: block;
+  border-bottom: 1px solid #eee;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  margin-bottom: 15px;
+  padding: 4px;
+}
+.chatperson:hover{
+  text-decoration: none;
+  border-bottom: 1px solid orange;
+}
+.namechat {
+    display: inline-block;
+    vertical-align: middle;
+}
+.chatperson .chatimg img{
+  width: 40px;
+  height: 40px;
+  background-image: url('http://i.imgur.com/JqEuJ6t.png');
+}
+.chatperson .pname{
+  font-size: 18px;
+  padding-left: 5px;
+}
+.chatperson .lastmsg{
+  font-size: 12px;
+  padding-left: 5px;
+  color: #ccc;
+}
+
+.panel{
+    margin-bottom: 0px;
+}
+.chat-window{
+    bottom:0;
+    position:fixed;
+    float:right;
+    margin-left:10px;
+}
+.chat-window > div > .panel{
+    border-radius: 5px 5px 0 0;
+}
+.icon_minim{
+    padding:2px 10px;
+}
+.msg_container_base{
+  border-bottom: 0px !important;
+  background:transparent;
+  margin: 0;
+  padding: 0 10px 0px;
+  max-height:300px;
+  overflow-x:hidden;
+}
+.top-bar {
+  background: #666;
+  color: white;
+  padding: 10px;
+  position: relative;
+  overflow: hidden;
+}
+.msg_receive{
+    padding-left:10px;
+    margin-left:0;
+}
+.msg_sent{
+    padding-bottom:20px !important;
+    margin-right:0;
+}
+.messages {
+  background: rgba(239, 252, 255, 0.25) none repeat scroll 0% 0%;
+border-radius: 10px;
+box-shadow: none;
+}
+
+.messages_us {
+  background:#f9f9f1 none repeat scroll 0% 0%;
+border-radius: 10px;
+box-shadow: none;
+}
+
+.messages_you {
+  background: #f9f9f9 none repeat scroll 0% 0%;
+border-radius: 10px;
+box-shadow: none;
+}
+
+.messages > p {
+    font-size: 14px;
+    margin: 0px 10px 0px 10px;
+  }
+.messages > time {
+ 
+    color: #ccc;
+        font-size: 12px ;
+    margin-left: 0px;
+
+}
+.msg_container {
+    padding: 10px;
+    overflow: hidden;
+    display: flex;
+}
+img {
+    display: block;
+    width: 100%;
+}
+.avatar {
+    position: relative;
+}
+.base_receive > .avatar:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border: 5px solid #FFF;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+}
+
+.base_sent {
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+.base_sent > .avatar:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border: 5px solid white;
+    border-right-color: transparent;
+    border-top-color: transparent;
+    box-shadow: 1px 1px 2px rgba(black, 0.2);
+}
+
+.msg_sent > time{
+    float: left;
+}
+
+.msg_sent {
+    padding-bottom: 9px !important;
+  }
+
+.msg_container_base::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #fff;
+}
+
+.msg_container_base::-webkit-scrollbar
+{
+    width: 12px;
+    background-color: #fff;
+}
+
+.msg_container_base::-webkit-scrollbar-thumb
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
+}
+
+.btn-group.dropup{
+    position:fixed;
+    left:0px;
+    bottom:0;
+}
+.panel-primary {
+border:none;
+}
+
+.card {
+    position: relative;
+    margin: 0.5rem 0px 1rem;
+    background-color: transparent;
+    transition: box-shadow 0.25s ease 0s;
+    border-radius: 0px;
+  }
+  .msg_container_base{
+
+    max-height: 400px !important;
+  }
+.send_btn{
+      background-color: #338EA7;
+    margin-bottom: 11px;
+    box-shadow: none;
+}
+
+.panel-footer{
+  background-color:transparent;
+  border:none !important;
+}
+.margin_top{
+
+  margin-top: 10px;
+}
+.bor_top{
+  border: 0px solid #CCC !important;
+
+padding: 5px;
+border-radius: 0px;
+}
+.collection .circle {
+    width: 50px !important;
+    height: 50px !important;
+}
+
+.color_green{
+color: #3B840F !important;
+margin-top: 18%;
+left: -80%;
+z-index: 99999;
+border: 3px solid #FFF;
+border-radius: 50%;
+position: relative;
+}
+
+.stylish-input-group .input-group-addon{
+    background: white !important; 
+}
+.stylish-input-group .form-control{
+  border-right:0; 
+  box-shadow:0 0 0; 
+  border-color:#ccc;
+}
+.stylish-input-group button{
+    border:0;
+    background:transparent;
+}
+.text-area {
+    width: 200px;
+    height: 50px;
+    border:1px solid #ccc;
+    display:inline-block;
+}
+
+.icon-example:after {
+    content: url(http://www.stat.ncsu.edu/dept-icons/camera-icon.gif);
+    position:absolute;
+    z-index:9999;
+    right: 3px;
+    bottom: 6px;
+}
+
+.hidden {
+    display:none;
+}
+.margin_to_12{
+margin-top: 12px;
+}
+.margin_to_3{
+margin-top: 3px;
+}
+.margin_bottom_0{
+margin-bottom: 0px;
+}
+
+.font_size_19{
+  font-size: 19px;
+}
+.new_card{
+
+  padding-top: 0px;
+  box-shadow: none;
+}
+.time{
+  
+  color: #a6a6a6 !important;
+   margin: 0px;
+}
+.typing{
+color: #338EA7 !important;
+}
+.padding_0{
+
+  padding: 0px 0px; 
+}
+.padding_hide_li{
+padding-left: 0px !important;
+  min-height: 25px !important;
+}
+
+.padin_ul{
+  background-color: #fff;
+  padding: 10px !important;
+}
+
+.nav {
+  
+  
+    position:absolute;
+}
+.nav>li>a:hover, .nav>li>a:focus, .nav .open>a, .nav .open>a:hover, .nav .open>a:focus {
+    background:#fff;
+}
+.dropdown {
+    background:#fff;
+    border:1px solid #ccc;
+    border-radius:4px;
+    width:300px;    
+}
+.dropdown-menu>li>a {
+    color:#338ea7;
+}
+.dropdown ul.dropdown-menu {
+    border-radius: 4px;
+box-shadow: none;
+margin-top: 20px;
+width: 40%;
+left: 62%;
+top: 65%;
+}
+.dropdown ul.dropdown-menu:before {
+    content: "";
+    border-bottom: 10px solid #fff;
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent;
+    position: absolute;
+    top: -10px;
+    right: 16px;
+    z-index: 10;
+}
+.dropdown ul.dropdown-menu:after {
+    content: "";
+    border-bottom: 12px solid #ccc;
+    border-right: 12px solid transparent;
+    border-left: 12px solid transparent;
+    position: absolute;
+    top: -12px;
+    right: 14px;
+    z-index: 9;
+}
+
+.bg_card_drop{
+  background-color:transparent !important;
+  color: #fff !important;
+}
+.borde_search_user{
+height: 40px !important;
+}
+.collection .collection-item {
+    background-color:transparent;
+    }
+  .collection .collection-item.avatar img{
+    
+    left: 2px !important;
+    
+}
+  .collection .collection-item.avatar{
+    
+  padding-left: 60px !important;
+    
+}
+.new_bg_for_all{
+  background-color: transparent;
+}
+
+.msg_container {
+    padding: 13px;
+    }
+    .margin_bottom_0{
+
+      margin-bottom:0px;
+    }
+.numberCircle {
+    border-radius: 50%;
+    behavior: url(PIE.htc); /* remove if you don't care about IE8 */
+
+    width: 100px;
+    height: 36px;
+    padding: 4px 10px;
+
+    background: #fff;
+    border: 1px solid #ccc;
+    color: #666;
+    text-align: center;
+
+    font: 17px ;
+}
+.fo_size_time{
+
+  font-size: 12px !important;
+  margin-left: 0px !important;
+}
+
+ .new_no_chat{
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    padding: 2px 1px;
+    background: #E12626 none repeat scroll 0% 0%;
+    border: 1px solid #fff;
+    color: #fff;
+    font-weight: 100;
+    text-align: center;
+    font-size: 12px;
+}
+
+
+/* Bottom left text */
+.bottom-left {
+    position: absolute;
+    bottom: -2px;
+    left: 49px !important;
+}
+
+.bottom-left-2 {
+    position: absolute;
+    bottom: -2px;
+    left: 39px !important;
+}
+
+.color_green{
+
+  color: #77C903;
+  border:2px solid #fff;
+}
+
+
+.color_red{
+
+  color: #E12626;
+  border:2px solid #fff;
+  border-radius: 50%;
+}
+
+.color_gray{
+border-radius: 50%;
+  color: #B6ACAC;
+  border:2px solid #fff;
+}
+.navbar-nav > li > a{
+
+  padding-top: 20px !important;
+padding-bottom: 19px !important;
+}
+.form-control{
+  border-radius: 0px;
+  width: 102%;
+  height: 42px !important;
+}
+
+.content_ques{
+  content: "?" !important;
+  color:#fff !important;
+}
+.collection .collection-item {
+  
+    padding: 10px 2px;
+    
+}
+.lisimg_msg{
+color:#B9B9B9 !important;
+}
+
+.the_champ_sharing_container{
+display:none;
+}
+
+.display_hide_conversation{
+  display:none !important;
+}

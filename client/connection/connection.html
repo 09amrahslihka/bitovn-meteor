@@ -1,0 +1,215 @@
+<template name="connection">
+<div class="row body_whole">
+    <div class="col s12"><p><img src="https://www.vayuz.com/wp-content/uploads/2015/01/vayuz_slider61.jpg"  height=300 width="1260"></p></div>
+    <div lass="col s12 m12 ll2">
+      <p>{{> connection_content}}</p>
+    </div>
+  </div>
+</template>
+
+<template name="connection_content"> 
+<ul class="nav nav-pills nav-stacked col-md-2 left_row">
+  <h5>Connection</h5>
+  <li class="active"><a href="#connection" data-toggle="pill">Connection ({{connection}})</a></li>
+  <li><a href="#request" data-toggle="pill">Request ({{request}})</a></li>
+  <li><a href="#ignore" data-toggle="pill">Ignored ({{ignore}})</a></li> 
+</ul>
+
+<div class="tab-content col-md-10 left_row">
+        <div class="tab-pane active" id="connection">
+          <div id="custom-search-input">
+            <div class="col-md-6">
+
+             <h5>All Connection ({{connection}})</h5></div>
+                            <div class="input-group col-md-6">
+                              <form class="form_reset" id="search_conn_form" >
+                               <input type="text" class="  search-query form-control" placeholder="Search connection by name" id="search_all_text_conn" />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-danger search_btn_frmt" type="button" id="search_connection_all">
+                                        <span class=" glyphicon glyphicon-search"></span>
+                                    </button>
+                                </span>
+                              </form>
+                            </div>
+                        </div>
+           <script type="text/javascript">
+                    $('#search_conn_form').keypress(function(e){
+                        var code = e.keyCode || e.which;
+
+                        if( code === 13 ) {
+                            e.preventDefault();
+                            $( "#search_connection_all" ).click();
+                        };
+                    });
+           </script> 
+            
+                <!-- <div class="col-md-4">
+                      <div class="card text-center">
+                      <div class="col-md-12">
+                        <img class="circle responsive-img" width="80" src="http://bitovn.com/feed/profileImage/cGft1494661092783272_user-Lauren-59f6b030ac35f.jpg">
+                      </div>
+                      <div class="card-content"> 
+                        <span class="card-title activator grey-text colo-blu">Shobhita Yadav </span>
+                        <span>To build product line whi</span><br/>
+                         <span><i class="fa fa-map-marker" style="color: #333; "></i> Australia</span><br/>
+                         <span> onnected since January, 1970 </span>
+                       
+                      </div> 
+                      <div class="card-action text-left">
+                        
+                        <span>
+                       <a href="#"  style="margin-right: 5px !important"> <img src="http://bitovn.com/feed/Images_final/icon/connection.png" width="15" ></a>
+                         <a href="#"><img src="http://bitovn.com/feed/Images_final/icon/groups.png" width="15" ></a>
+                        </span>
+                        <span class="right text-right">
+                        <a class='dropdown-button text-right pull-right' style="margin-right: 0px;" href='#' data-activates='dropdown1'><i class="fa fa-ellipsis-v "></i> </a> 
+                         //Dropdown Structure 
+                            <ul id='dropdown1' class='dropdown-content'>
+                              <li><a href="#!">Message</a></li>
+                              <li><a href="#!">Remove Connection</a></li>
+                            </ul>
+                        </span>
+                       </div>
+                      <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">&nbsp;<i class="fa fa-times  right"></i></span>
+                        <p> 
+                         <p><a href="#">Message</a></p>
+                          <p><a href="#">Remove Connection </a></p>   
+                        </p> 
+                      </div>
+                    </div>
+                 </div> -->
+              <div class="row">
+{{#each show_connections}}
+{{#each show_connections_2}}
+               <div class="col-md-4">
+                      <div class="card">
+                      <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" src={{profile_pic}} height="200" alt="No image" >
+                      </div>
+                      <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">{{name}}<i class="fa fa-ellipsis-v right"></i></span>
+        
+                      </div>
+                      <div class="card-action">
+                      <a href="#"  style="margin-right: 5px !important"> <img src="http://bitovn.com/feed/Images_final/icon/connection.png" width="15" ></a>
+                         <a href="#"><img src="{{profile_pic}}" width="15" alt="No image"></a></div>
+                      <div class="card-reveal text-center">
+                        <span class="card-title grey-text text-darken-4">&nbsp;<i class="fa fa-times  right"></i></span>
+                        <p>{{headline}}<br/> <a href="#" ><i class="fa fa-map-marker"></i>{{location}}</a></p>  <br/> <br/><br/>
+                         <p class="col m12 box_card_info"><a href="/Messaging" style="color: #a4a4a4;" >Message</a></p>
+                         <p class="col m12 box_card_info"><a href="#" style="color: #a4a4a4;" id="remove_connection" > Remove Connection </a></p>     
+                      </div>
+                    </div>
+                 </div>
+{{/each}}
+{{/each}}
+              </div>
+                <!--  <div class="col s1 m3 l3">
+                      <div class="card">
+                      <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" src="http://bitovn.com/feed/profileImage/7Gwk1484051164277891_user-shobhitaVAYUZ-59f6b11a7f9b6.jpg" height="200">
+                      </div>
+                      <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">Shobhita yadav<i class="fa fa-ellipsis-v right"></i></span>
+                       
+                      </div>
+                      <div class="card-action">
+                       <a href="#"  style="margin-right: 5px !important"> <img src="http://bitovn.com/feed/Images_final/icon/connection.png" width="15" ></a>
+                         <a href="#"><img src="http://bitovn.com/feed/Images_final/icon/groups.png" width="15" ></a></div>
+                      <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">&nbsp;<i class="fa fa-times  right"></i></span>
+                        <p> 
+                         <p><a href="#">Message</a></p>
+                          <p><a href="#">Remove Connection </a></p>   
+                        </p> 
+                      </div>
+                    </div>
+                 </div> -->
+                 <!-- <div class="col-md-3">
+                      <div class="card">
+                      <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" src="http://bitovn.com/feed/profileImage/cGft1494661092783272_user-Lauren-59f6b030ac35f.jpg">
+                      </div>
+                      <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">Shobhita yadav<i class="fa fa-ellipsis-v right"></i></span>
+                       
+                      </div>
+                      <div class="card-action">
+                       <a href="#"  style="margin-right: 5px !important"> <img src="http://bitovn.com/feed/Images_final/icon/connection.png" width="15" ></a>
+                         <a href="#"><img src="http://bitovn.com/feed/Images_final/icon/groups.png" width="15" ></a></div>
+                      <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">&nbsp;<i class="fa fa-times  right"></i></span>
+                        <p> 
+                         <p><a href="#">Message</a></p>
+                          <p><a href="#">Remove Connection </a></p>   
+                        </p> 
+                      </div>
+                    </div>
+                 </div> -->
+        </div>
+        <div class="tab-pane" id="request">
+             <h5>Request ({{request}})</h5>
+             <div class="row">
+                  <ul class="collection ">
+                    {{#each show_pending}}
+                    {{#each show_pending2}}
+                     <li class="collection-item avatar col_bor"> <img src={{profile_pic}} alt="No image" class="circle">
+                        <span class="title" style="font-size: 18px !important;">{{name}}</span>
+                          <p>{{headline}}
+                             <span style="float: right;"><a href="javascript:void(0)"  class="accept btn btn-default btn-rej ignore_event font_plus_class_b request_accept_status" id="request_accept_status" >Accept</a></span>
+
+                            <span style="float: right;">  <a href="javascript:void(0)" class="ignore btn btn-default btn-rej ignore_event font_plus_class_b" id="request_ignore_status" >Ignore</a></span>
+                          </p>
+                          <p> <i class="fa fa-map-marker"></i> {{location}} </p>
+                      </li>
+                    {{/each}}
+                    {{/each}}
+                  </ul>
+                </div>
+        </div>
+        <div class="tab-pane" id="ignore">
+             <h5>Ignored ({{ignore}})</h5>
+          
+             <div class="row">
+                  <ul class="collection">
+                    {{#each show_ignored }}
+                    {{#each show_ignored2 }}
+                     <li class="collection-item avatar col_bor"> <img src={{profile_pic}} alt="No image" class="circle">
+                        <span class="title" style="font-size: 18px !important;">{{name}}</span>
+                          <p>{{headline}}
+                             <span style="float: right;"><a href="javascript:void(0)" id="ignore_event-1348278818req-" class="accept btn btn-default btn-rej ignore_event font_plus_class_b request_accept_status" >Accept</a></span>
+                            
+                          </p>
+                          <p> <i class="fa fa-map-marker"></i> {{location}} </p>
+                        </li>
+                      {{/each}}
+                      {{/each}}
+                    </ul>
+                  </div>
+        </div>
+       
+</div><!-- tab content -->
+<script type="text/javascript">
+  $('.dropdown-button').dropdown({
+      inDuration: 300,
+      outDuration: 225,
+      constrainWidth: false, // Does not change width of dropdown to that of the activator
+      hover: true, // Activate on hover
+      gutter: 0, // Spacing from edge
+      belowOrigin: false, // Displays dropdown below the button
+      alignment: 'left', // Displays dropdown with edge aligned to the left of button
+      stopPropagation: false // Stops event propagation
+    }
+  );
+       
+
+</script>
+<script type="text/javascript">
+    $('.dropdown-button').dropdown('open');
+</script>
+<script type="text/javascript">
+ $('.dropdown-button').dropdown('close');
+</script>
+
+</template>

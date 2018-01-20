@@ -1,0 +1,125 @@
+<template name="groupdetail">
+  <head>
+  <title>Group Listing</title>
+</head>
+
+<div class="row body_whole">
+   {{> header}}
+      {{> grpdetail}}
+     
+</div>
+</template>
+
+<template name="grpdetail"> 
+{{#each show_group_details}}
+
+  <div class="col s12"><p><img src={{Show_grp_image}}  height=300 width="1260" alt="No Image" ></p></div>
+  <div class="row">
+    <div class="col-md-9">
+      <div class="section">
+{{#if current_user_admin}}
+        <ul class="nav navbar-nav pull-right panel-menu">           
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle account drop_down_frmt" data-toggle="dropdown">
+                  <div class="avatar">
+                    <i class="fa fa-ellipsis-v"></i> <b class="caret"></b>
+                  </div>         
+                </a>
+                <ul class="dropdown-menu dropdown-menu_pos ">
+                  {{#if activity_status}}
+                  <li> <a href="#" class="activity_status" newvalue="0" ><span> Deactivate</span></a> </li>
+                  {{else}}
+                  <li> <a href="#" class="activity_status" newvalue="1"><span> Activate</span></a> </li>
+                  {{/if}}
+                  <li> <span id="edit_group_3" ><span>Edit Group</span></span> </li>
+                 </ul>
+              </li>
+            </ul>
+{{/if}}
+
+        <h4 class="font_size_26">{{grp_title}}</h4>
+		
+        <p> {{grp_discription}}</p>
+          <div class="row">
+            <h5> Admin</h5> 
+{{#each show_admin_details}} 
+			  <ul class="collection">
+			    <li class="collection-item avatar">
+			      <img src="{{Show_admin_image}}" style="width:50px !important; height: 50px !important;" alt="No image" class="circle">
+			         <span class="title"><a href="" class="redirect_click_1" valu={{user_id}} > {{name}} </a> </span>
+			          <p>{{headline}} </p>
+			     </li>
+			   </ul>
+{{/each}}            
+          </div>
+          <div class="row">
+            <h5> Connections you known ({{Show_members_count}})</h5> 
+            <div class="col m6 l6 s12">
+			  <ul class="collection">
+          {{#each all_memeber}}
+           {{#each all_memeber_2}}
+          <li class="collection-item avatar">
+            <img src=h{{profile_pic}} alt="No Image" style="width:50px !important; height: 50px !important" class="circle">
+               <span class="title"><a href="#"> {{name}} </a> </span>
+                <p>{{headline}} </p>
+          </li>
+             {{else}}
+              <h4><p>No members Yet</p> </h4>        
+           {{/each}}     
+         {{/each}}
+
+			   </ul>
+			</div>
+            
+          </div>  
+      </div>
+    </div>
+  
+    <div class="col-md-3">
+      <div class="section section-btm">
+         {{#if join_status}}
+            <button id="Join_group" > Join</button>
+           {{else}}
+            <button id="leave_group" > Leave</button>          
+         {{/if}}
+      	<p class="head-format"><a class="font_plus_class_b" href="#">Members ({{Show_members_count}})</a></p>
+          <div class="row"  style="margin-bottom:0px; ">
+          	 <p >
+                                    
+        {{#each all_memeber}}       
+           {{#each all_memeber_2}}  
+              <img src={{profile_pic}} style="" alt="No Image" class="circle img_member" >
+             {{else}}
+              <h4><p>No members Yet</p> </h4>        
+           {{/each}}     
+         {{/each}}  
+			    
+			   </p> 
+			<p>	
+			   	<a class="waves-effect waves-light btn blog_button" style="width: 100%; margin-top: 10px;">Invite</a> 
+          	</p>
+			   
+		</div>	
+
+      </div>
+    </div>
+
+
+    {{#if join_status}}
+    {{else}}
+     <div class="col-md-3">
+      <div class="section">
+        <p class="head-format"><a class="font_plus_class_b" href="#"> Discussions (2) </a></p>
+          <div class="row" style="margin-bottom:0px; ">
+            <p>There is <a href="#"> 0 </a> discussion in this group</p>
+      <p> <a href="/group_discussion" class="waves-effect waves-light btn blog_button" style="width: 100%;">Start Discussion</a> 
+            </p>
+    </div>  
+      </div>
+    </div>
+    {{/if}}
+
+  </div>
+  {{/each}}
+</template>
+
