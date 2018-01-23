@@ -2273,6 +2273,10 @@ Template.profile.events({
 // }
 });
 
+function getBase64(file) {
+ 
+}
+
 function upload_cover_image(e,template){
     // e.preventDefault();
     // var files = e.currentTarget.files;
@@ -2280,7 +2284,37 @@ function upload_cover_image(e,template){
     if (e.currentTarget.files && e.currentTarget.files[0]) {
      var file = e.currentTarget.files[0];
       if (file) {
-        var uploadInstance = Images.insert({
+   
+        var reader = new FileReader();
+   var base64data="";
+   reader.readAsDataURL(file);
+   reader.onload = function () {
+   console.log(reader.result);
+   base64data = reader.result;
+
+        var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "http://beta.bitovn.com/testing/image_upload.php",
+  "method": "POST",
+  "headers": {
+    "content-type": "application/x-www-form-urlencoded"
+  },
+  "data": {
+    "image": base64data,
+  }
+}
+alert(base64data);
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+
+   };
+   reader.onerror = function (error) {
+     console.log('Error: ', error);
+   };
+
+      /*  var uploadInstance = Images.insert({
           file: file,
           streams: 'dynamic',
           chunkSize: 'dynamic'
@@ -2320,7 +2354,7 @@ function upload_cover_image(e,template){
           }
      });
 
-        uploadInstance.start();
+        uploadInstance.start();*/
       }   
   }
 }
