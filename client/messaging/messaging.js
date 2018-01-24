@@ -33,12 +33,18 @@ Session.setPersistent("updatedStatus","false");
       var sent_by = Session.get("userId");
   var userOnlineOffline =   UserInfo.find({"user_id":sent_by}).observe({
     added: function(newDoc) {
+    
     },
       removed: function(oldDoc) {
     },
       changed: function(newDoc, oldDoc) {
       if(newDoc.online_status=="online" && newDoc.online_status != oldDoc.online_status){
+      
 
+
+      setTimeout(function() {
+            $("#message_container").animate({ scrollTop: $('#message_container').prop("scrollHeight")}, 1);
+      }, 10); 
 
         var connection_details;
         if(Session.get("userId") == newDoc.user1){
@@ -53,7 +59,7 @@ Session.setPersistent("updatedStatus","false");
         // alert("ChatRoom " +openedChatRoomDetails[0].chatroom_id);
         if(openedChatRoomDetails[0].last_msg_sent_by != Session.get("userId")){
           // receipient is online
-            change_last_message_status(openedChatRoomDetails[0].last_msg_id,"read");
+           change_last_message_status(openedChatRoomDetails[0].last_msg_id,"read");
             increase_unread_count(openedChatRoomDetails[0].chatroom_id,"true")
             // alert("Last message read"); 
              // update msg status 
@@ -96,19 +102,27 @@ Session.setPersistent("updatedStatus","false");
           && Session.get("rightPanelChatRoomId") == newDoc.chatroom_id 
           && connection_details[0].last_msg_sent_by != Session.get("userId")){
           // receipient is online
-            change_last_message_status(newDoc.last_msg_id,"read");
-            increase_unread_count(newDoc.chatroom_id,"true")
+              var notification = new Audio("http://freesound.org/data/previews/235/235911_2391840-lq.mp3");
+              notification.play();
+
+              change_last_message_status(newDoc.last_msg_id,"read");
+              increase_unread_count(newDoc.chatroom_id,"true")
             // alert("Last message read"); 
              // update msg status 
              // no need for updating count
           }else if(connection_details[0].online_status == "online" && Session.get("rightPanelChatRoomId") != newDoc.chatroom_id){
             // alert("Last message delivered, but user is chatting with someone else ");
               // update last message count
+              var notification = new Audio("http://freesound.org/data/previews/235/235911_2391840-lq.mp3");
+              notification.play();
+
               change_last_message_status(newDoc.last_msg_id,"delivered");
               increase_unread_count(newDoc.chatroom_id,"false"); 
               // update msg status
           }
           else{
+              var notification = new Audio("http://freesound.org/data/previews/235/235911_2391840-lq.mp3");
+              notification.play();
 
               change_last_message_status(newDoc.last_msg_id,"delivered");
               increase_unread_count(newDoc.chatroom_id,"false"); 
@@ -615,19 +629,17 @@ Template.messanging.events({
 
   },
   'scroll #message_container':function(e){
-  /*  if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
-           
-*/
     var elem = $(e.currentTarget);
     if (elem.scrollTop() == 0)
     {
     const t = Template.instance();
     const msg_limit = t.message_show_limit.get();
-    // alert("At update"+msg_limit);
     msg_limit = parseInt(msg_limit);
     msg_limit = msg_limit +1; 
     t.message_show_limit.set(msg_limit);
-    // alert("As");
+
+
+    
     }
 /*
     var scrollTop = $(this).scrollTop();
@@ -657,8 +669,12 @@ Template.messanging.events({
 },
 
 'click .change_msg_onright': function(){
+
+ setTimeout(function() {
+      $("#message_container").animate({ scrollTop: $('#message_container').prop("scrollHeight")}, 1);
+}, 10); 
 var show_id = this.user_id;
-Session.setPersistent("msgid_forright",show_id);
+Session.setPersistent("msgid_forright",shouw_id);
  var check_chatroom = Chatroom.find({ $or: [
            {
             $and:
@@ -691,12 +707,12 @@ Session.setPersistent("msgid_forright",show_id);
             increase_unread_count(openedChatRoomDetails[0].chatroom_id,"true")
   }
 }
-
 },
 
  
 
 'click #send_msg': function(){
+
   $("#message_container").animate({ scrollTop: $('#message_container').prop("scrollHeight")}, 1);
   var msg_text = $('#msg_text').val();
 
