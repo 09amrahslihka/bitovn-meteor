@@ -60,10 +60,10 @@ Tracker.autorun(function () {
 });
                                             
 Template.summary.events({
-  'click #save_summary': function(event){
-  			// alert('hello');
-  			event.preventDefault();
-  			// alert('hello');
+  'click .save_summary': function(event){
+        // alert('hello');
+        event.preventDefault();
+        // alert('hello');
         var summary = $('#summary').val();
         //alert(summary_text);
         if(summary == null || summary == "")
@@ -91,8 +91,7 @@ Template.summary.events({
 });
 
 Template.heading.events({
-  'click #save_heading': function(event){
-
+  'click .save_heading': function(event){
         // alert('hello');
         event.preventDefault();
         // alert('hello');
@@ -154,8 +153,8 @@ Template.summary.helpers({
     var count = summary_text.length;
     // $('#read_more_summary').addClass('hide_redmore');
     // alert('Added');
-    if(count > 440){
-          var summary_text = summary_text.slice(0,440);
+    if(count > 460){
+          var summary_text = summary_text.slice(0,460);
            // $('#read_less_summary').removeClass('hide_redmore');
            // $('#read_more_summary').removeClass('hide_redmore');
     }
@@ -164,12 +163,12 @@ Template.summary.helpers({
     return summary_text;
   },
   show_Readless(){
-  	var summ = this.summary;
-  	// alert(summ);
-  	var count = summ.length;
+    var summ = this.summary;
+    // alert(summ);
+    var count = summ.length;
     // $('#read_more_summary').addClass('hide_redmore');
     // alert('Added');
-    if(count > 440){
+    if(count > 460){
           return true;
     }
   }
@@ -536,7 +535,7 @@ Template.profile.events({
 
 Template.professional.events({
 
-  'click #add_profjr': function(event){
+  'click .add_profjr': function(event){
         event.preventDefault();
         var company_name = $('#company_name').val();
         var job_title = $('#job_title').val();
@@ -742,9 +741,8 @@ Template.edudetails.events({
     $('.modal').modal('close');
   },
 
-  'click #save_edu': function(event){
+  'click .save_edu': function(event){
         event.preventDefault();
-        // alert('award');
         var course = $('#course').val();
         var board = $('#board').val();
         var school = $('#school').val();
@@ -910,23 +908,32 @@ if(document.getElementById('check_education_edu_2').checked){
 
   var score = msg6;
 //end script for cgpa and percentage  
+                var course = $('#course').val();
+        var board = $('#board').val();
+        var school = $('#school').val();
+
+        $('#edu_start_month').val('');
+        $('#edu_start_year').val('');
+        $('#edu_end_month').val('');
+        $('#edu_end_year').val('');
+        $('#autocomplete7').val('');
+
         var user_id = Session.get("userId");
         alert(board,school,score,edu_start_month,edu_start_year,edu_end_month,edu_end_year,edu_location);
-        Meteor.call('insert_education',user_id,course,board,school,score,edu_start_month,edu_start_year,edu_end_month,edu_end_year,edu_location);
-        
+        Meteor.call('insert_education',user_id,course,board,school,score,edu_start_month,edu_start_year,edu_end_month,edu_end_year,edu_location,function(error,result){
+          if(error){
+              // alert('error');
+              console.log('error in updating education');
+          }else{
+              // alert('result');
+              window.location.reload();
+              console.log('error in updating education');
+          }
+        });
         // alert('education inserted');
+        window.location.reload();
         $('.modal').modal('close');
-        // var course = $('#course').val();
-        // var board = $('#board').val();
-        // var school = $('#school').val();
-
-        // $('#edu_start_month').val('');
-        // $('#edu_start_year').val('');
-        // $('#edu_end_month').val('');
-        // $('#edu_end_year').val('');
-        // $('#autocomplete7').val('');
         $(".form_reset").trigger('reset');
-
   }
 });
 
@@ -1449,7 +1456,7 @@ Template.professional.events({
     //       Session.setPersistent("edit_profjr_id",this._id);      
     //      alert(Session.get(edit_profjr_id)); 
     // },
-  'click #update_professional_details':function(event){          
+  'click .update_professional_details':function(event){          
           // var postId= Session.get("current_prof_dialog");
           // alert(postId);
 
@@ -1584,7 +1591,7 @@ Template.professional.events({
   //   alert('way2');
 
 
-    alert(edit_id+company_name+job_title+start_month+start_year+end_month+end_year+Job_location+skill_used+key_responsibilities+job_type);
+    // alert(edit_id+company_name+job_title+start_month+start_year+end_month+end_year+Job_location+skill_used+key_responsibilities+job_type);
     
      Meteor.call('update_profjr',edit_id,company_name,job_title,start_month,start_year,end_month,end_year,Job_location,
           skill_used,key_responsibilities,job_type,function(error,result){
@@ -1595,8 +1602,11 @@ Template.professional.events({
                 }else{
                   // alert('update professional jr');
                   console.log('update professional jr');
-                  alert('update professional jr');
-                
+         // alert('Done bro');
+         window.location.reload();
+         // alert('update professional jr');
+         $('#modal_edit_prof').modal('close');
+         (".form_reset").trigger('reset');       
   }
           });
   // }  
@@ -1609,7 +1619,7 @@ Template.professional.events({
 Template.professional.events({
  'click #edit_5': function(){
       //alert('tron');{
-      	
+        
 
             var company_name = this.company;
             var job_title = this.title;
@@ -1624,8 +1634,8 @@ Template.professional.events({
             var end_year = this.end_year;
             var job_type = this.job_type;
 
-            alert(company_name+job_title+autocomplete5+hidden_profjr_id+skill_used+key_responsibilities+
-              start_month+start_year+end_month+end_year+job_type);
+            // alert(company_name+job_title+autocomplete5+hidden_profjr_id+skill_used+key_responsibilities+
+              // start_month+start_year+end_month+end_year+job_type);
 
             $("#edit_start_month").dropdown("set selected", start_month);
             $("#edit_start_year").dropdown("set selected", start_year);
@@ -1639,23 +1649,23 @@ Template.professional.events({
             $('#hidden_profjr_id').val(hidden_profjr_id);
             $('#edit_skill_used').val(skill_used);
 // $("#edit_check_experience").attr("checked",true);
-alert('end month = '+end_month+' and end years = '+end_year);
+// alert('end month = '+end_month+' and end years = '+end_year);
             $('#edit_key_responsibilities').val(key_responsibilities);
             if(end_year == "" || end_year == null || end_year == undefined){
             // $('#edit_end_year').addClass('display_hide');
             // $('#edit_end_month').addClass('display_hide');
             alert('inside');
-            	$("#edit_check_experience").attr("checked",true);
-            	// collw();
-            	                    if(document.getElementById('edit_check_experience').checked){
-						            // onchecked_edit_profjr_end_date
-						            $('#onchecked_edit_profjr_end_date').addClass('display_hide');
-						            $('#edit_end_month').removeClass('display_show');
+              $("#edit_check_experience").attr("checked",true);
+              // collw();
+                                  if(document.getElementById('edit_check_experience').checked){
+                        // onchecked_edit_profjr_end_date
+                        $('#onchecked_edit_profjr_end_date').addClass('display_hide');
+                        $('#edit_end_month').removeClass('display_show');
             }
         }else{
-            	$("#edit_check_experience").attr("checked",false);
-            	$('#onchecked_edit_profjr_end_date').removeClass('display_hide');
-			    $('#edit_end_month').addClass('display_show');	            
+              $("#edit_check_experience").attr("checked",false);
+              $('#onchecked_edit_profjr_end_date').removeClass('display_hide');
+          $('#edit_end_month').addClass('display_show');              
             }
             
          
@@ -1689,7 +1699,7 @@ Template.edudetails.events({
             var edu_end_year = this.edu_end_year;
             var edu_location = this.edu_location;
             var hidden_edit_edu_id = this._id;
-            alert(edit_course+edit_school+score+edu_start_month+edu_start_year+edu_end_month+edu_end_year+edu_location+hidden_edit_edu_id);
+            // alert(edit_course+edit_school+score+edu_start_month+edu_start_year+edu_end_month+edu_end_year+edu_location+hidden_edit_edu_id);
         
         if (isValid(score)) {
           // isValid
@@ -1706,7 +1716,7 @@ Template.edudetails.events({
           var edit_score = score[0];
           $('#edit_cgpa_out_of').removeClass('emptyfield');
           var edit_cgpa_out_of = score[2] ;
-          alert("naya alert yahi hai: "+edit_cgpa_out_of);
+          // alert("naya alert yahi hai: "+edit_cgpa_out_of);
           if(edit_cgpa_out_of==1){
             $("#edit_cgpa_out_of").dropdown("set selected", "10");
           }else{
@@ -1753,18 +1763,18 @@ Template.edudetails.events({
       if(edu_end_year == "" || edu_end_year == null || edu_end_year == undefined){
             // $('#edit_end_year').addClass('display_hide');
             // $('#edit_end_month').addClass('display_hide');
-            	$("#onchecked_edit_edu_end_date_show").attr("checked",true);
-            	// collw();
-            	                    if(document.getElementById('onchecked_edit_edu_end_date_show').checked){
-						            // onchecked_edit_profjr_end_date
-						            $('#onchecked_edit_du_end_date').addClass('display_hide');
-						            // $('#onchecked_edit_du_end_date').removeClass('display_show');
-						            // $('#edit_end_month').addClass('display_hide');
+              $("#onchecked_edit_edu_end_date_show").attr("checked",true);
+              // collw();
+                                  if(document.getElementById('onchecked_edit_edu_end_date_show').checked){
+                        // onchecked_edit_profjr_end_date
+                        $('#onchecked_edit_du_end_date').addClass('display_hide');
+                        // $('#onchecked_edit_du_end_date').removeClass('display_show');
+                        // $('#edit_end_month').addClass('display_hide');
             }
         }else{
-            	$("#onchecked_edit_edu_end_date_show").attr("checked",false);
-            	$('#onchecked_edit_du_end_date').removeClass('display_hide');
-            	// $('#onchecked_edit_du_end_date').addClass('display_show');
+              $("#onchecked_edit_edu_end_date_show").attr("checked",false);
+              $('#onchecked_edit_du_end_date').removeClass('display_hide');
+              // $('#onchecked_edit_du_end_date').addClass('display_show');
             }
  
 
@@ -1900,7 +1910,7 @@ Template.recentblog.events({
 });
 
 Template.edudetails.events({
-  'click #edit_save_edu': function(event){
+  'click .edit_save_edu': function(event){
         event.preventDefault();
         // alert('edit_award');
         var course = $('#edit_course').val();
@@ -2045,8 +2055,7 @@ if(document.getElementById('edit_check_education_edu_2').checked){
   // var cgpa_out_of =  $('#edit_cgpa_out_of').dropdown('get value');
 var edit_cgpa_out_of = $('#edit_cgpa_out_of').dropdown('get value');
   cgpa_out_of =  parseInt(edit_cgpa_out_of);
-  alert('cgpa out of : '+ cgpa_out_of);
-  
+  // alert('cgpa out of : '+ cgpa_out_of);
         if(cgpa_out_of == null || cgpa_out_of == "")
         {
           $('#edit_cgpa_out_of').addClass('emptyfield').focus();
@@ -2055,7 +2064,6 @@ var edit_cgpa_out_of = $('#edit_cgpa_out_of').dropdown('get value');
         else{
           $('#edit_cgpa_out_of').removeClass('emptyfield');
         }
-
   //if(!tm1.match(/^\d+$/) && !tm1.val().indexOf('.') != -1)
   if(!edu_grade.match(/^\d+$/))
   {
@@ -2077,7 +2085,7 @@ var edit_cgpa_out_of = $('#edit_cgpa_out_of').dropdown('get value');
   }
 
   var score = msg6;
-  alert("scored :"+score);
+  // alert("scored :"+score);
 //end script for cgpa and percentage        
         var edit_id = $("#hidden_edit_edu_id").val();    
         var user_id = Session.get("userId");
@@ -2088,7 +2096,8 @@ var edit_cgpa_out_of = $('#edit_cgpa_out_of').dropdown('get value');
             // alert('error');
             console.log('error');
           }else{
-            // alert(result + 'sucessfully updated education');
+            alert('sucessfully updated education');
+             window.location.reload();
             console.log(result + 'sucessfully updated education');
           }
         });
@@ -2189,6 +2198,7 @@ Template.profile.helpers({
 Template.profile.events({
  'change #upload_cover': function(e, template) {
     upload_cover_image(e, template);
+    
 },
 // 'click #crop_image':function(){
 //   crop_image();
@@ -2197,6 +2207,7 @@ Template.profile.events({
  'change #upload_profile': function(e, template) {
   // alert('upload PPlicked');
   // Session.clear("profilepic_imagePath");
+    // upload_cover_image(e, template);
     upload_profile_pic(e, template);
     $('#profile_pic_modal').click();
     // $('#crop_profile_image').modal('show');
@@ -2304,12 +2315,29 @@ function upload_cover_image(e,template){
     "image": base64data,
   }
 }
-alert(base64data);
+// alert(base64data);
 $.ajax(settings).done(function (response) {
   console.log(response);
-});
+  var new_image_url = 'http://beta.bitovn.com/testing' + response.substr(1, response.length);
+  console.log(new_image_url);
+  Session.setPersistent("new_image_url",new_image_url);
 
-   };
+
+    var imagePath = Session.get("new_image_url");
+
+    // alert(imagePath);
+        var user_id = Session.get("userId");
+        Meteor.call("upload_cover_image",user_id,new_image_url,function(error,result){
+        if(error){
+          alert("Error");
+        }else{
+         $('ul.tabs').tabs('select_tab', 'test7'); 
+        }
+        //template.currentUpload.set(false);
+    });
+
+});
+};
    reader.onerror = function (error) {
      console.log('Error: ', error);
    };
@@ -2429,7 +2457,7 @@ Router.go('/logout');
 
 
 function collw(){
-	      if(document.getElementById('edit_check_education_edu_2').checked){
+        if(document.getElementById('edit_check_education_edu_2').checked){
       
       $("#onchecked_edit_du_end_date").addClass('display_hide');
       $("#onchecked_edit_du_end_date").removeClass('display_show');
@@ -2455,52 +2483,42 @@ function collw(){
 function upload_profile_pic(e,template){
     // e.preventDefault();
     // var files = e.currentTarget.files;
-   
     if (e.currentTarget.files && e.currentTarget.files[0]) {
      var file = e.currentTarget.files[0];
       if (file) {
-        var uploadInstance = Images.insert({
-          file: file,
-          streams: 'dynamic',
-          chunkSize: 'dynamic'
-        });
+   
+        var reader = new FileReader();
+   var base64data="";
+   reader.readAsDataURL(file);
+   reader.onload = function () {
+   console.log(reader.result);
+   base64data = reader.result;
 
-        uploadInstance.on('start', function() {
-          template.currentUpload.set(this);
-        });
-        
-        // Session.setPersistent("Cropped","true");
+        var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "http://beta.bitovn.com/testing/image_upload.php",
+  "method": "POST",
+  "headers": {
+    "content-type": "application/x-www-form-urlencoded"
+  },
+  "data": {
+    "image": base64data,
+  }
+}
+// alert(base64data);
+// $.ajax(settings).done(function (response) {
+//   console.log(response);
+//   var imagePath = 'http://beta.bitovn.com/testing' + response.substr(1, response.length);
+//   console.log(imagePath);
+//   Session.setPersistent("new_image_url",imagePath);
 
-    uploadInstance.on('end', function(error, fileObj) {
-              if (error) {
-          // alert('error while uploaded');
-                window.alert('Error during upload: ' + error.reason);
-              } else {    
-                // alert('sucess');
-                // Session.setPersistent("imageUploaded_2","true");
-            // Session.setPersistent("imagePath",fileObj._id+'.'+  fileObj.ext);
-                // Session.setPersistent("Cropped","false");
-                   event.preventDefault();
-    var user_id = Session.get("userId");
-    // var imagePath = Session.get("imagePath");
-    // alert(1);
-    var imagePath = "http://localhost:3000/cdn/storage/Images/" + fileObj._id+"/original/" + fileObj._id+"."+  fileObj.ext;
-    Session.setPersistent("profilepic_imagePath",imagePath);
-
-    // alert(user_id+' '+imagePath);
-    // $('#divcrop').removeClass('cropper-example-lena');
-             // $("#defaultbox").show();
-             $("#my_image_profile").attr("src",imagePath);             
-             $("#my_image_profile").attr("srcset",imagePath);             
-             //divcrop_profile
-             
-    // Meteor.call("upload_profile_image",user_id,imagePath,function(error,result){
-    //     if(error){
-    //       alert("Error");
-    //     }else{
-            // alert("Image Changed");
+var imagePath = base64data;
+    $("#my_image_profile").attr("src",imagePath);             
+            $("#my_image_profile").attr("srcset",imagePath);             
+            
             $("#crop_profile_modal").attr("src",imagePath);
-           $('#divcrop_profile').addClass('cropper-example-lena');
+            $('#divcrop_profile').addClass('cropper-example-lena');
            // $('#crop_profile_modal').addClass('cropper-example-lena');
              $('.cropper-example-lena > img').cropper({
             aspectRatio: 8 / 8,
@@ -2531,38 +2549,64 @@ function upload_profile_pic(e,template){
             });
           $('#my_image_profile').cropper('destroy').cropper('replace', imagePath);
 
-    //     }
-    //     template.currentUpload.set(false);
-    // });
-              
-          }  
-     });
+    //var imagePath = Session.get("new_image_url");
 
-        // uploadInstance.start();
-      }   
-  }
-}
+};
+    
+     }  }} 
 
 function crop_image(){
   // alert('12345');
    event.preventDefault();
    // alert('vlll');
   var croppedPhoto = $('#my_image_profile').cropper('getCroppedCanvas');
-
-            
-    // alert('2');
-    // alert(croppedPhoto);
     console.log(croppedPhoto);
-    croppedPhoto.toBlob(function (blob) {
-          var reader = new window.FileReader();
-                reader.readAsDataURL(blob); 
-                
-                reader.onloadend = function() {
-      
-                base64data = reader.result; 
-                console.log(base64data);  
-                // alert(base64data);
-                var file = blobToFile(blob,"Ankit.png");
+    // croppedPhoto.toBlob(function (blob) {
+var dataURL = croppedPhoto.toDataURL('image/jpeg', 0.5);
+var blob = dataURItoBlob(dataURL);
+console.log(blob);
+var file = new FormData(document.forms[0]);
+file.append("canvasImage", blob);
+alert(dataURL);
+base64data = dataURL;
+console.log(base64data);
+
+       var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "http://beta.bitovn.com/testing/image_upload.php",
+  "method": "POST",
+  "headers": {
+    "content-type": "application/x-www-form-urlencoded"
+  },
+  "data": {
+    "image": base64data,
+  }
+}
+// alert(base64data);
+$.ajax(settings).done(function (response) {
+  console.log(response);
+  alert(response);
+  var imagePath = 'http://beta.bitovn.com/testing' + response.substr(1, response.length);
+  console.log(imagePath);
+  Session.setPersistent("new_profile_image_url",imagePath);
+
+     var user_id = Session.get("userId");
+     // var user_id = Session.get("userId");
+     alert(user_id +' & ' +imagePath);
+
+   Meteor.call("upload_profile_image",user_id,imagePath,function(error,result){
+        if(error){
+          alert("Error");
+        }else{
+            alert("Profile Pic Changed");
+             // toastr.success(Sucess, Profile Pic Changed);
+           $('#divcrop_profile').removeClass('cropper-example-lena');
+        }
+        template.currentUpload.set(false);
+    });
+
+});
         var uploadInstance = Images.insert({
                       file: file,
                         streams: 'dynamic',
@@ -2579,16 +2623,9 @@ function crop_image(){
              alert("Error");
             window.alert('Error during upload: ' + error.reason);
           } else {
-            // alert('ssss');
-            Session.set("Cropped","true");
-            Session.setPersistent("imageUploaded","true");
-            // Session.setPersistent("imagePath",fileObj._id+'.'+  fileObj.ext);
+            var new_profile_image_url = Session.get("new_profile_image_url");
+             var imagePath = new_profile_image_url;
 
-             var imagePath = "http://localhost:3000/cdn/storage/Images/" + fileObj._id+"/original/" + fileObj._id+"."+  fileObj.ext;
-             // alert(imagePath);
-             Session.setPersistent("imageCropped","true");
-             Session.setPersistent("profile_imagePath",imagePath);
-                
              $("#crop_image").hide();
              $("#divcrop").hide();
              $('#divcrop').removeClass('cropper-example-lena');
@@ -2597,25 +2634,32 @@ function crop_image(){
             $("#my_image_profile").attr("src","");  
             $("#my_image_profile").attr("srcset","");  
              $("#my_image2").attr("src","");
-             // $("#show_cropping_options").show();
-     var user_id = Session.get("userId");
-     // var user_id = Session.get("userId");   
-      Meteor.call("upload_profile_image",user_id,imagePath,function(error,result){
-        if(error){
-          alert("Error");
-        }else{
-            alert("Profile Pic Changed");
-             // toastr.success(Sucess, Profile Pic Changed);
-           $('#divcrop_profile').removeClass('cropper-example-lena');
-        }
-        template.currentUpload.set(false);
-    });
-
+   
           }
         });
 }
-});
+
+
+function dataURItoBlob(dataURI) {
+    // convert base64/URLEncoded data component to raw binary data held in a string
+    var byteString;
+    if (dataURI.split(',')[0].indexOf('base64') >= 0)
+        byteString = atob(dataURI.split(',')[1]);
+    else
+        byteString = unescape(dataURI.split(',')[1]);
+
+    // separate out the mime component
+    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+    // write the bytes of the string to a typed array
+    var ia = new Uint8Array(byteString.length);
+    for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+
+    return new Blob([ia], {type:mimeString});
 }
+
 
 function blobToFile(theBlob, fileName){
     //A Blob() is almost a File() - it's just missing the two properties below which we will add
@@ -2625,7 +2669,7 @@ function blobToFile(theBlob, fileName){
 }
 
 Template.passion.events({
-   'click #save_passion': function(){
+   'click .save_passion': function(){
     // var passion = $('#my_passion').val();
 
     var passion = $('#my_passion').dropdown('get value');
@@ -2644,7 +2688,8 @@ Template.passion.events({
         $('#my_passion').val('');
         $('.modal').modal('close');
 
-   }
+   // }
+}
 });
 
 

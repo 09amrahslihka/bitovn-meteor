@@ -12,7 +12,6 @@
               <img src={{uploaded_image}}  style="width: 100%;  height: 300px;" >  
               <!-- <img src="https://www.elegantthemes.com/blog/wp-content/uploads/2017/08/Dad-Blogs-Featured-Image.png" style="width: 100%;  height: 300px;"> -->
             </p>
-
           </div>
       </div>
 
@@ -233,7 +232,7 @@
   <div id="passion" class="modal">
      <div class="modal-header">  <h5>I'm passionate about</h5> </div>
         
-        <form class="form_reset" >
+        <form class="form_reset" id="enter_atpassion" >
 <div id="my_passion" class="ui fluid multiple search selection dropdown"  >
     <input name="tags" type="hidden">
         <i class="dropdown icon"></i>
@@ -259,10 +258,11 @@
             <div class="item" data-value="ux">User Experience</div>
         </div>
     </div>
+    <input type="hidden" class="save_passion" >
     </form>
     <div class="modal-footer">
       <a class="waves-effect waves-light btn close_modal">Cancel</a>
-      <a class="waves-effect waves-light btn" id="save_passion" >Save</a>
+      <a class="save_passion waves-effect waves-light btn" id="save_passion" >Save</a>
    </div>
 </div>
 
@@ -278,7 +278,15 @@
     // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
     $('.modal').modal();
   });
-      
+
+     $('#enter_atpassion').keypress(function(e){
+      alert('inside passion');
+                        var code = e.keyCode || e.which;
+                        if( code === 13 ) {
+                            e.preventDefault();
+                            $(".save_passion").click();
+                        };
+                    });
 </script>
 </template>
 
@@ -297,7 +305,7 @@
   <div id="heading_modal" class="modal">
      <div class="modal-header">  <h5>Heading</h5> </div>
         <div class="modal-content" style="box-shadow:none; border: none;">
-
+    <form id="form_heading" >
       <div class="row">
           <div class="input-field col s12">
             <textarea id="heading" class="materialize-textarea" maxlength="120"></textarea>
@@ -306,11 +314,13 @@
                  {{/each}}  
           </div>
         </div>
+        <input type="hidden" class="save_heading">
+    </form>    
     </div>
     <div class="modal-footer">
       <a class="waves-effect waves-light btn hide_model close_modal">Cancel</a>
-      <a class="waves-effect waves-light btn" id="save_heading" >Save</a>
-   </div>
+      <a class="save_heading waves-effect waves-light btn" id="save_heading" >Save</a>
+   </div>   
 </div>
 
 <script>
@@ -318,6 +328,14 @@
     // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
     $('.modal').modal();
   });
+                      $('#form_heading').keypress(function(e){
+                        var code = e.keyCode || e.which; 
+
+                        if( code === 13 ){
+                            e.preventDefault();
+                            $(".save_heading").click();
+                        };
+                    });
 </script>
 </template>
 
@@ -335,27 +353,36 @@
            <a href="javascript:void(0);"  class="an_style read_more hide_redmore" id="read_less_summary" style="color: #338ea7; padding: 5px 10px;">Read less</a>                   
           <input type="hidden" value={{summary}} id="hidden_summary">
            </div>
-
            {{/if}}
   </div>
         {{else}}
         <p> Nothing to Display as Summary</p>
         {{/each}}
-<script type="text/javascript">
-  $('document').ready(fucntion(){
-      // var count = $('#hidden_summary').val();
-      // count = count.length();
-      // if(count > 440)
-      // {
-
-      // }
-
-}
-</script>
-
   <div id="summary_modal" class="modal">
      <div class="modal-header">  <h5>Summary</h5> </div>
+        <div class="modal-content" style="box-shadow:none; border: none;">
+    <form id="form_summary" >
+      <div class="row">
+          <div class="input-field col s12">
+            <textarea id="summary" class="materialize-textarea" maxlength="1000" style="height:220px" ></textarea>
+                 {{#each display_summary}} 
+                    <input type="hidden" id="default_summary" value={{summary}} >
+                 {{/each}}  
+          </div>
+        </div>
+        <input type="hidden" class="save_summary">
+    </form>    
+    </div>
+    <div class="modal-footer">
+      <a class="waves-effect waves-light btn hide_model close_modal">Cancel</a>
+      <a class="save_summary waves-effect waves-light btn" id="save_summary" >Save</a>
+   </div>   
+</div>
+
+ <!--  <div id="summary_modal" class="modal">
+     <div class="modal-header">  <h5>Summary</h5> </div>
       <form id="form_summary">    
+        
         <div class="modal-content" style="box-shadow:none; border: none;">
             <div class="row">
             <div class="input-field col s12">
@@ -366,12 +393,14 @@
             </div>
           </div>
         </div>
-        <div class="modal-footer">
-          <a class="waves-effect waves-light btn close_modal">Cancel</a>
-          <a class="waves-effect waves-light btn save_heading" id="save_summary" >Save</a>
-       </div>
+
+   <input type="hidden" class="save_summary" >
  </form>
-</div>
+         <div class="modal-footer">
+          <a class="waves-effect waves-light btn close_modal">Cancel</a>
+          <a class="save_summary waves-effect waves-light btn save_heading" id="save_summary" >Save</a>
+       </div>
+</div> -->
 
 <script>
   $(document).ready(function(){
@@ -379,7 +408,14 @@
     $('.modal').modal();
   });
 
+        $('#form_summary').keypress(function(e){
+                        var code = e.keyCode || e.which;
 
+                        if( code === 13 ) {
+                            e.preventDefault();
+                            $(".save_summary").click();
+                        };
+                    });
 </script>
 </template>
 
@@ -645,7 +681,7 @@
         <div class="modal-header"><h5>Edit Professional Detail</h5></div>
         <div class="modal-content" style="box-shadow:none; border: none;">
 
-            <form class="form_reset">
+            <form class="form_reset" id="edit_form_profjr" >
                 <div class="row">
                     <div class="input-field col s6">
                         <input id="edit_company_name" type="text" class="validate">
@@ -834,18 +870,30 @@
                         <p> Fields marked with <sup><span class="red_start"> * </span></sup> are mandatory</p>
                     </div>
                 </div>
+                <input type="hidden" class="update_professional_details" >
             </form>
         </div>
         <div class="modal-footer">
    <span id="delete_profjr" ><i class="fa fa-trash-o fa-2x pull-left" ></i>
 </span>
             <a class="waves-effect waves-light btn close_modal">Cancel</a>
-            <a class="waves-effect waves-light btn" id="update_professional_details">Save</a>
+            <a class="update_professional_details waves-effect waves-light btn" id="update_professional_details">Save</a>
         </div>
     </div>
 
+<script type="text/javascript">
+                    $('#edit_form_profjr').keypress(function(e){
+                        var code = e.keyCode || e.which;
+
+                        if( code === 13 ) {
+                            e.preventDefault();
+                            $(".update_professional_details").click();
+                        };
+                    });
+</script> 
+
   <div id="addprofes" class="modal">
-     <form class="form_reset" >
+     <form class="form_reset" id="form_profjr" >
      <div class="modal-header">  <h5>Professional Detail</h5> </div>
         <div class="modal-content" style="box-shadow:none; border: none;">
 
@@ -990,11 +1038,12 @@
          </div>
       </div>
     </div>
+    <input type="hidden" class="add_profjr" >
+ </form>
     <div class="modal-footer">
       <a class="waves-effect waves-light btn close_modal">Cancel</a>
-      <a class="waves-effect waves-light btn" id="add_profjr">Save</a>
+      <a class="add_profjr waves-effect waves-light btn" id="add_profjr">Save</a>
    </div>
- </form>
 </div>
 
 <script>
@@ -1005,6 +1054,18 @@
       
 
 </script>
+
+<script type="text/javascript">
+ $('#form_profjr').keypress(function(e){
+                var code = e.keyCode || e.which;
+                if( code === 13 ) {
+                e.preventDefault();
+                $(".add_profjr").click();
+                };
+          });
+</script>
+
+
 <script type="text/javascript">
   $(document).ready(function() {
     $('select').material_select();
@@ -1025,30 +1086,29 @@
       <p  class="font15 p_margin_btom_none">{{school}} | 
       {{show_score score}}
           {{score}}
-      
     </p>
+      
       <p>{{edu_start_month}}, {{edu_start_year}} - 
       {{#if edu_end_month }}
       {{edu_end_month}}, {{edu_end_year}}
       {{else}}
       Present
-      
       {{/if}}
+
     </p>
          </div>
     <div class="col-lg-1 col-md-1 col-xs-12 pull-right" style="padding-right: 0; text-align: right;">
-<a class="waves-light modal-trigger" href="#ediedudetails" eid={{_id}} id="edit_6" ><i class="fa fa-pencil" style="font-size: 16px;"></i></a> 
+       <a class="waves-light modal-trigger" href="#ediedudetails" eid={{_id}} id="edit_6" ><i class="fa fa-pencil" style="font-size: 16px;"></i></a> 
     </div>
   </div>
-
     {{else}}
     nothing
   {{/each}}
     </div>
 
   <div id="addedudetails" class="modal" >
-    <form class="form_reset" >
-     <div class="modal-header">  <h5>Education Detail</h5> </div>
+    <form class="form_reset" id="form_edu">
+      <div class="modal-header">  <h5>Education Detail</h5> </div>
         <div class="modal-content" style="box-shadow:none; border: none;">
 
 
@@ -1058,12 +1118,14 @@
           <label for="course">Course / Degree: * <sup><span class="red_start"> * </span></sup></label>
         </div>
       </div>
+
        <div class="row">
         <div class="input-field col s12">
           <input id="board" type="text" class="validate">
           <label for="board">University / Board :<sup><span class="red_start"> * </span></sup></label>
         </div>
      </div>
+
      <div class="row">
         <div class="input-field col s12">
           <input id="school" type="text" class="validate">
@@ -1205,7 +1267,7 @@ $(document).ready(function(){
      </div>
      
 
-
+<input type="hidden" class="save_edu" >
   </form>
       </div>
       <div class="row">
@@ -1217,7 +1279,7 @@ $(document).ready(function(){
     <div class="modal-footer">
 
       <a class="waves-effect waves-light btn close_modal">Cancel</a>
-      <a class="waves-effect waves-light btn" id="save_edu">Save</a>
+      <a class="save_edu waves-effect waves-light btn" id="save_edu">Save</a>
    </div>
  </form>
 </div>
@@ -1227,18 +1289,26 @@ $(document).ready(function(){
     // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
     $('.modal').modal();
   });
-      
-
 </script>
+
 <script type="text/javascript">
   $(document).ready(function() {
     $('select').material_select();
   });
-
 </script>
 
+<script type="text/javascript">
+                    $('#form_edu').keypress(function(e){
+                        var code = e.keyCode || e.which;
+                        if( code === 13 ) {
+                            e.preventDefault();
+                            $(".save_edu").click();
+                        };
+                    });
+</script>  
+
 <div id="ediedudetails" class="modal">
-  <form class="form_reset">
+  <form class="form_reset" id="edit_form_edu" >
         <div class="modal-header"><h5>Edit Education Detail</h5></div>
         <div class="modal-content" style="box-shadow:none; border: none;">
 
@@ -1298,7 +1368,7 @@ $(document).ready(function(){
             <script>
                 $(document).ready(function () {
                     $("#edit_education_format").change(function () {
-                      alert('coooo');
+                      // alert('coooo');
                         var edit_education_format = $("#edit_education_format").dropdown('get value');
                         alert(edit_education_format);
                         if (edit_education_format == 'percentage') {
@@ -1453,14 +1523,28 @@ $(document).ready(function(){
                 </div>
             </div>
         </div>
+        <input class="edit_save_edu" type="hidden" >
         <div class="modal-footer">
            <span id="delete_education" ><i class="fa fa-trash-o fa-2x pull-left" ></i>
 </span>
             <a class="waves-effect waves-light btn close_modal">Cancel</a>
-            <a class="waves-effect waves-light btn" id="edit_save_edu">Save</a>
+            <a class="edit_save_edu waves-effect waves-light btn" id="edit_save_edu">Save</a>
         </div>
   </form>
     </div>
+
+<script type="text/javascript">
+                    $('#edit_form_edu').keypress(function(e){
+                        var code = e.keyCode || e.which;
+
+                        if( code === 13 ) {
+                            e.preventDefault();
+                            $(".edit_save_edu").click();
+                        };
+                    });
+</script>  
+
+
 </template>
 
  <template name="achievement">

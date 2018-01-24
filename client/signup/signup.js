@@ -94,8 +94,8 @@ Template.dme.helpers({
   uploaded_image:function(){
 
   var imagePath = Session.get("imagePath");
-    
   if(imagePath){
+  alert(imagePath);
   var display_image =  imagePath;
     return display_image;
   }
@@ -116,7 +116,7 @@ Template.dme.helpers({
     return display_image;
 	}
   else{
-      var display_image = '/uploads/default/Default_group.png';
+    var display_image = '/uploads/default/Default_group.png';
     return display_image;
   }
 }
@@ -325,39 +325,50 @@ function validation_for_disability(){
 
 
 }
+
 function upload_image(e,template){
-	  	 
-   e.preventDefault();
-    var files = e.currentTarget.files;
-   
+	     // e.preventDefault();
+    // var files = e.currentTarget.files;
     if (e.currentTarget.files && e.currentTarget.files[0]) {
-   
-	   var file = e.currentTarget.files[0];
+     var file = e.currentTarget.files[0];
       if (file) {
-        var uploadInstance = Images.insert({
-          file: file,
-          streams: 'dynamic',
-          chunkSize: 'dynamic'
-        });
+   
+        var reader = new FileReader();
+   var base64data="";
+   reader.readAsDataURL(file);
+   reader.onload = function () {
+   console.log(reader.result);
+   base64data = reader.result;
 
-        uploadInstance.on('start', function() {
-          template.currentUpload.set(this);
-        });
+//         var settings = {
+//   "async": true,
+//   "crossDomain": true,
+//   "url": "http://beta.bitovn.com/testing/image_upload.php",
+//   "method": "POST",
+//   "headers": {
+//     "content-type": "application/x-www-form-urlencoded"
+//   },
+//   "data": {
+//     "image": base64data,
+//   }
+// }
+// alert(base64data);
+// $.ajax(settings).done(function (response) {
+//   console.log(response);
+//   var imagePath = 'http://beta.bitovn.com/testing' + response.substr(1, response.length);
+//   console.log(imagePath);
+  
 
-		uploadInstance.on('end', function(error, fileObj) {
-		          if (error) {
-					alert('uploaded');
-		            window.alert('Error during upload: ' + error.reason);
-		          } else {		          
-            var imagePath = "https://bitovn.herokuapp.com/cdn/storage/Images/" + fileObj._id+"/original/" + fileObj._id+"."+  fileObj.ext;
-             Session.setPersistent("imagePath",imagePath);
+var imagePath = base64data;
+ Session.setPersistent("imagePath",imagePath);
+ 	 // alert(imagePath);
 
 
-            // $('#divcrop').show();
-            // $('#defaultbox').hide();
+            $('#divcrop').show();
+            $('#defaultbox').hide();
 
-            $("#my_image_profile").attr("src",imagePath);
-            // $('#divcrop').addClass('cropper-example-lena');
+            $('#divcrop').addClass('cropper-example-lena');
+            $("#my_image2").attr("src",imagePath);
 
              $('.cropper-example-lena > img').cropper({
              aspectRatio: 8 / 8,
@@ -372,51 +383,65 @@ function upload_image(e,template){
 
     $('#crop_image').show();
     $('#crop_cancel').show();
-
-               $("#show_cropping_options").show();
-
-		      }
-		 });
-
-        // uploadInstance.start();
-      }
-    
-  }
-
-}
+    $("#show_cropping_options").show();
+}}}}
 
 function crop_image(){
 	 event.preventDefault();
   var croppedPhoto = $('#my_image2').cropper('getCroppedCanvas');
 
-    croppedPhoto.toBlob(function (blob) {
-          var reader = new window.FileReader();
-                reader.readAsDataURL(blob); 
-                reader.onloadend = function() {
- 			
-                base64data = reader.result; 
-                console.log(base64data);  
-                // alert(base64data);
-                var file = blobToFile(blob,"Ankit.png");
-        var uploadInstance = Images.insert({
-                      file: file,
-                        streams: 'dynamic',
-                          chunkSize: 'dynamic'
-                    });
+  // event.preventDefault();
+   // alert('vlll');
+  // var croppedPhoto = $('#my_image_profile').cropper('getCroppedCanvas');
+    console.log(croppedPhoto);
+    // croppedPhoto.toBlob(function (blob) {
+var dataURL = croppedPhoto.toDataURL('image/jpeg', 0.5);
+var blob = dataURItoBlob(dataURL);
+console.log(blob);
+var file = new FormData(document.forms[0]);
+file.append("canvasImage", blob);
+// alert(dataURL);
+base64data = dataURL;
+// alert(base64data);
+console.log(base64data);
 
-        uploadInstance.on('start', function() {
-          // template.currentUpload.set(this);
-        });
-        uploadInstance.on('end', function(error, fileObj) {
-          if (error) {
-             alert("Error");
-            window.alert('Error during upload: ' + error.reason);
-          } else {
-            Session.set("Cropped","true");
-      			Session.setPersistent("imageUploaded","true");
-            // Session.setPersistent("imagePath",fileObj._id+'.'+  fileObj.ext);
+       var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "http://beta.bitovn.com/testing/image_upload.php",
+  "method": "POST",
+  "headers": {
+    "content-type": "application/x-www-form-urlencoded"
+  },
+  "data": {
+    "image": base64data,
+  }
+}
+// alert(base64data);
+$.ajax(settings).done(function (response) {
+  console.log(response);
+  alert(response);
+  var imagePath = 'http://beta.bitovn.com/testing' + response.substr(1, response.length);
+  console.log(imagePath);
+  Session.setPersistent("new_profile_image_url",imagePath);
 
-             var imagePath = "https://bitovn.herokuapp.com/cdn/storage/Images/" + fileObj._id+"/original/" + fileObj._id+"."+  fileObj.ext;
+     var user_id = Session.get("userId");
+     // var user_id = Session.get("userId");
+     alert(user_id +' & ' +imagePath);
+
+   Meteor.call("upload_profile_image",user_id,imagePath,function(error,result){
+        if(error){
+          alert("Error");
+        }else{
+            alert("Profile Pic Changed");
+             // toastr.success(Sucess, Profile Pic Changed);
+           $('#divcrop_profile').removeClass('cropper-example-lena');
+        }
+        template.currentUpload.set(false);
+    });
+ });
+
+             var imagePath =  Session.get("new_profile_image_url");
              // alert(imagePath);
              Session.setPersistent("imageCropped","true");
              Session.setPersistent("imagePath",imagePath);
@@ -431,10 +456,6 @@ function crop_image(){
              $("#my_image2").attr("src","");
              $("#show_cropping_options").show();
           }
-        });
-}
-});
-}
 
 function blobToFile(theBlob, fileName){
     //A Blob() is almost a File() - it's just missing the two properties below which we will add
@@ -443,3 +464,23 @@ function blobToFile(theBlob, fileName){
     return theBlob;
 }
 
+
+function dataURItoBlob(dataURI) {
+    // convert base64/URLEncoded data component to raw binary data held in a string
+    var byteString;
+    if (dataURI.split(',')[0].indexOf('base64') >= 0)
+        byteString = atob(dataURI.split(',')[1]);
+    else
+        byteString = unescape(dataURI.split(',')[1]);
+
+    // separate out the mime component
+    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+    // write the bytes of the string to a typed array
+    var ia = new Uint8Array(byteString.length);
+    for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+
+    return new Blob([ia], {type:mimeString});
+}
