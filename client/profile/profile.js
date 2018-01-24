@@ -2306,7 +2306,7 @@ function upload_cover_image(e,template){
         var settings = {
   "async": true,
   "crossDomain": true,
-  "url": "http://beta.bitovn.com/testing/image_upload.php",
+  "url": "https://www.vayuz.com/testing/image_upload.php",
   "method": "POST",
   "headers": {
     "content-type": "application/x-www-form-urlencoded"
@@ -2318,7 +2318,7 @@ function upload_cover_image(e,template){
 // alert(base64data);
 $.ajax(settings).done(function (response) {
   console.log(response);
-  var new_image_url = 'http://beta.bitovn.com/testing' + response.substr(1, response.length);
+  var new_image_url = 'https://www.vayuz.com/testing' + response.substr(1, response.length);
   console.log(new_image_url);
   Session.setPersistent("new_image_url",new_image_url);
 
@@ -2497,7 +2497,7 @@ function upload_profile_pic(e,template){
         var settings = {
   "async": true,
   "crossDomain": true,
-  "url": "http://beta.bitovn.com/testing/image_upload.php",
+  "url": "https://www.vayuz.com/testing/image_upload.php",
   "method": "POST",
   "headers": {
     "content-type": "application/x-www-form-urlencoded"
@@ -2574,7 +2574,7 @@ console.log(base64data);
        var settings = {
   "async": true,
   "crossDomain": true,
-  "url": "http://beta.bitovn.com/testing/image_upload.php",
+  "url": "https://www.vayuz.com/testing/image_upload.php",
   "method": "POST",
   "headers": {
     "content-type": "application/x-www-form-urlencoded"
@@ -2587,7 +2587,7 @@ console.log(base64data);
 $.ajax(settings).done(function (response) {
   console.log(response);
   alert(response);
-  var imagePath = 'http://beta.bitovn.com/testing' + response.substr(1, response.length);
+  var imagePath = 'https://www.vayuz.com/testing' + response.substr(1, response.length);
   console.log(imagePath);
   Session.setPersistent("new_profile_image_url",imagePath);
 
