@@ -102,9 +102,12 @@ Session.setPersistent("updatedStatus","false");
           && Session.get("rightPanelChatRoomId") == newDoc.chatroom_id 
           && connection_details[0].last_msg_sent_by != Session.get("userId")){
           // receipient is online
-              var notification = new Audio("http://freesound.org/data/previews/235/235911_2391840-lq.mp3");
-              notification.play();
 
+              var notification = new Audio("http://freesound.org/data/previews/235/235911_2391840-lq.mp3");
+              var check_mute = Session.get("check_mute");
+            if(check_mute == undefined || check_mute == "" ){
+              notification.play();
+              }
               change_last_message_status(newDoc.last_msg_id,"read");
               increase_unread_count(newDoc.chatroom_id,"true")
             // alert("Last message read"); 
@@ -636,10 +639,7 @@ Template.messanging.events({
     const msg_limit = t.message_show_limit.get();
     msg_limit = parseInt(msg_limit);
     msg_limit = msg_limit +1; 
-    t.message_show_limit.set(msg_limit);
-
-
-    
+    t.message_show_limit.set(msg_limit); 
     }
 /*
     var scrollTop = $(this).scrollTop();
@@ -888,6 +888,11 @@ $("#message_container").animate({ scrollTop: $('#message_container').prop("scrol
             $('#msg_text').val('');                  
             });      
 
+},
+
+'click #mute_button': function(){
+  Session.setPersistent("check_mute",1);
+  Session.get("check_mute");
 },
 
 //  'change #submit_image': function(e, template) {
