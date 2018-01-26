@@ -100,7 +100,7 @@ else {
 
       <div class="card" style="box-shadow: none;">
     <div class="card-content">
-      <p> <input type="text" class="form-control input-sm chat_input borde_search_user" placeholder="Search Connections" style="margin-bottom: 0px;" id="search_connection_msg" /></p>
+      <p> <input type="text" class="form-control input-sm chat_input borde_search_user" placeholder="Search Conversations" style="margin-bottom: 0px;" id="search_connection_msg" /></p>
     </div>
  
     <div class="card-content">
@@ -115,7 +115,8 @@ else {
 {{#each show_connections}}
 {{#each show_connections_2}}
 
-            <li class="collection-item avatar change_msg_onright">
+        <a href="#">
+         <li class="collection-item avatar change_msg_onright">
 
         <span> <img src={{profile_pic}} alt="No Image" class="circle" >
         <span class="bottom-left-2">
@@ -144,6 +145,7 @@ else {
   </p>
   {{/each}}    
     </li>
+  </a>
 
 {{/each}}
 {{/each}}
@@ -242,9 +244,9 @@ else {
     <li class="collection-item avatar">
       <span>
           {{#if equals delivery_status 'read'}} 
-        <div class="messages messages_us msg_receive text-right green_bg">
+        <div class="messages messages_us msg_receive text-right green_bg" style="background-color: #338EA7 !important; color: #fff;">
             <p style="text-align: justify; ">  {{msg_text}}  </p>
-            <time datetime="2009-11-13T20:00"><span class="time fo_size_time">
+            <time datetime="2009-11-13T20:00"><span class="time fo_size_time" style="font-size: 10px !important; color: #fff !important;">
                <p>{{calculate_time_difference sentAt}}</p>
             </span></time>
                             </div>
@@ -253,7 +255,7 @@ else {
           {{else if equals delivery_status 'delivered' }}
           <div class="messages messages_us msg_receive text-right yellow_bg" >
             <p style="text-align: justify">  {{msg_text}}  </p>
-            <time datetime="2009-11-13T20:00"><span class="time fo_size_time">
+            <time datetime="2009-11-13T20:00"><span class="time fo_size_time" style="font-size: 10px !important;">
                <p>{{calculate_time_difference sentAt}}</p>
             </span></time>
           </div>
@@ -262,7 +264,7 @@ else {
            {{else}}
           <div class="messages messages_us msg_receive text-right red_bg">
             <p style="text-align: justify">  {{msg_text}}  </p>
-            <time datetime="2009-11-13T20:00"><span class="time fo_size_time">
+            <time datetime="2009-11-13T20:00"><span class="time fo_size_time" style="font-size: 10px !important;">
                <p>{{calculate_time_difference sentAt}}</p>
             </span></time>
           </div>
@@ -281,7 +283,7 @@ else {
     {{else}}
     <li class="collection-item avatar">
     {{#each msg_rightbox}}  
-        <span> <img src={{profile_pic}} alt="NO Image" class="circle"> <span class="bottom-left"></span></span> 
+        <span> <img src={{profile_pic}} alt="NO Image" class="circle" style="width: 40px !important; height: 40px !important;"> <span class="bottom-left"></span></span> 
     {{/each}}
       <span>
         <div class="messages messages_you msg_receive text-left">
@@ -366,7 +368,7 @@ else {
 
       <div class="card" style="box-shadow: none;">
     <div class="card-content">
-      <p> <input type="text" class="form-control input-sm chat_input borde_search_user" placeholder="Search Connections" style="margin-bottom: 0px;" id="search_connection_msg" /></p>
+      <p> <input type="text" class="form-control input-sm chat_input borde_search_user" placeholder="Search Conversations" style="margin-bottom: 0px;" id="search_connection_msg" /></p>
     </div>
  
     <div class="card-content">

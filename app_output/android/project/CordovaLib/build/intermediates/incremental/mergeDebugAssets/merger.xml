@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="/media/bird/2AE477A5E4777245/bitovn/app_output/android/project/CordovaLib/assets"/><source path="/media/bird/2AE477A5E4777245/bitovn/app_output/android/project/CordovaLib/build/generated/assets/shaders/debug"/></dataSet><dataSet config="debug"><source path="/media/bird/2AE477A5E4777245/bitovn/app_output/android/project/CordovaLib/src/debug/assets"/></dataSet></merger>
