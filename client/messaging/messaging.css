@@ -748,3 +748,11 @@ float: right;
 #style-11::-webkit-scrollbar-thumb:active {
   background: linear-gradient(left, #22ADD4, #1E98BA);
 }
+
+.display_hide_conversation{
+  display:none !important;
+}
+
+.highligh_selected{
+  background-color: #f9f9f1 !important;
+  }

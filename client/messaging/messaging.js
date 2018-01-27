@@ -20,7 +20,7 @@ Session.setPersistent("updatedStatus","false");
       return a === b;
     });
 
-    Template.messagingpage.onRendered(function(){
+ Template.messagingpage.onRendered(function(){
       setTimeout(function() {
       $("#message_container").animate({ scrollTop: $('#message_container').prop("scrollHeight")}, 1);
       makeGifClear();
@@ -92,9 +92,12 @@ Session.setPersistent("updatedStatus","false");
 
 
         var connection_details;
+        var currentUserStatus;       
         if(Session.get("userId") == newDoc.user1){
+           currentUserStatus = "user1";
            connection_details = UserInfo.find({user_id: newDoc.user2}).fetch();
         }else{
+          currentUserStatus ="user2";
            connection_details = UserInfo.find({user_id: newDoc.user1}).fetch();
         }
 
@@ -102,12 +105,16 @@ Session.setPersistent("updatedStatus","false");
           && Session.get("rightPanelChatRoomId") == newDoc.chatroom_id 
           && connection_details[0].last_msg_sent_by != Session.get("userId")){
           // receipient is online
-
-              var notification = new Audio("http://freesound.org/data/previews/235/235911_2391840-lq.mp3");
-              var check_mute = Session.get("check_mute");
-            if(check_mute == undefined || check_mute == "" ){
+        alert("Case 1");
+            if(connection_details[0].mute_status_user1 == "Unmute" && currentUserStatus =="user1"){
+              // bjegi
+               var notification = new Audio("http://freesound.org/data/previews/235/235911_2391840-lq.mp3");
               notification.play();
-              }
+              
+            }else{
+               // nhi bjegi
+            }
+             
               change_last_message_status(newDoc.last_msg_id,"read");
               increase_unread_count(newDoc.chatroom_id,"true")
             // alert("Last message read"); 
@@ -116,17 +123,24 @@ Session.setPersistent("updatedStatus","false");
           }else if(connection_details[0].online_status == "online" && Session.get("rightPanelChatRoomId") != newDoc.chatroom_id){
             // alert("Last message delivered, but user is chatting with someone else ");
               // update last message count
-              var notification = new Audio("http://freesound.org/data/previews/235/235911_2391840-lq.mp3");
+              alert("Case 11");
+               if(connection_details[0].mute_status_user1 == "Unmute" && currentUserStatus =="user1"){
+              // bjegi
+            var notification = new Audio("http://freesound.org/data/previews/235/235911_2391840-lq.mp3");
               notification.play();
+            }else{
+               // nhi bjegi
+            }
+
 
               change_last_message_status(newDoc.last_msg_id,"delivered");
               increase_unread_count(newDoc.chatroom_id,"false"); 
               // update msg status
           }
           else{
-              var notification = new Audio("http://freesound.org/data/previews/235/235911_2391840-lq.mp3");
-              notification.play();
-
+              //var notification = new Audio("http://freesound.org/data/previews/235/235911_2391840-lq.mp3");
+              // notification.play();
+              alert("case 111");
               change_last_message_status(newDoc.last_msg_id,"delivered");
               increase_unread_count(newDoc.chatroom_id,"false"); 
                // alert("Last message delivered but user is offline");
@@ -231,20 +245,20 @@ Template.messanging.events({
    if(minutes<1 && seconds<10){
     return 'now';
   }else if(minutes <1 && seconds<59 ){
-    return seconds + ' sec';
+    return seconds + 's';
    } else if(minutes>= 1 && minutes<=59) {
-    return minutes + ' m';
+    return minutes + 'm';
   }else if(minutes>=60 && hours<24){
         if(Math.floor(hours)==1 || minutes==60){
-        return Math.floor(hours) + ' h';
+        return Math.floor(hours) + 'h';
         }else{ 
-        return Math.floor(hours) + ' hrs';
+        return Math.floor(hours) + 'h';
         }
   }else if(hours>24){
     if(Math.floor(days) == 1){
-    return Math.floor(days) +" day";
+    return Math.floor(days) +"d";
     }else{
-    return Math.floor(days) +" days";
+    return Math.floor(days) +"d";
     }
   }
   else{    
@@ -440,9 +454,11 @@ if(query == "" || query == undefined ){
   // show_pending = show_pending.slice(0, 5);
   // return false;
   return show_pending;  
+
  },
 
 recent_list_2(){
+  
   var use_id = Session.get("userId");
   if(use_id == this.user1 ){
     use_id = this.user2;  
@@ -450,8 +466,29 @@ recent_list_2(){
     use_id = this.user1;
   }
   var connection_details = UserInfo.find({user_id: use_id}).fetch();
-  console.log(connection_details);
+  // console.log(connection_details);
+
+  // if(connection_details[0].user_id == highligh_selected){
+  //   alert('right '+connection_details[0].user_id + ' && ' + highligh_selected);
+  //   $('#show_right').addClass('highligh_selected');
+  //   }
+  // else{
+  //   $('#show_right').removeClass('highligh_selected');
+  //   }
+
   return connection_details;
+},
+
+highligh_selected(){
+   var highligh_selected = Session.get("msgid_forright");
+   var listed_user = this.user_id;
+   
+   if(listed_user == highligh_selected){
+        return true;
+    }
+    else{
+      return false;
+    }
 },
 
 show_message_details(){
@@ -544,7 +581,7 @@ check_unread(){
   msg_rightbox(){  
    var show_session = Session.get('msgid_forright');
    var logged_in = Session.get("userId");
-   
+   // alert(show_session+' - '+logged_in);
    var connection_details = UserInfo.find({user_id: show_session}).fetch();
    var show_details = connection_details[0];                                            
    return connection_details;                                                      
@@ -622,6 +659,68 @@ check_connection(){
  }
 
 },
+
+'check_mute_user_field':function(){
+     var logged_in = Session.get("userId");
+     // alert(chatroom_id +' & '+ logged_in);
+     if(logged_in == this.user1){
+            // alert(1);
+            return true;
+         }
+         else{
+          // alert(2);
+          return false;
+         }
+},
+
+check_lastmsg_sender(){
+    var logged_in = Session.get("userId");
+    var sender = this.last_msg_sent_by;
+    if(logged_in == sender){
+      // alert('me');
+      return true;
+    }
+    else{
+      // alert('you');
+      return false;
+    }
+},
+
+sender(){
+   var sent_by = this.last_msg_sent_by;
+   var result = UserInfo.find({"user_id":sent_by}).fetch();
+   return result[0].name;
+},
+chatroom_around(){
+ var show_id = this.user_id;
+ // Session.get("msgid_forright");
+ // alert(show_id);
+ var result = Chatroom.find({ $or: [
+           {
+            $and:
+             [
+              {
+               user1: Session.get("userId")
+              },
+              {
+               user2: Session.get("msgid_forright")
+              }
+             ]
+           } ,
+          { 
+            $and:
+              [
+             {  
+              user1: Session.get("msgid_forright")
+             },
+             {
+              user2: Session.get("userId")
+             }
+            ]   
+           }
+           ] }).fetch();
+ return result;
+}
 });
 
 Template.messanging.events({
@@ -669,12 +768,15 @@ Template.messanging.events({
 },
 
 'click .change_msg_onright': function(){
-
+// alert('ccs');
  setTimeout(function() {
       $("#message_container").animate({ scrollTop: $('#message_container').prop("scrollHeight")}, 1);
 }, 10); 
 var show_id = this.user_id;
-Session.setPersistent("msgid_forright",shouw_id);
+// alert(show_id);
+Session.setPersistent("msgid_forright",show_id);
+// alert('22');
+// alert(Session.get("msgid_forright"));
  var check_chatroom = Chatroom.find({ $or: [
            {
             $and:
@@ -887,19 +989,177 @@ $("#message_container").animate({ scrollTop: $('#message_container').prop("scrol
             $('#submit_image').val('');
             $('#msg_text').val('');                  
             });      
-
 },
 
-'click #mute_button': function(){
-  Session.setPersistent("check_mute",1);
-  Session.get("check_mute");
-},
+'click .mute_button': function(){
+  // alert('hit');
+
+     var chatroom_id = this.chatroom_id;
+     Session.setPersistent("active_chatroom_mute",chatroom_id);
+     var logged_in = Session.get("userId");
+     alert(chatroom_id +' & '+ logged_in);
+     if(logged_in == this.user1){
+         if(this.mute_status_user1 == 'Mute'){
+            var mute_status_user1 = 'Unmute';
+
+         }
+         else{
+            var mute_status_user1 = 'Mute';
+          }
+         alert(mute_status_user1);
+          Meteor.call('Update_Notification_satus_user1',chatroom_id,mute_status_user1,function(error,result){
+              if(error){
+                console.log(error);
+              }else{
+                      console.log(result);
+                   }
+          });
+     } 
+
+     else if(logged_in == this.user2){
+         if(this.mute_status_user2 == 'Mute'){
+            var mute_status_user2 = 'Unmute';
+         }
+         else if(this.mute_status_user2 == 'Unmute'){
+            var mute_status_user2 = 'Mute';
+         }
+       } 
+
+          Meteor.call('Update_Notification_satus_user2',chatroom_id,mute_status_user2,function(error,result){
+              if(error){
+                console.log(error);
+              }else{
+                      console.log(result);
+                   }
+          });
+     },
 
 //  'change #submit_image': function(e, template) {
 //     upload_image(e, template);
 // },
 
-'focusin #msg_text': function(){
+// 'focusout #msg_text': function(){
+// var user_id = $('#hidden_conversation_user_id').val();  
+// var msg_txt = $('#msg_text').val();  
+// if(msg_txt){
+//   alert('focus in captured');
+// // alert(user_id);
+// // var c2 = user_id + '-1';
+//  // Session.setPersistent("conversation_input_active",c2);
+//           var sent_by = Session.get("userId");
+//          var sent_to = Session.get('msgid_forright');
+
+//    var user1 = sent_by;
+//    var user2 = sent_to;
+//    // alert(user1+' & '+user2);
+//    var check_chatroom = Chatroom.find({ $or: [
+//            {
+//             $and:
+//              [
+//               {
+//                user1: user1
+//               },
+//               {
+//                user2: user2
+//               }
+//              ]
+//            } ,
+//           { 
+//             $and:
+//               [
+//              {  
+//               user1: user2
+//              },
+//              {
+//               user2: user1
+//              }
+//             ]   
+//            }
+//            ] }).count();
+  
+//   // alert('else '+check_chatroom);
+//   // var insert_chatroom_once = Session.get("insert_chatroom_once");
+  
+//    if(check_chatroom > 0){
+//    var check_chatroom = Chatroom.find({ $or: [
+//            {
+//             $and:
+//              [
+//               {
+//                user1: user1
+//               },
+//               {
+//                user2: user2
+//               }
+//              ]
+//            } ,
+//           { 
+//             $and:
+//               [
+//              {  
+//               user1: user2
+//              },
+//              {
+//               user2: user1
+//              }
+//             ]   
+//            }
+//            ] }).fetch();
+
+//    var chatroom_id = check_chatroom[0].chatroom_id;
+//    var currently_typing_multi = check_chatroom[0].currently_typing;
+
+
+// setTimeout(myTimeoutFunction(){
+  
+// if(currently_typing_multi == 0 || currently_typing_multi ==""){
+//    return false;
+// }
+// else{
+//       var new_multi_user = currently_typing_multi.includes(sent_by);
+//       if(new_multi_user){
+//      currently_typing   = currently_typing_multi.replace(sent_by,"").replace(",","");
+//       }else{
+//        return false;
+//         // return true;  
+//       }
+
+//    Meteor.call('Update_currently_typing',chatroom_id,currently_typing,function(error,result){
+//               if(error){
+//                 console.log(error);
+//               }else{
+//                       console.log(result);
+//                    }
+//           });
+
+//  }, 10000);
+
+// if(currently_typing_multi == 0 || currently_typing_multi ==""){
+//    return false;
+// }
+// else{
+//       var new_multi_user = currently_typing_multi.includes(sent_by);
+//       if(new_multi_user){
+//      currently_typing   = currently_typing_multi.replace(sent_by,"").replace(",","");
+//       }else{
+//        return false;
+//         // return true;  
+//       }
+
+//    // alert(currently_typing+' & '+chatroom_id);
+//    Meteor.call('Update_currently_typing',chatroom_id,currently_typing,function(error,result){
+//               if(error){
+//                 console.log(error);
+//               }else{
+//                       console.log(result);
+//                    }
+//           });
+// }
+//     }
+//   }
+// },
+
+'keyup #msg_text': function(){
   // alert('focus in captured');
 var user_id = $('#hidden_conversation_user_id').val();  
 // alert(user_id);
@@ -989,12 +1249,28 @@ else{
               if(error){
                 console.log(error);
               }else{
-                      console.log(result);
+                      console.log('typing set');
                    }
           });
-    }
-},
 
+
+    setTimeout(function(){  
+     currently_typing   = currently_typing_multi.replace(sent_by,"").replace(",","");
+     Meteor.call('Update_currently_typing',chatroom_id,currently_typing,function(error,result){
+              if(error){
+                console.log(error);
+              }else{
+                      console.log('typing unset');
+                   }
+          });
+
+ }, 15000);
+
+
+    }
+
+
+},
 // // 'focusout #msg_text': function(){
 // //               var sent_by = Session.get("userId");
 // //          var sent_to = Session.get('msgid_forright');

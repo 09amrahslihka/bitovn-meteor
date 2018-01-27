@@ -679,15 +679,16 @@ currently_typing){
 				        				user2:        user2 , 
 				        				last_msg_id: last_msg_id,
 				        				last_msg: last_msg, 
+				        				mute_status_user2: 'Unmute',
+				        				mute_status_user1: 'Unmute',
 				        				last_msg_time: Date.now(),
 				        				last_msg_sent_by: last_msg_sent_by, 
 				        				connect_status: connect_status, 
 				        				currently_typing: currently_typing 
 										});
-			  	}
+							  	}
 			    return result;
         },
-
 
         Update_currently_typing:function(chatroom_id,currently_typing){        	
         		var newUser = Chatroom.find({chatroom_id: chatroom_id}).fetch();
@@ -762,7 +763,32 @@ currently_typing){
 			
 				  	return result;	
         },
-
+        Update_Notification_satus_user1:function(chatroom_id,mute_status_user1){
+var newUser = Chatroom.find({chatroom_id: chatroom_id}).fetch();
+			  	var total_messages = Message.find({"chatroom_id":chatroom_id}).count();
+			  	if(newUser[0]){
+					var result = Chatroom.update({
+						  _id: newUser[0]._id,
+						}, {
+						  $set: {
+						  		mute_status_user1: mute_status_user1,
+						  }
+						});
+			  	}
+},
+        Update_Notification_satus_user2:function(chatroom_id,mute_status_user2){
+var newUser = Chatroom.find({chatroom_id: chatroom_id}).fetch();
+			  	var total_messages = Message.find({"chatroom_id":chatroom_id}).count();
+			  	if(newUser[0]){
+					var result = Chatroom.update({
+						  _id: newUser[0]._id,
+						}, {
+						  $set: {
+						  		mute_status_user2: mute_status_user1,
+						  }
+						});
+			  	}
+},
 
 
 });

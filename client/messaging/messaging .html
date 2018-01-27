@@ -129,7 +129,7 @@ else {
   {{/if}}
         </span></span>
       <span class="title">
-        <a href="" class="redirect_click_1" valu={{user_id}} >{{name}}</a>
+        {{name}}
       </span> 
   {{#each show_message_details}}
       <span class="pull-right"><p>{{calculate_time_difference last_msg_time}} </p> </span>
@@ -155,7 +155,11 @@ else {
 <div id="display_conversation" >
   {{#each recent_list}}
   {{#each recent_list_2}}
-            <li class="collection-item avatar change_msg_onright">
+        <li class="collection-item avatar change_msg_onright 
+        {{#if highligh_selected}}
+            highligh_selected     
+        {{/if}}
+        " id="show_right" >
 
         <span> <img src={{profile_pic}} alt="No Image" class="circle" >
         <span class="bottom-left-2">
@@ -168,13 +172,18 @@ else {
   {{/if}}
         </span></span>
       <span class="title">
-        <a href="" class="redirect_click_1" valu={{user_id}} >{{name}}</a>
+        {{name}}
       </span> 
   {{#each show_message_details}}
       <span class="pull-right"><p>{{calculate_time_difference last_msg_time}} </p> </span>
       
-      <p class="lisimg_msg">{{last_msg}} 
+      <p class="lisimg_msg">
 
+      {{#if check_lastmsg_sender}}
+        Me: {{last_msg}} 
+       {{else}}
+       {{sender}}: {{last_msg}} 
+      {{/if}}
       
   {{#if check_unread}}
   <span class="pull-right new_no_chat"> 
@@ -189,6 +198,8 @@ else {
       <span class="title"><a href="#">Shobhita Yadav</a></span> <span class="pull-right fo_size_time"> 20m </span>
       <p class="typing">Typing ...</p>
     </li> -->
+    {{else}}
+<p> Search your connections to start coneversations</p>
     {{/each}} 
     {{/each}}
     </div> 
@@ -203,7 +214,7 @@ else {
   <div class="col s12 m12 l9 cbg_toofull">
      <div class="row bor_top wid_row_tp">
          <div class="col m1"> 
-         	<img src={{profile_pic}} width="50"  height="50" alt="User Avatar" class="img-circle" style="width: 50px;"> 
+          <img src={{profile_pic}} width="50"  height="50" alt="User Avatar" class="img-circle" style="width: 50px;"> 
          </div>
          
 <div class="col m7" style="padding-left: 15px;"> <span class="font_size_19">{{name}}</span><br/>        
@@ -220,9 +231,17 @@ else {
         <li class="dropdown col s12 m12 l12 drop_dwn_tw" style="margin-top: 4px; margin-left: -4%; border-bottom: 0px !important;">
           <a href="#" class="dropdown-toggle drop_dwn_tw_a" data-toggle="dropdown"><i class="fa fa-ellipsis-v pull-right fa-2x pull-right"></i></a>
           <ul class="dropdown-menu">
-            <li><a href="#"> Mute </a></li>
-            <li class="divider"></li>
-             <li><a href="#"> Unmute </a></li>
+  {{#each chatroom_around}}
+    {{#if check_mute_user_field}}
+      <li><a href="#" class="mute_button" > {{mute_status_user1}} </a></li>
+    {{else}}
+      <li><a href="#" class="mute_button" > {{mute_status_user2}} </a></li>
+    {{/if}}  
+    {{else}}       
+      <li><a href="#" class="mute_button" > Mute </a></li>    
+  {{/each}}
+         <!--    <li class="divider"></li>
+             <li><a href="#"> Unmute </a></li> -->
           </ul>
         </li>
       </ul>
@@ -247,7 +266,7 @@ else {
         <div class="messages messages_us msg_receive text-right green_bg" style="background-color: #338EA7 !important; color: #fff;">
             <p style="text-align: justify; ">  {{msg_text}}  </p>
             <time datetime="2009-11-13T20:00"><span class="time fo_size_time" style="font-size: 10px !important; color: #fff !important;">
-               <p>{{calculate_time_difference sentAt}}</p>
+               <p  >{{calculate_time_difference sentAt}}</p>
             </span></time>
                             </div>
                                <div style="clear: both;"></div>
@@ -256,7 +275,7 @@ else {
           <div class="messages messages_us msg_receive text-right yellow_bg" >
             <p style="text-align: justify">  {{msg_text}}  </p>
             <time datetime="2009-11-13T20:00"><span class="time fo_size_time" style="font-size: 10px !important;">
-               <p>{{calculate_time_difference sentAt}}</p>
+               <p  >{{calculate_time_difference sentAt}}</p>
             </span></time>
           </div>
              <div style="clear: both;"></div>
@@ -264,19 +283,15 @@ else {
            {{else}}
           <div class="messages messages_us msg_receive text-right red_bg">
             <p style="text-align: justify">  {{msg_text}}  </p>
-            <time datetime="2009-11-13T20:00"><span class="time fo_size_time" style="font-size: 10px !important;">
-               <p>{{calculate_time_difference sentAt}}</p>
-            </span></time>
+            <time datetime="2009-11-13T20:00">
+                <span class="time fo_size_time" style="font-size: 10px !important;">
+                    <p  >{{calculate_time_difference sentAt}}</p>
+                </span>
+            </time>
           </div>
           <div style="clear: both;"></div>
-           <p class="not_delived"> Not Delivered </p>
+           <p class="not_delived"> Sent </p>
           {{/if}} 
-
-        
-
-
-
-
       </span>
        <div style="clear: both;"> </div>
     </li>
@@ -396,7 +411,7 @@ else {
   {{/if}}
         </span></span>
       <span class="title">
-        <a href="" class="redirect_click_1" valu={{user_id}} >{{name}}</a>
+        {{name}}
       </span> 
   {{#each show_message_details}}
       <span class="pull-right"><p>{{calculate_time_difference last_msg_time}} </p> </span>
@@ -405,23 +420,22 @@ else {
 
       
   {{#if check_unread}}
-  <span class="pull-right new_no_chat"> 
-      {{unread_msg_count}}    
+      <span class="pull-right new_no_chat"> 
+        {{unread_msg_count}}    
       </span>
-    {{/if}}
+  {{/if}}
+
   </p>
   {{/each}}    
     </li>
-
 {{/each}}
 {{/each}}
-
 </div>
 
 <div id="display_conversation" >
   {{#each recent_list}}
   {{#each recent_list_2}}
-            <li class="collection-item avatar change_msg_onright">
+            <li class="collection-item avatar change_msg_onright" style="background-color: red">
 
         <span> <img src={{profile_pic}} alt="No Image" class="circle" >
         <span class="bottom-left-2">
@@ -455,10 +469,16 @@ else {
       <span class="title"><a href="#">Shobhita Yadav</a></span> <span class="pull-right fo_size_time"> 20m </span>
       <p class="typing">Typing ...</p>
     </li> -->
+    {{else}}
+<p> Search your connections to start coneversations</p>
     {{/each}} 
     {{/each}}
+
+  
     </div> 
   </ul>
+
+
       </div>
     </div>
   </div>
