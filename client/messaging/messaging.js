@@ -105,8 +105,8 @@ Session.setPersistent("updatedStatus","false");
           && Session.get("rightPanelChatRoomId") == newDoc.chatroom_id 
           && connection_details[0].last_msg_sent_by != Session.get("userId")){
           // receipient is online
-        alert("Case 1");
-            if(connection_details[0].mute_status_user1 == "Unmute" && currentUserStatus =="user1"){
+        // alert("Case 1");
+            if(connection_details[0].mute_status_user1 == "Unmute" && (currentUserStatus =="user1" ||currentUserStatus =="user2" )){
               // bjegi
                var notification = new Audio("http://freesound.org/data/previews/235/235911_2391840-lq.mp3");
               notification.play();
@@ -123,7 +123,7 @@ Session.setPersistent("updatedStatus","false");
           }else if(connection_details[0].online_status == "online" && Session.get("rightPanelChatRoomId") != newDoc.chatroom_id){
             // alert("Last message delivered, but user is chatting with someone else ");
               // update last message count
-              alert("Case 11");
+              // alert("Case 11");
                if(connection_details[0].mute_status_user1 == "Unmute" && currentUserStatus =="user1"){
               // bjegi
             var notification = new Audio("http://freesound.org/data/previews/235/235911_2391840-lq.mp3");
@@ -140,7 +140,7 @@ Session.setPersistent("updatedStatus","false");
           else{
               //var notification = new Audio("http://freesound.org/data/previews/235/235911_2391840-lq.mp3");
               // notification.play();
-              alert("case 111");
+              // alert("case 111");
               change_last_message_status(newDoc.last_msg_id,"delivered");
               increase_unread_count(newDoc.chatroom_id,"false"); 
                // alert("Last message delivered but user is offline");
