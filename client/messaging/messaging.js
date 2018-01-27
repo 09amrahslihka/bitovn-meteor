@@ -106,7 +106,7 @@ Session.setPersistent("updatedStatus","false");
           && connection_details[0].last_msg_sent_by != Session.get("userId")){
           // receipient is online
         // alert("Case 1");
-            if(connection_details[0].mute_status_user1 == "Unmute" && (currentUserStatus =="user1" ||currentUserStatus =="user2" )){
+            if(connection_details[0].mute_status_user1 == "Unmute" && currentUserStatus =="user1"){
               // bjegi
                var notification = new Audio("http://freesound.org/data/previews/235/235911_2391840-lq.mp3");
               notification.play();
