@@ -331,14 +331,7 @@ padding-left: 0px !important;
 .dropdown-menu>li>a {
     color:#338ea7;
 }
-.dropdown ul.dropdown-menu {
-    border-radius: 4px;
-box-shadow: none;
-margin-top: 20px;
-width: 40%;
-left: 62%;
-top: 65%;
-}
+
 .dropdown ul.dropdown-menu:before {
     content: "";
     border-bottom: 10px solid #fff;
@@ -460,14 +453,11 @@ border-radius: 50%;
 }
 .navbar-nav > li > a{
 
-  padding-top: 20px !important;
-padding-bottom: 19px !important;
+
 }
 .form-control{
 
-  border-radius: 0px;
-  width: 102%;
-  height: 42px !important;
+ 
 }
 
 .content_ques{
@@ -487,3 +477,4 @@ color:#B9B9B9 !important;
 .the_champ_sharing_container{
 display:none;
 }
+

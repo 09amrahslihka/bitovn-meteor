@@ -21,7 +21,9 @@ Session.setPersistent("updatedStatus","false");
     });
 
  Template.messagingpage.onRendered(function(){
-      setTimeout(function() {
+      
+
+setTimeout(function() {
       $("#message_container").animate({ scrollTop: $('#message_container').prop("scrollHeight")}, 1);
       makeGifClear();
       }, 1000);
@@ -100,12 +102,64 @@ Session.setPersistent("updatedStatus","false");
           currentUserStatus ="user2";
            connection_details = UserInfo.find({user_id: newDoc.user1}).fetch();
         }
+        
+              var sent_by = Session.get("userId");
+      var sent_to = Session.get('msgid_forright');
+
+   var msg_id = 'msg_'+ Math.floor((Math.random() * 2465789) + 1);
+   var user1 = sent_by;
+   var user2 = sent_to;
+   // alert(user1+' & '+user2);
+   var check_chatroom = Chatroom.find({ $or: [
+           {
+            $and:
+             [
+              {
+               user1: user1
+              },
+              {
+               user2: user2
+              }
+             ]
+           } ,
+          { 
+            $and:
+              [
+             {  
+              user1: user2
+             },
+             {
+              user2: user1
+             }
+            ]   
+           }
+           ] }).fetch();
+
+        // alert('user2: '+check_chatroom[0].user1+'user1: '+check_chatroom[0].user2 +'Logged_in user: '+Session.get("userId"));
+      // user2: user_1572248 || user1: user_1989999 || Logged_in user: user_1572248
+        // alert('mute_status_user1: ' + check_chatroom[0].mute_status_user1 + 'mute_status_user2 : ' + check_chatroom[0].mute_status_user2);
+         // mute_status_user1: Unmute || mute_status_user2 : Unmute
+         // mute_status_user1: Mute mute_status_user2 : Unmute
+        if(check_chatroom[0].user1 == Session.get("userId")){
+                    if(check_chatroom[0].mute_status_user1 == "Mute"){
+                        var notification = new Audio("http://freesound.org/data/previews/235/235911_2391840-lq.mp3");
+                        notification.play();
+                      }
+        }
+        else if(check_chatroom[0].user2 == Session.get("userId")){
+                     if(check_chatroom[0].mute_status_user2 == "Mute"){
+                        var notification = new Audio("http://freesound.org/data/previews/235/235911_2391840-lq.mp3");
+                        notification.play();
+                      }
+        }
+
+
 
         if(connection_details[0].online_status == "online" 
           && Session.get("rightPanelChatRoomId") == newDoc.chatroom_id 
           && connection_details[0].last_msg_sent_by != Session.get("userId")){
           // receipient is online
-        // alert("Case 1");
+            //alert("Case 1");
             if(connection_details[0].mute_status_user1 == "Unmute" && currentUserStatus =="user1"){
               // bjegi
                var notification = new Audio("http://freesound.org/data/previews/235/235911_2391840-lq.mp3");
@@ -123,7 +177,7 @@ Session.setPersistent("updatedStatus","false");
           }else if(connection_details[0].online_status == "online" && Session.get("rightPanelChatRoomId") != newDoc.chatroom_id){
             // alert("Last message delivered, but user is chatting with someone else ");
               // update last message count
-              // alert("Case 11");
+              //alert("Case 11");
                if(connection_details[0].mute_status_user1 == "Unmute" && currentUserStatus =="user1"){
               // bjegi
             var notification = new Audio("http://freesound.org/data/previews/235/235911_2391840-lq.mp3");
@@ -140,7 +194,7 @@ Session.setPersistent("updatedStatus","false");
           else{
               //var notification = new Audio("http://freesound.org/data/previews/235/235911_2391840-lq.mp3");
               // notification.play();
-              // alert("case 111");
+              //alert("case 111");
               change_last_message_status(newDoc.last_msg_id,"delivered");
               increase_unread_count(newDoc.chatroom_id,"false"); 
                // alert("Last message delivered but user is offline");
@@ -287,6 +341,11 @@ Template.messanging.events({
 if(query == "" || query == undefined ){
       $('#display_conversation').removeClass('display_hide_conversation');
       $('#display_connection').addClass('display_hide_conversation');
+
+  var connection_details = UserInfo.find({user_id: use_id}).fetch();
+  var show_details = connection_details[0];
+  console.log(connection_details);
+  return connection_details; 
 }
 
   if(use_id == logged_in){
@@ -299,11 +358,12 @@ if(query == "" || query == undefined ){
   return connection_details;
   }
   else{
-  var connection_details = UserInfo.find({user_id: use_id}).fetch();
+  var connection_details = UserInfo.find({user_id: use_id,name: query}).fetch();
   var show_details = connection_details[0];
   console.log(connection_details);
   return connection_details;  
-  }},
+  }
+},
 
   typing_gif(){
          var sent_by = Session.get("userId");
@@ -445,7 +505,9 @@ if(query == "" || query == undefined ){
   // alert(user_id);
   // var show_pending = Chatroom.find({}).fetch();
   
-  var show_pending = Chatroom.find({ $or: [{ user1: user_id },{ user2: user_id } ] }).fetch();
+  // var show_pending = Chatroom.find({ $or: [{ user1: user_id },{ user2: user_id } ] }).fetch();sort: {createdAt:-1}
+  
+  var show_pending = Chatroom.find({ $or: [{ user1: user_id },{ user2: user_id } ] },{sort: {last_msg_time: -1}}).fetch();
   
   console.log("sss - ");
   console.log(show_pending);
@@ -997,7 +1059,7 @@ $("#message_container").animate({ scrollTop: $('#message_container').prop("scrol
      var chatroom_id = this.chatroom_id;
      Session.setPersistent("active_chatroom_mute",chatroom_id);
      var logged_in = Session.get("userId");
-     alert(chatroom_id +' & '+ logged_in);
+     // alert(chatroom_id +' & '+ logged_in);
      if(logged_in == this.user1){
          if(this.mute_status_user1 == 'Mute'){
             var mute_status_user1 = 'Unmute';
@@ -1182,7 +1244,7 @@ var c2 = user_id + '-1';
                user2: user2
               }
              ]
-           } ,
+           },
           { 
             $and:
               [
@@ -1253,7 +1315,6 @@ else{
                    }
           });
 
-
     setTimeout(function(){  
      currently_typing   = currently_typing_multi.replace(sent_by,"").replace(",","");
      Meteor.call('Update_currently_typing',chatroom_id,currently_typing,function(error,result){
@@ -1263,13 +1324,8 @@ else{
                       console.log('typing unset');
                    }
           });
-
- }, 15000);
-
-
+ }, 10000);
     }
-
-
 },
 // // 'focusout #msg_text': function(){
 // //               var sent_by = Session.get("userId");

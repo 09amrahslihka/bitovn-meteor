@@ -7,7 +7,7 @@
 
   {{> header}}
   {{> messanging}}
-  {{> messangingleft}}
+  
  <script>
 $(window).on('beforeunload', function() {
   console.log("beforeunload called");
@@ -81,6 +81,7 @@ else {
 
 <template name="messanging">
 
+
   <div class="container row margin-tp contai hidden-xs hidden-sm hidden-md">
       <div class="col s12 m12 l3 left_part" >
 
@@ -88,7 +89,7 @@ else {
 
  <ul class="nav navbar-nav col s12 m12 l12" style="padding: 0px;">
         <li class="dropdown col s12 m12 l12 drop_dwn_tw">
-          <a href="#" class="dropdown-toggle drop_dwn_tw_a" style="padding-top: 20px !important;" data-toggle="dropdown"><span style="font-size: 18px;">Conversations ({{conversation_count}})</span></a> <!--<i class="fa fa-ellipsis-v pull-right fa-2x pull-right"></i>
+          <a href="#" class="dropdown-toggle drop_dwn_tw_a" data-toggle="dropdown"><span style="font-size: 18px;">Conversation ({{conversation_count}})</span></a> <!--<i class="fa fa-ellipsis-v pull-right fa-2x pull-right"></i>
           <ul class="dropdown-menu">
             <li><a href="#"> Delete Conversations </a></li>
             <li class="divider"></li>
@@ -103,7 +104,7 @@ else {
       <p> <input type="text" class="form-control input-sm chat_input borde_search_user" placeholder="Search Conversations" style="margin-bottom: 0px;" id="search_connection_msg" /></p>
     </div>
  
-    <div class="card-content">
+    <div class="card-content" style="padding-left: 0px !important; padding-right: 0px !important;">
   
       <div id="connnection">
 
@@ -116,9 +117,9 @@ else {
 {{#each show_connections_2}}
 
         <a href="#">
-         <li class="collection-item avatar change_msg_onright">
+         <li class="collection-item avatar change_msg_onright" >
 
-        <span> <img src={{profile_pic}} alt="No Image" class="circle" >
+        <span> <img src={{profile_pic}} alt="No Image" class="circle"  >
         <span class="bottom-left-2">
         
         <input type="hidden" id="hidden_conversation_user_id" value={{user_id}}  > 
@@ -159,7 +160,7 @@ else {
         {{#if highligh_selected}}
             highligh_selected     
         {{/if}}
-        " id="show_right" >
+        " id="show_right"  style="padding-right: 10px !important;">
 
         <span> <img src={{profile_pic}} alt="No Image" class="circle" >
         <span class="bottom-left-2">
@@ -175,7 +176,7 @@ else {
         {{name}}
       </span> 
   {{#each show_message_details}}
-      <span class="pull-right"><p>{{calculate_time_difference last_msg_time}} </p> </span>
+      <span class="pull-right fo_size_time"><p>{{calculate_time_difference last_msg_time}} </p> </span>
       
       <p class="lisimg_msg">
 
@@ -211,13 +212,14 @@ else {
 
 {{#each msg_rightbox}}
 
+
   <div class="col s12 m12 l9 cbg_toofull">
-     <div class="row bor_top wid_row_tp">
+     <div class="row wid_row_tp" style="margin-bottom: 0px; margin-right: 0px !important; ">
          <div class="col m1"> 
           <img src={{profile_pic}} width="50"  height="50" alt="User Avatar" class="img-circle" style="width: 50px;"> 
          </div>
          
-<div class="col m7" style="padding-left: 15px;"> <span class="font_size_19">{{name}}</span><br/>        
+<div class="col m7" style="padding-left: 3px;"> <span class="font_size_19">{{name}}</span><br/>        
           {{#if check_connection}}
             Connected 
           {{else}}
@@ -229,7 +231,7 @@ else {
 
  <ul class="nav navbar-nav col s12 m12 l12" style="padding: 0px;">
         <li class="dropdown col s12 m12 l12 drop_dwn_tw" style="margin-top: 4px; margin-left: -4%; border-bottom: 0px !important;">
-          <a href="#" class="dropdown-toggle drop_dwn_tw_a" data-toggle="dropdown"><i class="fa fa-ellipsis-v pull-right fa-2x pull-right"></i></a>
+          <a href="#" class="new_dropdown_dots dropdown-toggle drop_dwn_tw_a" data-toggle="dropdown"><i class="fa fa-ellipsis-v pull-right fa-2x pull-right"></i></a>
           <ul class="dropdown-menu">
   {{#each chatroom_around}}
     {{#if check_mute_user_field}}
@@ -248,7 +250,7 @@ else {
          </div>
         
        </div>
-  <div class="card new_card"  style="margin-bottom: 0px;">
+  <div class="card new_card margin_top_bottom_zeero">
       <div id="test4">
             <div class="col-s12">
                   <div class="chatbody" >
@@ -327,10 +329,10 @@ else {
                       
 
                 <div class="panel-footer padding_0">
-                    <div class="input-controls-container" style="padding-top: 10px;">
+                    <div class="input-controls-container">
                       
                       <form id="msg_input_form" >
-                      <textarea class="form-control " placeholder="Type a message here ..." style="border: none;" id="msg_text" ></textarea>
+                      <textarea class="form-control textarea_format " placeholder="Type a message here ..." id="msg_text" ></textarea>
                       <input type="hidden" id="send_msg" >
                     </form>
 
@@ -360,134 +362,8 @@ else {
 {{/each}}
 
 </div>
+
 </template>
 
-<template name="messangingleft">
-
-  <div class="container row margin-tp contai hidden-lg">
-      <div class="col s12 m12 l12 left_part" >
-
-         <div class="card card_two">
-
- <ul class="nav navbar-nav col s12 m12 l12" style="padding: 0px;">
-        <li class="dropdown col s12 m12 l12 drop_dwn_tw">
-          <a href="#" class="dropdown-toggle drop_dwn_tw_a" data-toggle="dropdown"><span style="font-size: 18px;">Conversations ({{conversation_count}})</span></a> <!--<i class="fa fa-ellipsis-v pull-right fa-2x pull-right"></i>
-          <ul class="dropdown-menu">
-            <li><a href="#"> Delete Conversations </a></li>
-            <li class="divider"></li>
-             <li><a href="#"> Delete Conversations </a></li>
-          </ul>-->
-        </li>
-      </ul>
-         </div>
-
-      <div class="card" style="box-shadow: none;">
-    <div class="card-content">
-      <p> <input type="text" class="form-control input-sm chat_input borde_search_user" placeholder="Search Conversations" style="margin-bottom: 0px;" id="search_connection_msg" /></p>
-    </div>
- 
-    <div class="card-content">
-  
-      <div id="connnection">
-
-
-  <ul class="collection">
- 
- <div id="display_connection" class="display_hide_conversation" > 
-
-{{#each show_connections}}
-{{#each show_connections_2}}
-
-            <li class="collection-item avatar change_msg_onright">
-
-        <span> <img src={{profile_pic}} alt="No Image" class="circle" >
-        <span class="bottom-left-2">
-        
-        <input type="hidden" id="hidden_conversation_user_id" value={{user_id}}  > 
-  {{#if online_status}} 
-        <i class="fa fa-circle color_green"></i>
-     {{else}}   
-        <i class="fa fa-circle color_red"></i>
-  {{/if}}
-        </span></span>
-      <span class="title">
-        {{name}}
-      </span> 
-  {{#each show_message_details}}
-      <span class="pull-right"><p>{{calculate_time_difference last_msg_time}} </p> </span>
-      
-      <p class="lisimg_msg">{{last_msg}} 
-
-      
-  {{#if check_unread}}
-      <span class="pull-right new_no_chat"> 
-        {{unread_msg_count}}    
-      </span>
-  {{/if}}
-
-  </p>
-  {{/each}}    
-    </li>
-{{/each}}
-{{/each}}
-</div>
-
-<div id="display_conversation" >
-  {{#each recent_list}}
-  {{#each recent_list_2}}
-            <li class="collection-item avatar change_msg_onright" style="background-color: red">
-
-        <span> <img src={{profile_pic}} alt="No Image" class="circle" >
-        <span class="bottom-left-2">
-        
-        <input type="hidden" id="hidden_conversation_user_id" value={{user_id}}  > 
-  {{#if online_status}} 
-        <i class="fa fa-circle color_green"></i>
-     {{else}}   
-        <i class="fa fa-circle color_red"></i>
-  {{/if}}
-        </span></span>
-      <span class="title">
-        <a href="" class="redirect_click_1" valu={{user_id}} >{{name}}</a>
-      </span> 
-  {{#each show_message_details}}
-      <span class="pull-right"><p>{{calculate_time_difference last_msg_time}} </p> </span>
-      
-      <p class="lisimg_msg">{{last_msg}} 
-
-      
-  {{#if check_unread}}
-  <span class="pull-right new_no_chat"> 
-      {{unread_msg_count}}    
-      </span>
-    {{/if}}
-  </p>
-  {{/each}}    
-    </li>
-     <!-- <li class="collection-item avatar">
-     <span> <img src="https://i0.wp.com/tricksmaze.com/wp-content/uploads/2017/04/Stylish-Girls-Profile-Pictures-36.jpg?resize=300%2C300&ssl=1" alt="" class="circle"> <span class="bottom-left-2"><i class="fa fa-circle color_red"></i></span></span>
-      <span class="title"><a href="#">Shobhita Yadav</a></span> <span class="pull-right fo_size_time"> 20m </span>
-      <p class="typing">Typing ...</p>
-    </li> -->
-    {{else}}
-<p> Search your connections to start coneversations</p>
-    {{/each}} 
-    {{/each}}
-
-  
-    </div> 
-  </ul>
-
-
-      </div>
-    </div>
-  </div>
-  </div>
-
-
-
-
-</div>
-</template>
 
 
