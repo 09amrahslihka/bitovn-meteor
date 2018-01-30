@@ -107,7 +107,6 @@ setTimeout(function() {
         // case 2: one user is online
         if(newDoc.video_session_counts!=oldDoc.video_session_counts){
              var userId = Session.get("userId");
-              alert("After Split = "+newDoc.video_session_id.split("_"));
               if(newDoc.video_session_id.split("_")[3]+"_"+newDoc.video_session_id.split("_")[4] == userId){
                  Session.set("videoSessionId",newDoc.video_session_id);
                 $('#call_picker_dialog').modal('open');
