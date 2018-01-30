@@ -27,6 +27,7 @@ connection.onstream = function(event) {
 };
 
 var predefinedRoomId = Session.get("video_session_id");
+alert("joining at"+predefinedRoomId);
 connection.join(predefinedRoomId);
 
 /*var videoSessionCallerId = Session.get("videoSessionCallerId");
