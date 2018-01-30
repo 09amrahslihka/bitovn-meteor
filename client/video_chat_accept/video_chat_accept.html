@@ -28,8 +28,16 @@ connection.onstream = function(event) {
 };
 
 var predefinedRoomId = Session.get("video_session_id");
-alert("joining at"+predefinedRoomId);
-connection.join(predefinedRoomId);
+
+connection.checkPresence(predefinedRoomId, function(isRoomExist, roomid) {
+    if (isRoomExist === true) {
+    	alert("True Joining");
+        connection.join(predefinedRoomId);
+    } else {
+    	alert("creating new");
+        connection.open(roomid);
+    }
+});
 
 /*var videoSessionCallerId = Session.get("videoSessionCallerId");
 var videoSessionPickerId = Session.get("videoSessionPickerId");
