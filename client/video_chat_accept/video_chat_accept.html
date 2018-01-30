@@ -1,4 +1,4 @@
-<template name="video_chat">
+<template name="video_chat_accept">
 <script src="https://rtcmulticonnection.herokuapp.com/dist/RTCMultiConnection.min.js"></script>
 <script src="https://rtcmulticonnection.herokuapp.com/socket.io/socket.io.js"></script>
 <button id="btn-open-room">Open Room</button>
@@ -25,28 +25,22 @@ connection.sdpConstraints.mandatory = {
 connection.onstream = function(event) {
     document.body.appendChild( event.mediaElement );
 };
-var videoSessionCallerId = Session.get("videoSessionCallerId");
+
+var predefinedRoomId = Session.get("video_session_id");
+connection.join(predefinedRoomId);
+
+/*var videoSessionCallerId = Session.get("videoSessionCallerId");
 var videoSessionPickerId = Session.get("videoSessionPickerId");
-var chatRoom = Session.get("videoSessionChatRoomId");
-
 var videoSessionId = "VideoSession" +videoSessionCallerId + videoSessionPickerId;
-// var chatRoom = Session.get("rightPanelChatRoomId");
-
-
-
-
-
-
-
-Meteor.call('maintain_video_session',videoSessionId,videoSessionCallerId,videoSessionPickerId,chatRoom,function(error,result){
+Meteor.call('maintain_video_session',videoSessionId,videoSessionCallerId,videoSessionPickerId,function(error,result){
 if(error){
 alert("call failed");
 }else{
 alert("onGoingCall, waiting for user to join");
-connection.open(videoSessionId);
+connection.open(videoSessionCallerId+videoSessionPickerId);
 }
 });
-
+*/
 
 /*document.getElementById('btn-open-room').onclick = function() {
     this.disabled = true;

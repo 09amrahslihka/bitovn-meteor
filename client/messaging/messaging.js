@@ -6,6 +6,7 @@ import { FriendRequest } from './../../import/collections/insert.js';
 import { UserInfo } from './../../import/collections/insert.js';
 import { Message } from './../../import/collections/insert.js';
 import { Chatroom } from './../../import/collections/insert.js';
+import { VideoSession } from './../../import/collections/insert.js';
 
 import { Images } from './../../import/config.js';
 import { Base64 } from 'meteor/ostrio:base64';
@@ -33,6 +34,19 @@ setTimeout(function() {
       Session.clear("msg_img_id"); 
 
       var sent_by = Session.get("userId");
+
+    var isSomeoneCalling = VideoSession.find({$and: [{"is_picked":false},{"picker_id":sent_by}]}).observe({
+       added: function(newDoc) {
+        //display
+     
+
+    },
+      removed: function(oldDoc) {
+      },
+      changed: function(newDoc, oldDoc) {
+        
+        }
+    });  
   var userOnlineOffline =   UserInfo.find({"user_id":sent_by}).observe({
     added: function(newDoc) {
     
@@ -40,6 +54,7 @@ setTimeout(function() {
       removed: function(oldDoc) {
     },
       changed: function(newDoc, oldDoc) {
+
       if(newDoc.online_status=="online" && newDoc.online_status != oldDoc.online_status){
       
 
@@ -90,6 +105,11 @@ setTimeout(function() {
       changed: function(newDoc, oldDoc) {
         // case 1: both user are online
         // case 2: one user is online
+        if(newDoc.video_session_counts!=oldDoc.video_session_counts){
+             alert('here at model display');
+             Session.set("videoSessionId",newDoc.video_session_id);
+            $('#call_picker_dialog').modal('open');
+        }
       if(newDoc.total_messages != oldDoc.total_messages){
 
 
@@ -260,6 +280,8 @@ setTimeout(function() {
 
   
 })*/
+
+
 Template.messanging.events({
 'click .redirect_click_1': function(event){
     // alert(1);
@@ -784,9 +806,52 @@ chatroom_around(){
  return result;
 }
 });
+function popitup(url) {
+    newwindow=window.open(url,'name','height=300,width=300, location=300');
+    if (window.focus) {newwindow.focus()}
+    return false;
+}
 
 Template.messanging.events({
+  'click #accept_the_call':function(event){
+    var videoSessionId = Session.get("videoSessionId");
 
+  popitup("https://73cdcbfc.ngrok.io/video_chat/accept_call/"+videoSessionId);
+
+},
+'click #call_button':function(event){
+  var dialer = Session.get("userId");
+  var picker = Session.get("msgid_forright");
+
+
+  var check_chatroom = Chatroom.find({ $or: [
+           {
+            $and:
+             [
+              {
+               user1: dialer
+              },
+              {
+               user2: picker
+              }
+             ]
+           } ,
+          { 
+            $and:
+              [
+             {  
+              user1: picker
+             },
+             {
+              user2: dialer
+             }
+            ]   
+           }
+           ] }).fetch();
+
+
+  popitup("https://73cdcbfc.ngrok.io/video_chat/"+ dialer+"/calling/"+picker+"/"+check_chatroom[0].chatroom_id);
+},
   'onblur #parent_panel':function(){
     console.log("BluRrrrrrrrrrrrrrrr");
     alert("blur event");
