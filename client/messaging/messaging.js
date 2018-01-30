@@ -818,7 +818,7 @@ Template.messanging.events({
   'click #accept_the_call':function(event){
     var videoSessionId = Session.get("videoSessionId");
 
-  popitup("http://localhost:3000/video_chat/accept_call/"+videoSessionId);
+  popitup("https://bitovn.herokuapp.com/video_chat/accept_call/"+videoSessionId);
 
 },
 'click #call_button':function(event){
@@ -852,7 +852,7 @@ Template.messanging.events({
            ] }).fetch();
 
 
-  popitup("http://localhost:3000/video_chat/"+ dialer+"/calling/"+picker+"/"+check_chatroom[0].chatroom_id);
+  popitup("https://bitovn.herokuapp.com/video_chat/"+ dialer+"/calling/"+picker+"/"+check_chatroom[0].chatroom_id);
 },
   'onblur #parent_panel':function(){
     console.log("BluRrrrrrrrrrrrrrrr");
