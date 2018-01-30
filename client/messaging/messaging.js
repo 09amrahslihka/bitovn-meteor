@@ -816,7 +816,7 @@ Template.messanging.events({
   'click #accept_the_call':function(event){
     var videoSessionId = Session.get("videoSessionId");
 
-  popitup("https://73cdcbfc.ngrok.io/video_chat/accept_call/"+videoSessionId);
+  popitup("https://bitovn.herokuapp.com/video_chat/accept_call/"+videoSessionId);
 
 },
 'click #call_button':function(event){
@@ -850,7 +850,7 @@ Template.messanging.events({
            ] }).fetch();
 
 
-  popitup("https://73cdcbfc.ngrok.io/video_chat/"+ dialer+"/calling/"+picker+"/"+check_chatroom[0].chatroom_id);
+  popitup("https://bitovn.herokuapp.com/video_chat/"+ dialer+"/calling/"+picker+"/"+check_chatroom[0].chatroom_id);
 },
   'onblur #parent_panel':function(){
     console.log("BluRrrrrrrrrrrrrrrr");
