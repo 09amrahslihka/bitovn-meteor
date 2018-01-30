@@ -14,6 +14,7 @@ import { UserGroup } from './../import/collections/insert.js';
 import { Email } from 'meteor/email';
 import { GroupRequest } from './../import/collections/insert.js';
 import { Chatroom } from './../import/collections/insert.js';
+import { VideoSession } from './../import/collections/insert.js';
 
 import { ServiceConfiguration } from 'meteor/service-configuration';
 
@@ -789,9 +790,58 @@ var newUser = Chatroom.find({chatroom_id: chatroom_id}).fetch();
 						});
 			  	}
 },
+			maintain_video_session:function(videoSessionId, callerId,pickerId,chatRoom){
+			var newUser = VideoSession.find({$and: [{"caller_id":callerId},{"picker_id":pickerId},{"is_picked":true}]}).fetch();
+				  	if(newUser[0]){
+							var result = VideoSession.update({
+						  _id: newUser[0]._id,
+						}, {
+						  $set: {
+						  		is_picked: false,
+						  }
+						});
+				  	}
+				  	var result =VideoSession.insert({
+								video_session_id:videoSessionId,
+								chatroom_id:chatRoom,
+								caller_id:callerId,
+						        picker_id:pickerId,
+						        is_picked:false,
+						        createdAt: new Date()// no comma needed here
+			   			});
+				  	
 
+			var newUser = Chatroom.find({chatroom_id: chatRoom}).fetch();
+			if(newUser[0]){
+					if(!newUser[0].video_session_counts){
+					var result = Chatroom.update({
+						  _id: newUser[0]._id,
+						}, {
+						  $set: {
+						  			 video_session_counts: 1,
+						  			 video_session_id: videoSessionId,
+                      			}
+						});
+
+					}else{
+						var result = Chatroom.update({
+						  _id: newUser[0]._id,
+						}, {
+						  $set: {
+						  			 video_session_counts: newUser[0].video_session_counts+1,
+                      					video_session_id: videoSessionId,
+                      		}
+						});
+					}
+
+					
+			  	}
+			  	return result;
+			}
 
 });
+
+
 
 
 
