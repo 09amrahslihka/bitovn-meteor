@@ -41,10 +41,12 @@ if(error){
 alert("call failed");
 }else{ 
   if(result=="Inserted"){
+
     callerId= videoSessionId.split("=")[1];
     current_user=callerId;
         connection.open(videoSessionId);
   }else{
+    alert("Updated");
     pickerId = videoSessionId.split("=")[2];
     current_user = pickerId;
         connection.join(videoSessionId);
