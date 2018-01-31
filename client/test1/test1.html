@@ -1,16 +1,14 @@
-<template name="test">
+<template name="test1">
 <script src="./node_modules/rtcmulticonnection/RTCMultiConnection.js"></script>
 <button id="btn-open-room">Open Room</button>
 <button id="btn-join-room">Join Room</button><hr>
 
 <script type="text/javascript">
-	var connection = new RTCMultiConnection();
-
+var connection = new RTCMultiConnection();
 // this line is VERY_important
 // connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
 connection.socketURL = 'https://bitovn.herokuapp.com:443/';
 // all below lines are optional; however recommended.
-connection.resources.firebaseio = 'https://webrtc.firebaseIO.com/';
 
 connection.session = {
     audio: true,
@@ -27,8 +25,6 @@ connection.onstream = function(event) {
 
 };
 
-var session = Session.get("joinSession");
-alert(session);
 
 
 

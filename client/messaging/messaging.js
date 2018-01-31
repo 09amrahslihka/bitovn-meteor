@@ -107,7 +107,7 @@ setTimeout(function() {
         // case 2: one user is online
         if(newDoc.video_session_counts!=oldDoc.video_session_counts){
              var userId = Session.get("userId");
-              if(newDoc.video_session_id.split("_")[3]+"_"+newDoc.video_session_id.split("_")[4] == userId){
+              if(newDoc.video_session_id.split("=")[1] == userId){
                  Session.set("videoSessionId",newDoc.video_session_id);
                 $('#call_picker_dialog').modal('open');
               }
@@ -818,8 +818,13 @@ Template.messanging.events({
   'click #accept_the_call':function(event){
     var videoSessionId = Session.get("videoSessionId");
 
-  popitup("https://bitovn.herokuapp.com/video_chat/accept_call/"+videoSessionId);
-
+  // popitup("https://bitovn.herokuapp.com/video_chat/accept_call/"+videoSessionId);
+    var openedChatRoomDetails = VideoSession.find({"video_session_id":videoSessionId}).fetch();
+    // var url = "http://localhost:3000/video_chat/"+ openedChatRoomDetails[0].caller_id+"/calling/"+openedChatRoomDetails[0].picker_id+"/"+openedChatRoomDetails[0].chatroom_id;
+    var url = "https://bitovn.herokuapp.com/video_chat/"+ openedChatRoomDetails[0].caller_id+"/calling/"+openedChatRoomDetails[0].picker_id+"/"+openedChatRoomDetails[0].chatroom_id;
+    Session.set("videoChatRequestAccepted","true");
+    alert(videoSessionId);
+    popitup(url);
 },
 'click #call_button':function(event){
   var dialer = Session.get("userId");
@@ -852,6 +857,7 @@ Template.messanging.events({
            ] }).fetch();
 
 
+  // popitup("https://bitovn.herokuapp.com/video_chat/"+ dialer+"/calling/"+picker+"/"+check_chatroom[0].chatroom_id);
   popitup("https://bitovn.herokuapp.com/video_chat/"+ dialer+"/calling/"+picker+"/"+check_chatroom[0].chatroom_id);
 },
   'onblur #parent_panel':function(){
