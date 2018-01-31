@@ -7,6 +7,7 @@ import { UserInfo } from './../../import/collections/insert.js';
 import { Message } from './../../import/collections/insert.js';
 import { Chatroom } from './../../import/collections/insert.js';
 import { VideoSession } from './../../import/collections/insert.js';
+import { AudioSession } from './../../import/collections/insert.js';
 
 import { Images } from './../../import/config.js';
 import { Base64 } from 'meteor/ostrio:base64';
@@ -105,10 +106,29 @@ setTimeout(function() {
       changed: function(newDoc, oldDoc) {
         // case 1: both user are online
         // case 2: one user idxs online
+
         if(newDoc.video_session_counts!=oldDoc.video_session_counts){
-             var userId = Session.get("userId");
               if(newDoc.video_session_id.split("=")[2] == userId){
+                var userId = Session.get("userId");
+                  Session.set("mediaType","video");
                  Session.set("videoSessionId",newDoc.video_session_id);
+                   // var connection_details1 = UserInfo.find({user_id: userId}).fetch();                  
+                   var connection_details2 = UserInfo.find({user_id: newDoc.video_session_id.split("=")[1]}).fetch();                  
+                  var message = connection_details2[0].name +" is calling you";
+                  $("#call_picker_message").text(message);  
+
+                 var notification = new Audio("https://www.zedge.net/d2w/4/1199006/128515930/view/?mp3");
+                        notification.play();
+                         
+                  $('#call_picker_dialog').modal('open');
+              }
+            }
+     
+     if(newDoc.audio_session_counts!=oldDoc.audio_session_counts){
+             var userId = Session.get("userId");
+             Session.set("mediaType","audio");
+              if(newDoc.video_session_id.split("=")[2] == userId){
+                 Session.set("audioSessionId",newDoc.video_session_id);
                    // var connection_details1 = UserInfo.find({user_id: userId}).fetch();                  
                    var connection_details2 = UserInfo.find({user_id: newDoc.video_session_id.split("=")[1]}).fetch();                  
                   var message = connection_details2[0].name +" is calling you";
@@ -830,6 +850,7 @@ function popitup(url) {
 Template.messanging.events({
   'click #accept_the_call':function(event){
     $('#call_picker_dialog').modal('close');
+    if(Session.get("mediaType")=="video"){
     var videoSessionId = Session.get("videoSessionId");
     //popitup("https://bitovn.herokuapp.com/video_chat/accept_call/"+videoSessionId);
     var openedChatRoomDetails = VideoSession.find({"video_session_id":videoSessionId}).fetch();
@@ -837,14 +858,28 @@ Template.messanging.events({
     // var url = "https://bitovn.herokuapp.com/video_chat/"+ openedChatRoomDetails[0].caller_id+"/calling/"+openedChatRoomDetails[0].picker_id+"/"+openedChatRoomDetails[0].chatroom_id+"/"+videoSessionId;
     // var url = "https://bitovn.herokuapp.com/video_chat/"+ openedChatRoomDetails[0].caller_id+"/calling/"+openedChatRoomDetails[0].picker_id+"/"+openedChatRoomDetails[0].chatroom_id+"/"+videoSessionId;
     var url = "https://bitovn.herokuapp.com/video_chat/"+ openedChatRoomDetails[0].caller_id+"/calling/"+openedChatRoomDetails[0].picker_id+"/"+openedChatRoomDetails[0].chatroom_id+"/"+videoSessionId;
-    popitup(url);
+    }else{
+    var videoSessionId = Session.get("audioSessionId");
+    //popitup("https://bitovn.herokuapp.com/video_chat/accept_call/"+videoSessionId);
+    var openedChatRoomDetails = AudioSession.find({"audio_session_id":videoSessionId}).fetch();
+    // var url = "http://localhost:3000/video_chat/"+ openedChatRoomDetails[0].caller_id+"/calling/"+openedChatRoomDetails[0].picker_id+"/"+openedChatRoomDetails[0].chatroom_id;
+    // var url = "https://bitovn.herokuapp.com/video_chat/"+ openedChatRoomDetails[0].caller_id+"/calling/"+openedChatRoomDetails[0].picker_id+"/"+openedChatRoomDetails[0].chatroom_id+"/"+videoSessionId;
+    // var url = "https://bitovn.herokuapp.com/video_chat/"+ openedChatRoomDetails[0].caller_id+"/calling/"+openedChatRoomDetails[0].picker_id+"/"+openedChatRoomDetails[0].chatroom_id+"/"+videoSessionId;
+    var url = "https://bitovn.herokuapp.com/audio_chat/"+ openedChatRoomDetails[0].caller_id+"/calling/"+openedChatRoomDetails[0].picker_id+"/"+openedChatRoomDetails[0].chatroom_id+"/"+videoSessionId;
+      
+    }
+    popitup(url);  
 
 },
 'click #reject_the_call':function(event){
   $('#call_picker_dialog').modal('close');
+  if(Session.get("mediaType")=="video"){
   var videoSessionId = Session.get("videoSessionId");  
+   }else{
+  var videoSessionId = Session.get("audioSessionId");      
+   } 
   //rejects the call
-  Meteor.call('rejects_the_call',videoSessionId,false,function(error,result){
+  Meteor.call('rejects_the_call',videoSessionId,false,Session.get("mediaType"),function(error,result){
               if(error){
                 console.log(error);
               }else{
@@ -899,7 +934,7 @@ Template.messanging.events({
             if(newDoc.is_picked== true){
                toastr.success("Please wait, connecting your call is picked by user", "Success");
             } else if(newDoc.is_rejected== true){
-               toastr.success("USer is Busy", "Alert");
+               toastr.success("User is Busy", "Alert");
                // toastr.success("Please wait, connecting your call is picked by user", "Success");
             } 
           }
@@ -909,6 +944,60 @@ Template.messanging.events({
 
 
 },
+  'click #audio_call':function(){
+    var dialer = Session.get("userId");
+  var picker = Session.get("msgid_forright");
+
+
+  var check_chatroom = Chatroom.find({ $or: [
+           {
+            $and:
+             [
+              {
+               user1: dialer
+              },
+              {
+               user2: picker
+              }
+             ]
+           } ,
+          { 
+            $and:
+              [
+             {  
+              user1: picker
+             },
+             {
+              user2: dialer
+             }
+            ]   
+           }
+           ] }).fetch();
+
+
+  // popitup("https://bitovn.herokuapp.com/video_chat/"+ dialer+"/calling/"+picker+"/"+check_chatroom[0].chatroom_id);
+  
+  var randomNumberBetween0and19 = Math.floor(Math.random() * 2000000);
+  randomNumberBetween0and19 = randomNumberBetween0and19 +"="+dialer+"="+picker;
+  // popitup("https://bitovn.herokuapp.com/video_chat/"+ dialer+"/calling/"+picker+"/"+check_chatroom[0].chatroom_id+"/"+randomNumberBetween0and19);
+  popitup("https://bitovn.herokuapp.com/audio_chat/"+ dialer+"/calling/"+picker+"/"+check_chatroom[0].chatroom_id+"/"+randomNumberBetween0and19);
+
+  var isSomeoneCalling = AudioSession.find({"audio_session_id":randomNumberBetween0and19}).observe({
+        added: function(newDoc) {
+             },
+        removed: function(oldDoc) {
+        },
+        changed: function(newDoc, oldDoc) {
+            if(newDoc.is_picked== true){
+               toastr.success("Please wait, connecting your call is picked by user", "Success");
+            } else if(newDoc.is_rejected== true){
+               toastr.success("User is Busy", "Alert");
+               // toastr.success("Please wait, connecting your call is picked by user", "Success");
+            } 
+          }
+    });  
+  },
+
   'onblur #parent_panel':function(){
     console.log("BluRrrrrrrrrrrrrrrr");
     alert("blur event");

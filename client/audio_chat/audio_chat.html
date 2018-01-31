@@ -1,4 +1,4 @@
-<template name="video_chat">
+<template name="audio_chat">
     
 <script src="./node_modules/rtcmulticonnection/RTCMultiConnection.js"></script>
 <button id="btn-open-room">Open Room</button>
@@ -15,28 +15,28 @@ connection.resources.firebaseio = 'https://webrtc.firebaseIO.com/';
 
 connection.session = {
     audio: true,
-    video: true
+    video: false
 };
 
 connection.sdpConstraints.mandatory = {
     OfferToReceiveAudio: true,
-    OfferToReceiveVideo: true
+    OfferToReceiveVideo: false
 };
 
 connection.onstream = function(event) {
     document.body.appendChild(event.mediaElement);
 };
-var videoSessionCallerId = Session.get("videoSessionCallerId");
-var videoSessionPickerId = Session.get("videoSessionPickerId");
-var chatRoom = Session.get("videoSessionChatRoomId");
-var videoSessionId = Session.get("videoSessionId");
+var videoSessionCallerId = Session.get("audioSessionCallerId");
+var videoSessionPickerId = Session.get("audioSessionPickerId");
+var chatRoom = Session.get("audioSessionChatRoomId");
+var videoSessionId = Session.get("audioSessionId");
 // var videoAcceptStatus = Session.get("videoAcceptStatus");
 var callerId = "";
 var pickerId = "";
 var current_user = "";
 
 
-Meteor.call('maintain_video_session',videoSessionId,videoSessionCallerId,videoSessionPickerId,chatRoom,function(error,result){
+Meteor.call('maintain_audio_session',videoSessionId,videoSessionCallerId,videoSessionPickerId,chatRoom,function(error,result){
 if(error){
 alert("call failed");
 }else{ 
@@ -58,7 +58,7 @@ $(window).on('beforeunload', function() {
   return 'Your own message goes here...';
 });
 function changeVideoSessionStatus(videoSessionId,current_user,status){
-  Meteor.call('change_video_chat_user_availability',videoSessionId,current_user,status,function(error,result){
+  Meteor.call('change_audio_chat_user_availability',videoSessionId,current_user,status,function(error,result){
              if(error){
               console.log('failed');
              }else{

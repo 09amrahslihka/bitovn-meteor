@@ -15,6 +15,7 @@ import { Email } from 'meteor/email';
 import { GroupRequest } from './../import/collections/insert.js';
 import { Chatroom } from './../import/collections/insert.js';
 import { VideoSession } from './../import/collections/insert.js';
+import { AudioSession } from './../import/collections/insert.js';
 
 import { ServiceConfiguration } from 'meteor/service-configuration';
 
@@ -846,7 +847,8 @@ var newUser = Chatroom.find({chatroom_id: chatroom_id}).fetch();
 				  					  
 
 			},
-			rejects_the_call:function(videoSessionId,status){
+			rejects_the_call:function(videoSessionId,status,type){
+						if(type=="video"){
 						var newUser = VideoSession.find({"video_session_id":videoSessionId}).fetch();
 						var result = VideoSession.update({
 						  _id: newUser[0]._id,
@@ -854,7 +856,17 @@ var newUser = Chatroom.find({chatroom_id: chatroom_id}).fetch();
 						  $set: {
 						  		is_rejected: true,
 						  }
+						});	
+					}else{
+						var newUser = AudioSession.find({"audio_session_id":videoSessionId}).fetch();
+						var result = AudioSession.update({
+						  _id: newUser[0]._id,
+						}, {
+						  $set: {
+						  		is_rejected: true,
+						  }
 						});
+					}	
 							return result;
 				},
 			change_video_chat_user_availability:function(videoSessionId,current_user,status){
@@ -883,8 +895,90 @@ var newUser = Chatroom.find({chatroom_id: chatroom_id}).fetch();
 				}
 				
 				return status +" changed user "+current_user ;
-			}
+			},
+			maintain_audio_session:function(videoSessionId, callerId,pickerId,chatRoom){
+			// var newUser = VideoSession.find({$and: [{"caller_id":callerId},{"picker_id":pickerId},{"is_picked":true}]}).fetch();
+			var newUser = AudioSession.find({"audio_session_id":videoSessionId}).fetch();
+				  	if(!newUser[0]){
+						/*	var result = VideoSession.update({
+						  _id: newUser[0]._id,
+						}, {
+						  $set: {
+						  		is_picked: false,
+						  }
+						});*/
+				  	var result =AudioSession.insert({
+								audio_session_id:videoSessionId,
+								chatroom_id:chatRoom,
+								caller_id:callerId,
+						        picker_id:pickerId,
+						        createdAt: new Date()// no comma needed here
+			   			});
+				  	var newUser = Chatroom.find({chatroom_id: chatRoom}).fetch();
+					if(newUser[0]){
+						if(!newUser[0].audio_session_counts){
+						var result = Chatroom.update({
+						  _id: newUser[0]._id,
+						}, {
+						  $set: {
+						  			 audio_session_counts: 1,
+						  			 audio_session_id: videoSessionId,
+                      			}
+						});
 
+						}else{
+						var result = Chatroom.update({
+						  _id: newUser[0]._id,
+						}, {
+						  $set: {
+						  			 audio_session_counts: newUser[0].audio_session_counts+1,
+                      					audio_session_id: videoSessionId,
+                      		}
+						});
+						}
+
+			  		}
+					return "Inserted";
+					}else{
+						var result = AudioSession.update({
+						  _id: newUser[0]._id,
+						}, {
+						  $set: {
+						  		is_picked: true,
+						  }
+						});
+						return "Updated";
+					}
+				  					  
+
+			},
+			change_audio_chat_user_availability:function(videoSessionId,current_user,status){
+				var newUser = AudioSession.find({"audio_session_id":videoSessionId}).fetch();
+				var type = "";
+				if(newUser[0].is_picked){
+					if(newUser[0].caller_id == current_user){
+					
+				var result = AudioSession.update({
+						  _id: newUser[0]._id,
+						}, {
+						  $set: {
+						  		caller: status,
+						  }
+						});
+
+				}else{
+				var result = AudioSession.update({
+						  _id: newUser[0]._id,
+						}, {
+						  $set: {
+						  		picker: status,
+						  }
+						});
+				}
+				}
+				
+				return status +" changed user "+current_user ;
+			},
 
 });
 

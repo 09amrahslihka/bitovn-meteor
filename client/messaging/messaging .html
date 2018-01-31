@@ -219,7 +219,9 @@ else {
           <img src={{profile_pic}} width="50"  height="50" alt="User Avatar" class="img-circle" style="width: 50px;"> 
          </div>
          
-<div class="col m7" style="padding-left: 3px;"> <span class="font_size_19">{{name}}</span><br/> <button id="call_button">call</button>       
+<div class="col m7" style="padding-left: 3px;"> <span class="font_size_19">{{name}}</span><br/> 
+  <button id="call_button">call</button>
+  <button id="audio_call">Audio call</button>       
           {{#if check_connection}}
             Connected 
           {{else}}

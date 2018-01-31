@@ -13,5 +13,6 @@ export const UserGroup = new Mongo.Collection('user_group');
 export const GroupRequest = new Mongo.Collection('group_request');                          
 export const Chatroom = new Mongo.Collection('chatroom');                                   
 export const VideoSession = new Mongo.Collection('video_session');                                   
+export const AudioSession = new Mongo.Collection('audio_session');                                   
 
 
