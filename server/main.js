@@ -856,7 +856,34 @@ var newUser = Chatroom.find({chatroom_id: chatroom_id}).fetch();
 						  }
 						});
 							return result;
+				},
+			change_video_chat_user_availability:function(videoSessionId,current_user,status){
+				var newUser = VideoSession.find({"video_session_id":videoSessionId}).fetch();
+				var type = "";
+				if(newUser[0].is_picked){
+					if(newUser[0].caller_id == current_user){
+					
+				var result = VideoSession.update({
+						  _id: newUser[0]._id,
+						}, {
+						  $set: {
+						  		caller: status,
+						  }
+						});
+
+				}else{
+				var result = VideoSession.update({
+						  _id: newUser[0]._id,
+						}, {
+						  $set: {
+						  		picker: status,
+						  }
+						});
 				}
+				}
+				
+				return status +" changed user "+current_user ;
+			}
 
 
 });

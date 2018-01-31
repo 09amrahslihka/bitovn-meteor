@@ -5,9 +5,7 @@
 <button id="btn-join-room">Join Room</button><hr>
 
 <script type="text/javascript">
-
-
-	var connection = new RTCMultiConnection();
+var connection = new RTCMultiConnection();
 
 // this line is VERY_important
 connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
@@ -33,6 +31,9 @@ var videoSessionPickerId = Session.get("videoSessionPickerId");
 var chatRoom = Session.get("videoSessionChatRoomId");
 var videoSessionId = Session.get("videoSessionId");
 // var videoAcceptStatus = Session.get("videoAcceptStatus");
+var callerId = "";
+var pickerId = "";
+var current_user = "";
 
 
 // var chatRoom = Session.get("rightPanelChatRoomId");
@@ -44,8 +45,12 @@ if(error){
 alert("call failed");
 }else{ 
   if(result=="Inserted"){
+    callerId= videoSessionId.split("=")[1];
+    current_user=callerId;
         connection.open(videoSessionId);
   }else{
+    pickerId = videoSessionId.split("=")[2];
+    current_user = pickerId;
         connection.join(videoSessionId);
   }
 }
@@ -64,7 +69,62 @@ document.getElementById('btn-join-room').onclick = function() {
     this.disabled = true;
     connection.join( predefinedRoomId );
 };*/
+
+
+
+$(window).on('beforeunload', function() {
+  console.log("beforeunload called");
+    changeVideoSessionStatus(videoSessionId,current_user,"away"); 
+  return 'Your own message goes here...';
+});
+function changeVideoSessionStatus(videoSessionId,current_user,status){
+  Meteor.call('change_video_chat_user_availability',videoSessionId,current_user,status,function(error,result){
+             if(error){
+              console.log('failed');
+             }else{
+                console.log(result);
+             }                  
+            });
+}
+    // Create `myApp` namespace.
+window.myApp = {
+  // Function to use for the `focus` event.
+
+  onFocus: function () {
+      // online
+
+    changeVideoSessionStatus(videoSessionId,current_user,"available"); 
+        
+      },
+  // Function to use for the `blur` event.
+  onBlur: function () {
+      changeVideoSessionStatus(videoSessionId,current_user,"away");  
+     }
+};
+
+if(window.addEventListener) {
+  window.addEventListener('load', function () {
+    window.addEventListener('focus', window.myApp.onFocus);
+    window.addEventListener('blur', window.myApp.onBlur);
+
+  });
+}
+else if(window.attachEvent) {
+  window.attachEvent('onload', function () {
+    window.attachEvent('onfocus', window.myApp.onFocus);
+    window.attachEvent('onblur', window.myApp.onBlur); 
+  });
+}
+else {
+  window.onload = function () {
+    window.onfocus = window.myApp.onFocus;
+    window.onblur = window.myApp.onBlur;   
+  };
+}
 </script>
+
+
+
 
 
 
