@@ -29,10 +29,10 @@ connection.onstream = function(event) {
 var videoSessionCallerId = Session.get("videoSessionCallerId");
 var videoSessionPickerId = Session.get("videoSessionPickerId");
 var chatRoom = Session.get("videoSessionChatRoomId");
+var videoSessionId = Session.get("videoSessionId");
 // var videoAcceptStatus = Session.get("videoAcceptStatus");
 
-var randomNumberBetween0and19 = Math.floor(Math.random() * 2000000);
-var videoSessionId = videoSessionCallerId +"="+ videoSessionPickerId;
+
 // var chatRoom = Session.get("rightPanelChatRoomId");
 
 // alert("videoAcceptStatus:"+videoAcceptStatus );
@@ -40,8 +40,7 @@ var videoSessionId = videoSessionCallerId +"="+ videoSessionPickerId;
 Meteor.call('maintain_video_session',videoSessionId,videoSessionCallerId,videoSessionPickerId,chatRoom,function(error,result){
 if(error){
 alert("call failed");
-}else{
-  alert(result);  
+}else{ 
   if(result=="Inserted"){
         connection.open(videoSessionId);
   }else{
