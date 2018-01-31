@@ -127,10 +127,10 @@ setTimeout(function() {
      if(newDoc.audio_session_counts!=oldDoc.audio_session_counts){
              var userId = Session.get("userId");
              Session.set("mediaType","audio");
-              if(newDoc.video_session_id.split("=")[2] == userId){
-                 Session.set("audioSessionId",newDoc.video_session_id);
+              if(newDoc.audio_session_id.split("=")[2] == userId){
+                 Session.set("audioSessionId",newDoc.audio_session_id);
                    // var connection_details1 = UserInfo.find({user_id: userId}).fetch();                  
-                   var connection_details2 = UserInfo.find({user_id: newDoc.video_session_id.split("=")[1]}).fetch();                  
+                   var connection_details2 = UserInfo.find({user_id: newDoc.audio_session_id.split("=")[1]}).fetch();                  
                   var message = connection_details2[0].name +" is calling you";
                   $("#call_picker_message").text(message);  
 
