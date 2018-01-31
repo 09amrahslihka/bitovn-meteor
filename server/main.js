@@ -806,7 +806,6 @@ var newUser = Chatroom.find({chatroom_id: chatroom_id}).fetch();
 								chatroom_id:chatRoom,
 								caller_id:callerId,
 						        picker_id:pickerId,
-						        is_picked:false,
 						        createdAt: new Date()// no comma needed here
 			   			});
 				  	var newUser = Chatroom.find({chatroom_id: chatRoom}).fetch();
@@ -835,11 +834,30 @@ var newUser = Chatroom.find({chatroom_id: chatroom_id}).fetch();
 			  		}
 					return "Inserted";
 					}else{
+						var result = VideoSession.update({
+						  _id: newUser[0]._id,
+						}, {
+						  $set: {
+						  		is_picked: true,
+						  }
+						});
 						return "Updated";
 					}
 				  					  
 
-			}
+			},
+			rejects_the_call:function(videoSessionId,status){
+						var newUser = VideoSession.find({"video_session_id":videoSessionId}).fetch();
+						var result = VideoSession.update({
+						  _id: newUser[0]._id,
+						}, {
+						  $set: {
+						  		is_rejected: true,
+						  }
+						});
+							return result;
+				}
+
 
 });
 

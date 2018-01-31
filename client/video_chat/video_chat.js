@@ -1,5 +1,4 @@
 
-
 /*
 var MODERATOR_CHANNEL_ID = 'ABCDEF'; // channel-id
 var MODERATOR_SESSION_ID = 'XYZ';    // room-id
