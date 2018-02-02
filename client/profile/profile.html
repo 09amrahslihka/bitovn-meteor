@@ -96,7 +96,14 @@
 
 <div class="col s1"><p style="color:white"><a href="/connection" target="_blank">Connection </a></p></div>
 
-<div class="col s1"><p style="color:white"><a href="/Messaging" target="_blank">Messaging </a></p></div>
+{{#if isPhone}}
+  <div class="col s1"><p style="color:white"><a href="/Messaging_mobile" target="_blank">Messaging </a></p></div>
+{{/if}}
+
+
+{{#if isDesktop}}
+  <div class="col s1"><p style="color:white"><a href="/Messaging" target="_blank">Messaging </a></p></div>
+{{/if}}
 
 <div class="col s1"><p style="color:white"><a href="/grplisting" target="_blank">group listing </a></p></div>
 

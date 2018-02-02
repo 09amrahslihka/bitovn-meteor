@@ -6,13 +6,11 @@ import { FriendRequest } from './../../import/collections/insert.js';
 import { UserInfo } from './../../import/collections/insert.js';
 import { Message } from './../../import/collections/insert.js';
 import { Chatroom } from './../../import/collections/insert.js';
-import { VideoSession } from './../../import/collections/insert.js';
-import { AudioSession } from './../../import/collections/insert.js';
 
 import { Images } from './../../import/config.js';
 import { Base64 } from 'meteor/ostrio:base64';
 
-Template.messanging.onCreated(function(){
+Template.messangingright.onCreated(function(){
 this.message_show_limit = new ReactiveVar("");
 this.search_connection_to_message = new ReactiveVar("");
 Session.setPersistent("updatedStatus","false");
@@ -22,10 +20,8 @@ Session.setPersistent("updatedStatus","false");
       return a === b;
     });
 
- Template.messagingpage.onRendered(function(){
-      
-
-setTimeout(function() {
+ Template.messaging_right.onRendered(function(){
+      setTimeout(function() {
       $("#message_container").animate({ scrollTop: $('#message_container').prop("scrollHeight")}, 1);
       makeGifClear();
       }, 1000);
@@ -35,19 +31,6 @@ setTimeout(function() {
       Session.clear("msg_img_id"); 
 
       var sent_by = Session.get("userId");
-
-    var isSomeoneCalling = VideoSession.find({$and: [{"is_picked":false},{"picker_id":sent_by}]}).observe({
-       added: function(newDoc) {
-        //display
-     
-
-    },
-      removed: function(oldDoc) {
-      },
-      changed: function(newDoc, oldDoc) {
-        
-        }
-    });  
   var userOnlineOffline =   UserInfo.find({"user_id":sent_by}).observe({
     added: function(newDoc) {
     
@@ -55,7 +38,6 @@ setTimeout(function() {
       removed: function(oldDoc) {
     },
       changed: function(newDoc, oldDoc) {
-
       if(newDoc.online_status=="online" && newDoc.online_status != oldDoc.online_status){
       
 
@@ -79,12 +61,7 @@ setTimeout(function() {
           // receipient is online
            change_last_message_status(openedChatRoomDetails[0].last_msg_id,"read");
             increase_unread_count(openedChatRoomDetails[0].chatroom_id,"true")
-            // alert("Last message read"); 
-             // update msg status 
-             // no need for updating count
           }
-
-
       }
     }
   });
@@ -105,43 +82,7 @@ setTimeout(function() {
     },
       changed: function(newDoc, oldDoc) {
         // case 1: both user are online
-        // case 2: one user idxs online
-
-        if(newDoc.video_session_counts!=oldDoc.video_session_counts){
-                var userId = Session.get("userId");
-              alert("Video Session "+ newDoc.video_session_id);
-              alert("User Id :"+userId);
-              if(newDoc.video_session_id.split("=")[2] == userId){
-                  Session.set("mediaType","video");
-                 Session.set("videoSessionId",newDoc.video_session_id);
-                   // var connection_details1 = UserInfo.find({user_id: userId}).fetch();                  
-                   var connection_details2 = UserInfo.find({user_id: newDoc.video_session_id.split("=")[1]}).fetch();                  
-                  var message = connection_details2[0].name +" is calling you";
-                  $("#call_picker_message").text(message);  
-
-                 var notification = new Audio("https://www.zedge.net/d2w/4/1199006/128515930/view/?mp3");
-                        notification.play();
-                         
-                  $('#call_picker_dialog').modal('open');
-              }
-            }
-     
-     else if(newDoc.audio_session_counts!=oldDoc.audio_session_counts){
-             var userId = Session.get("userId");
-              if(newDoc.audio_session_id.split("=")[2] == userId){
-                Session.set("mediaType","audio");
-                 Session.set("audioSessionId",newDoc.audio_session_id);
-                   // var connection_details1 = UserInfo.find({user_id: userId}).fetch();                  
-                   var connection_details2 = UserInfo.find({user_id: newDoc.audio_session_id.split("=")[1]}).fetch();                  
-                  var message = connection_details2[0].name +" is calling you";
-                  $("#call_picker_message").text(message);  
-
-                 var notification = new Audio("https://www.zedge.net/d2w/4/1199006/128515930/view/?mp3");
-                        notification.play();
-                         
-                  $('#call_picker_dialog').modal('open');
-              }
-            }
+        // case 2: one user is online
       if(newDoc.total_messages != oldDoc.total_messages){
 
 
@@ -312,9 +253,7 @@ setTimeout(function() {
 
   
 })*/
-
-
-Template.messanging.events({
+Template.messangingright.events({
 'click .redirect_click_1': function(event){
     // alert(1);
     event.preventDefault();
@@ -338,13 +277,8 @@ Template.messanging.events({
     }
 }
 });
-/*function testing_function()
-{
-  alert("inside messaging js");
-   
-}*/
-
- Template.messanging.helpers({
+// messangingright
+ Template.messangingright.helpers({
   calculate_time_difference(a){
     var dt = new Date(a);
    var millis =    new Date().getTime() - dt.getTime() ;
@@ -564,9 +498,8 @@ if(query == "" || query == undefined ){
   // alert(user_id);
   // var show_pending = Chatroom.find({}).fetch();
   
-  // var show_pending = Chatroom.find({ $or: [{ user1: user_id },{ user2: user_id } ] }).fetch();sort: {createdAt:-1}
-  
-  var show_pending = Chatroom.find({ $or: [{ user1: user_id },{ user2: user_id } ] },{sort: {last_msg_time: -1}}).fetch();
+  // var show_pending = Chatroom.find({ $or: [{ user1: user_id },{ user2: user_id } ] }).fetch();
+  var show_pending = Chatroom.find({ $or: [{ user1: user_id },{ user2: user_id } ] }).fetch();
   
   console.log("sss - ");
   console.log(show_pending);
@@ -708,46 +641,6 @@ check_unread(){
    return connection_details;                                                      
   },                                                                              
                                                                             
-  // message_content(){
-  // var sent_by = Session.get("userId");
-  //    var sent_to = Session.get('msgid_forright');
-  //          const t = Template.instance();
-  //     // alert('critsmas');
-  //    const msg_limit = t.message_show_limit.get(); 
-  //    // alert("Current limit "+msg_limit);
-  //    if(msg_limit == ""){
-  //              msg_limit = 1;
-  //              t.message_show_limit.set(msg_limit);
-  //    }  
-  //    msg_limit = msg_limit * 8;
-  //     // $('#all_messages').animate({scrollTop: $('#all_messages').prop('scrollHeight')}, 500);
-  //    var result = Message.find({ $or: [
-  //          {
-  //           $and:
-  //            [
-  //             {
-  //              sent_to: sent_by
-  //             },
-  //             {
-  //              sent_by: sent_to
-  //             }
-  //            ]
-  //          },
-  //         { 
-  //           $and:
-  //             [
-  //            {  
-  //             sent_to: sent_to
-  //            },
-  //            {
-  //             sent_by: sent_by
-  //            }
-  //           ]
-  //          }
-  //          ] },  {sort: {sentAt: -1}, limit: msg_limit}).fetch().reverse();
-  // return result;
-  // },
-
   sentby_other_user(){
    var sent_by = this.sent_by;
    var current_login_user = Session.get("userId");    
@@ -761,16 +654,8 @@ if( sent_by == current_login_user){
 check_connection(){
   var logged_in_user = Session.get("userId");
   var sent_to = this.user_id;
-  // if(logged_in_user == listed_user){
-  //   var sent_to = this.user2;
-  // }
-  // else {
-  //   var sent_to = this.user1;
-  // }
-  // alert('logged_in_user '+logged_in_user+'sent_to '+sent_to);
   var show_pending = FriendRequest.find({ $or: [{ sent_to: sent_to },{ sent_by: sent_to }] }).fetch();
   console.log(show_pending);
-
   var length = show_pending.length;
   if(length > 0){
   return true;  
@@ -783,13 +668,10 @@ check_connection(){
 
 'check_mute_user_field':function(){
      var logged_in = Session.get("userId");
-     // alert(chatroom_id +' & '+ logged_in);
      if(logged_in == this.user1){
-            // alert(1);
             return true;
          }
          else{
-          // alert(2);
           return false;
          }
 },
@@ -802,7 +684,6 @@ check_lastmsg_sender(){
       return true;
     }
     else{
-      // alert('you');
       return false;
     }
 },
@@ -843,162 +724,8 @@ chatroom_around(){
  return result;
 }
 });
-function popitup(url) {
-    newwindow=window.open(url,'name','height=300,width=300, location=300');
-    if (window.focus) {newwindow.focus()}
-    return false;
-}
 
-Template.messanging.events({
-  'click #accept_the_call':function(event){
-    $('#call_picker_dialog').modal('close');
-    if(Session.get("mediaType")=="video"){
-    var videoSessionId = Session.get("videoSessionId");
-    //popitup("http://localhost:3000/video_chat/accept_call/"+videoSessionId);
-    var openedChatRoomDetails = VideoSession.find({"video_session_id":videoSessionId}).fetch();
-    // var url = "http://localhost:3000/video_chat/"+ openedChatRoomDetails[0].caller_id+"/calling/"+openedChatRoomDetails[0].picker_id+"/"+openedChatRoomDetails[0].chatroom_id;
-    // var url = "http://localhost:3000/video_chat/"+ openedChatRoomDetails[0].caller_id+"/calling/"+openedChatRoomDetails[0].picker_id+"/"+openedChatRoomDetails[0].chatroom_id+"/"+videoSessionId;
-    // var url = "http://localhost:3000/video_chat/"+ openedChatRoomDetails[0].caller_id+"/calling/"+openedChatRoomDetails[0].picker_id+"/"+openedChatRoomDetails[0].chatroom_id+"/"+videoSessionId;
-    var url = "http://localhost:3000/video_chat/"+ openedChatRoomDetails[0].caller_id+"/calling/"+openedChatRoomDetails[0].picker_id+"/"+openedChatRoomDetails[0].chatroom_id+"/"+videoSessionId;
-    }else{
-    var videoSessionId = Session.get("audioSessionId");
-    //popitup("http://localhost:3000/video_chat/accept_call/"+videoSessionId);
-    var openedChatRoomDetails = AudioSession.find({"audio_session_id":videoSessionId}).fetch();
-    // var url = "http://localhost:3000/video_chat/"+ openedChatRoomDetails[0].caller_id+"/calling/"+openedChatRoomDetails[0].picker_id+"/"+openedChatRoomDetails[0].chatroom_id;
-    // var url = "http://localhost:3000/video_chat/"+ openedChatRoomDetails[0].caller_id+"/calling/"+openedChatRoomDetails[0].picker_id+"/"+openedChatRoomDetails[0].chatroom_id+"/"+videoSessionId;
-    // var url = "http://localhost:3000/video_chat/"+ openedChatRoomDetails[0].caller_id+"/calling/"+openedChatRoomDetails[0].picker_id+"/"+openedChatRoomDetails[0].chatroom_id+"/"+videoSessionId;
-    var url = "http://localhost:3000/audio_chat/"+ openedChatRoomDetails[0].caller_id+"/calling/"+openedChatRoomDetails[0].picker_id+"/"+openedChatRoomDetails[0].chatroom_id+"/"+videoSessionId;
-      
-    }
-    popitup(url);  
-
-},
-'click #reject_the_call':function(event){
-  $('#call_picker_dialog').modal('close');
-  if(Session.get("mediaType")=="video"){
-  var videoSessionId = Session.get("videoSessionId");  
-   }else{
-  var videoSessionId = Session.get("audioSessionId");      
-   } 
-  //rejects the call
-  Meteor.call('rejects_the_call',videoSessionId,false,Session.get("mediaType"),function(error,result){
-              if(error){
-                console.log(error);
-              }else{
-                alert("You rejects the Call");
-              }
-          }); 
-},
-'click #call_button':function(event){
-  var dialer = Session.get("userId");
-  var picker = Session.get("msgid_forright");
-
-
-  var check_chatroom = Chatroom.find({ $or: [
-           {
-            $and:
-             [
-              {
-               user1: dialer
-              },
-              {
-               user2: picker
-              }
-             ]
-           } ,
-          { 
-            $and:
-              [
-             {  
-              user1: picker
-             },
-             {
-              user2: dialer
-             }
-            ]   
-           }
-           ] }).fetch();
-
-
-  // popitup("http://localhost:3000/video_chat/"+ dialer+"/calling/"+picker+"/"+check_chatroom[0].chatroom_id);
-  
-  var randomNumberBetween0and19 = Math.floor(Math.random() * 2000000);
-  randomNumberBetween0and19 = randomNumberBetween0and19 +"="+dialer+"="+picker;
-  // popitup("http://localhost:3000/video_chat/"+ dialer+"/calling/"+picker+"/"+check_chatroom[0].chatroom_id+"/"+randomNumberBetween0and19);
-  popitup("http://localhost:3000/video_chat/"+ dialer+"/calling/"+picker+"/"+check_chatroom[0].chatroom_id+"/"+randomNumberBetween0and19);
-
-  var isSomeoneCalling = VideoSession.find({"video_session_id":randomNumberBetween0and19}).observe({
-           added: function(newDoc) {
-             },
-        removed: function(oldDoc) {
-        },
-      changed: function(newDoc, oldDoc) {
-            if(newDoc.is_picked== true){
-               toastr.success("Please wait, connecting your call is picked by user", "Success");
-            } else if(newDoc.is_rejected== true){
-               toastr.success("User is Busy", "Alert");
-               // toastr.success("Please wait, connecting your call is picked by user", "Success");
-            } 
-          }
-    });  
-
-
-
-
-},
-  'click #audio_call':function(){
-    var dialer = Session.get("userId");
-  var picker = Session.get("msgid_forright");
-
-
-  var check_chatroom = Chatroom.find({ $or: [
-           {
-            $and:
-             [
-              {
-               user1: dialer
-              },
-              {
-               user2: picker
-              }
-             ]
-           } ,
-          { 
-            $and:
-              [
-             {  
-              user1: picker
-             },
-             {
-              user2: dialer
-             }
-            ]   
-           }
-           ] }).fetch();
-
-
-  // popitup("http://localhost:3000/video_chat/"+ dialer+"/calling/"+picker+"/"+check_chatroom[0].chatroom_id);
-  
-  var randomNumberBetween0and19 = Math.floor(Math.random() * 2000000);
-  randomNumberBetween0and19 = randomNumberBetween0and19 +"="+dialer+"="+picker;
-  // popitup("http://localhost:3000/video_chat/"+ dialer+"/calling/"+picker+"/"+check_chatroom[0].chatroom_id+"/"+randomNumberBetween0and19);
-  popitup("http://localhost:3000/audio_chat/"+ dialer+"/calling/"+picker+"/"+check_chatroom[0].chatroom_id+"/"+randomNumberBetween0and19);
-
-  var isSomeoneCalling = AudioSession.find({"audio_session_id":randomNumberBetween0and19}).observe({
-        added: function(newDoc) {
-             },
-        removed: function(oldDoc) {
-        },
-        changed: function(newDoc, oldDoc) {
-            if(newDoc.is_picked== true){
-               toastr.success("Please wait, connecting your call is picked by user", "Success");
-            } else if(newDoc.is_rejected== true){
-               toastr.success("User is Busy", "Alert");
-               // toastr.success("Please wait, connecting your call is picked by user", "Success");
-            } 
-          }
-    });  
-  },
+Template.messangingright.events({
 
   'onblur #parent_panel':function(){
     console.log("BluRrrrrrrrrrrrrrrr");
@@ -1015,27 +742,10 @@ Template.messanging.events({
     msg_limit = msg_limit +1; 
     t.message_show_limit.set(msg_limit); 
     }
-/*
-    var scrollTop = $(this).scrollTop();
-    $('#message_container').each(function() {
-        var topDistance = $(this).offset().top;
-
-        if ( (topDistance+100) < scrollTop ) {
-            alert( $(this).text() + ' was scrolled to the top' );
-        }
-    });
-*/
-  }
-  ,
-  // search_connection_to_message
+  },
 
 'keyup #search_connection_msg': function(){
-  // alert($('#search_connection_msg').val());
   const t1 = Template.instance();
-    // alert('sooorrr');
-    // var search_text = $('#search_all_text_conn').val();
-    // var result =  UserGroup.find({grp_title:{$regex:new RegExp('^' + search_text)}}).fetch();
-      // alert(search_text);
       $('#display_connection').removeClass('display_hide_conversation');
       $('#display_conversation').addClass('display_hide_conversation');
       t1.search_connection_to_message.set($('#search_connection_msg').val());
@@ -1043,15 +753,11 @@ Template.messanging.events({
 },
 
 'click .change_msg_onright': function(){
-// alert('ccs');
  setTimeout(function() {
       $("#message_container").animate({ scrollTop: $('#message_container').prop("scrollHeight")}, 1);
 }, 10); 
 var show_id = this.user_id;
-// alert(show_id);
 Session.setPersistent("msgid_forright",show_id);
-// alert('22');
-// alert(Session.get("msgid_forright"));
  var check_chatroom = Chatroom.find({ $or: [
            {
             $and:
@@ -1089,11 +795,11 @@ Session.setPersistent("msgid_forright",show_id);
  
 
 'click #send_msg': function(){
-
+alert('hit');
   $("#message_container").animate({ scrollTop: $('#message_container').prop("scrollHeight")}, 1);
   var msg_text = $('#msg_text').val();
 
-        $('#display_conversation').removeClass('display_hide_conversation');
+      $('#display_conversation').removeClass('display_hide_conversation');
       $('#display_connection').addClass('display_hide_conversation');
       
      msg_text = jQuery.trim(msg_text);
@@ -1540,80 +1246,12 @@ else{
  }, 10000);
     }
 },
-// // 'focusout #msg_text': function(){
-// //               var sent_by = Session.get("userId");
-// //          var sent_to = Session.get('msgid_forright');
 
-// //    var user1 = sent_by;
-// //    var user2 = sent_to;
-// //    // alert(user1+' & '+user2);
-// //    var check_chatroom = Chatroom.find({ $or: [
-// //            {
-// //             $and:
-// //              [
-// //               {
-// //                user1: user1
-// //               },
-// //               {
-// //                user2: user2
-// //               }
-// //              ]
-// //            } ,
-// //           { 
-// //             $and:
-// //               [
-// //              {  
-// //               user1: user2
-// //              },
-// //              {
-// //               user2: user1
-// //              }
-// //             ]   
-// //            }
-// //            ] }).count();
-  
-// //   // alert('else '+check_chatroom);
-// //   // var insert_chatroom_once = Session.get("insert_chatroom_once");
-  
-// //    if(check_chatroom > 0){
-// //    var check_chatroom = Chatroom.find({ $or: [
-// //            {
-// //             $and:
-// //              [
-// //               {
-// //                user1: user1
-// //               },
-// //               {
-// //                user2: user2
-// //               }
-// //              ]
-// //            } ,
-// //           { 
-// //             $and:
-// //               [
-// //              {  
-// //               user1: user2
-// //              },
-// //              {
-// //               user2: user1
-// //              }
-// //             ]   
-// //            }
-// //            ] }).fetch();
+'click .send_person_to_msg_page': function(){
+   // alert('here');
+   Router.go('/messaging_right');
+},
 
-// //    var chatroom_id = check_chatroom[0].chatroom_id;
-// //    var currently_typing = 0;
-// //    alert(currently_typing+' & '+chatroom_id);
-// //    Meteor.call('Update_currently_typing',chatroom_id,currently_typing,function(error,result){
-// //               if(error){
-// //                 console.log(error);
-// //               }else{
-// //                       console.log(result);
-// //                    }
-// //           });
-// //     }
-
-// // }
 });
 
 // function upload_image(e,template){

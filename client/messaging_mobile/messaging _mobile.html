@@ -1,0 +1,208 @@
+
+<template name="messagingpage_mobile">
+  <head>
+  <title>messanging</title>
+</head>
+
+  {{> header}}
+  {{> messanging_mobile}}
+  
+ <script>
+$(window).on('beforeunload', function() {
+  console.log("beforeunload called");
+    changeUserStatus("offline"); 
+  return 'Your own message goes here...';
+});
+function changeUserStatus(status){
+  Meteor.call('change_user_online_status',Session.get("userId"),status,function(error,result){
+             if(error){
+              console.log('failed');
+             }else{
+              if(status == "offline"){
+              console.log('sucess offline');
+            
+              }else{
+              console.log('sucess online');
+              }
+             }                  
+            });
+}
+    // Create `myApp` namespace.
+window.myApp = {
+  // Function to use for the `focus` event.
+
+  onFocus: function () {
+      // online
+        changeUserStatus("online"); 
+        
+      },
+  // Function to use for the `blur` event.
+  onBlur: function () {
+      changeUserStatus("offline");          
+     }
+};
+
+if(window.addEventListener) {
+  window.addEventListener('load', function () {
+    window.addEventListener('focus', window.myApp.onFocus);
+    window.addEventListener('blur', window.myApp.onBlur);
+
+  });
+}
+/* Detect if the browser supports `attachEvent`
+  Only Internet Explorer browsers support that. */
+else if(window.attachEvent) {
+  // Handle window's `load` event.
+  window.attachEvent('onload', function () {
+    // Wire up the `focus` and `blur` event handlers.
+    window.attachEvent('onfocus', window.myApp.onFocus);
+    window.attachEvent('onblur', window.myApp.onBlur); 
+  });
+}
+/* If neither event handler function exists, then overwrite 
+the built-in event handers. With this technique any previous event
+handlers are lost. */
+else {
+  // Handle window's `load` event.
+  window.onload = function () {
+    // Wire up the `focus` and `blur` event handlers.
+    window.onfocus = window.myApp.onFocus;
+    window.onblur = window.myApp.onBlur;
+   
+  };
+}
+  </script>
+</template>
+
+<template name="messanging_mobile">
+  <div class="container row margin-tp contai hidden-lg">
+      <div class="col s12 m12 l12 left_part" >
+
+         <div class="card card_two">
+
+ <ul class="nav navbar-nav col s12 m12 l12" style="padding: 0px;">
+        <li class="dropdown col s12 m12 l12 drop_dwn_tw">
+          <a href="#" class="dropdown-toggle drop_dwn_tw_a" data-toggle="dropdown"><span style="font-size: 18px;">Conversations ({{conversation_count}})</span></a> <!--<i class="fa fa-ellipsis-v pull-right fa-2x pull-right"></i>
+          <ul class="dropdown-menu">
+            <li><a href="#"> Delete Conversations </a></li>
+            <li class="divider"></li>
+             <li><a href="#"> Delete Conversations </a></li>
+          </ul>-->
+        </li>
+      </ul>
+         </div>
+
+      <div class="card" style="box-shadow: none;">
+    <div class="card-content">
+      <p> <input type="text" class="form-control input-sm chat_input borde_search_user" placeholder="Search Conversations" style="margin-bottom: 0px;" id="search_connection_msg" /></p>
+    </div>
+ 
+    <div class="card-content">
+  
+      <div id="connnection">
+
+
+  <ul class="collection">
+ 
+ <div id="display_connection" class="display_hide_conversation" > 
+
+{{#each show_connections}}
+{{#each show_connections_2}}
+
+            <div  class="collection-item avatar change_msg_onright send_person_to_msg_page">
+        <span> <img src={{profile_pic}} alt="No Image" class="circle" >
+        <span class="bottom-left-2">  
+        <input type="hidden" id="hidden_conversation_user_id" value={{user_id}}  > 
+  {{#if online_status}} 
+        <i class="fa fa-circle color_green"></i>
+     {{else}}   
+        <i class="fa fa-circle color_red"></i>
+  {{/if}}
+        </span></span>
+      <span class="title">
+        {{name}}
+      </span> 
+  {{#each show_message_details}}
+      <span class="pull-right"><p>{{calculate_time_difference last_msg_time}} </p> </span>     
+      <p class="lisimg_msg">
+      {{#if check_lastmsg_sender}}
+        Me: {{last_msg}} 
+       {{else}}
+       {{sender}}: {{last_msg}} 
+      {{/if}}
+
+        <!-- {{last_msg}}       -->
+  {{#if check_unread}}
+  <span class="pull-right new_no_chat"> 
+      {{unread_msg_count}}    
+      </span>
+    {{/if}}
+  </p>
+  {{/each}}    
+    </div>
+
+{{/each}}
+{{/each}}
+
+</div>
+
+<div id="display_conversation" >
+  {{#each recent_list}}
+  {{#each recent_list_2}}
+            <li class="collection-item avatar ">
+<div class="send_person_to_msg_page" >
+        <span> <img src={{profile_pic}} alt="No Image" class="circle" >
+        <span class="bottom-left-2">
+        
+        <input type="hidden" id="hidden_conversation_user_id" value={{user_id}}  > 
+  {{#if online_status}} 
+        <i class="fa fa-circle color_green"></i>
+     {{else}}   
+        <i class="fa fa-circle color_red"></i>
+  {{/if}}
+        </span></span>
+      <span class="title">
+        {{name}}
+      </span> 
+  {{#each show_message_details}}
+      <span class="pull-right"><p>{{calculate_time_difference last_msg_time}} </p> </span>
+      
+      <p class="lisimg_msg">
+      
+      {{#if check_lastmsg_sender}}
+        Me: {{last_msg}} 
+       {{else}}
+       {{sender}}: {{last_msg}} 
+      {{/if}}
+      
+      <!-- {{last_msg}}  -->
+
+      
+  {{#if check_unread}}
+  <span class="pull-right new_no_chat"> 
+      {{unread_msg_count}}    
+      </span>
+    {{/if}}
+  </p>
+  {{/each}}    
+</div>
+    </li>
+     <!-- <li class="collection-item avatar">
+     <span> <img src="https://i0.wp.com/tricksmaze.com/wp-content/uploads/2017/04/Stylish-Girls-Profile-Pictures-36.jpg?resize=300%2C300&ssl=1" alt="" class="circle"> <span class="bottom-left-2"><i class="fa fa-circle color_red"></i></span></span>
+      <span class="title"><a href="#">Shobhita Yadav</a></span> <span class="pull-right fo_size_time"> 20m </span>
+      <p class="typing">Typing ...</p>
+    </li> -->
+    {{/each}} 
+    {{/each}}
+    </div> 
+  </ul>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+
+</template>
+
+
+

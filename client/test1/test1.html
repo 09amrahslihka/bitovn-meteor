@@ -2,7 +2,8 @@
 <script src="./node_modules/rtcmulticonnection/RTCMultiConnection.js"></script>
 <button id="btn-open-room">Open Room</button>
 <button id="btn-join-room">Join Room</button><hr>
-
+<div id="user_video"></div> 
+<script src="https://cdn.webrtc-experiment.com/getMediaElement.js"></script>
 <script type="text/javascript">
 var connection = new RTCMultiConnection();
 // this line is VERY_important
@@ -20,15 +21,27 @@ connection.sdpConstraints.mandatory = {
     OfferToReceiveVideo: true
 };
 
-connection.onstream = function(event) {
-    document.body.appendChild( event.mediaElement );
-
+/*connection.onstream = function(event) {
+    document.body.appendChild(event.mediaElement);
 };
-
-
-
-
-
+*/
+ connection.videosContainer = document.getElementById('user_video');
+            connection.onstream = function(event) {
+                var width = parseInt(connection.videosContainer.clientWidth) ;
+                alert(width);
+                var mediaElement = getMediaElement(event.mediaElement, {
+                    title: event.userid,
+                    buttons: ['full-screen'],
+                    width: width,
+                    showOnMouseEnter: false
+                });
+                connection.videosContainer.appendChild(mediaElement);
+                setTimeout(function() {
+                    mediaElement.media.play();
+                }, 5000);
+                mediaElement.id = event.streamid;
+               
+            };
 document.getElementById('btn-open-room').onclick = function() {
 connection.open("predefinedRoomId");
     this.disabled = true;
