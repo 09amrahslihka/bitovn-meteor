@@ -35,60 +35,7 @@ setTimeout(function() {
       Session.clear("msg_img_id"); 
 
       var sent_by = Session.get("userId");
-
-    /*var isSomeoneCalling = VideoSession.find({$and: [{"is_picked":false},{"picker_id":sent_by}]}).observe({
-       added: function(newDoc) {
-        //display
-     
-
-    },
-      removed: function(oldDoc) {
-      },
-      changed: function(newDoc, oldDoc) {
-        
-        }
-    });  */
-/*  var userOnlineOffline =   UserInfo.find({"user_id":sent_by}).observe({
-    added: function(newDoc) {
-    
-    },
-      removed: function(oldDoc) {
-    },
-      changed: function(newDoc, oldDoc) {
-
-      if(newDoc.online_status=="online" && newDoc.online_status != oldDoc.online_status){
-      
-
-
-      setTimeout(function() {
-            $("#message_container").animate({ scrollTop: $('#message_container').prop("scrollHeight")}, 1);
-      }, 10); 
-
-        var connection_details;
-        if(Session.get("userId") == newDoc.user1){
-           connection_details = UserInfo.find({user_id: newDoc.user2}).fetch();
-        }else{
-           connection_details = UserInfo.find({user_id: newDoc.user1}).fetch();
-        }
-  var rightPanelChatRoomId = Session.get("rightPanelChatRoomId");
-  // alert(rightPanelChatRoomId);
-        var openedChatRoomDetails = Chatroom.find({"chatroom_id":rightPanelChatRoomId}).fetch();
-
-        // alert("ChatRoom " +openedChatRoomDetails[0].chatroom_id);
-        if(openedChatRoomDetails[0].last_msg_sent_by != Session.get("userId")){
-          // receipient is online
-            change_last_message_status(openedChatRoomDetails[0].last_msg_id,"read");
-            increase_unread_count(openedChatRoomDetails[0].chatroom_id,"true")
-            // alert("Last message read"); 
-             // update msg status 
-             // no need for updating count
-          }
-
-
-      }
-    }
-  });
-*/    var userHandle =  Chatroom.find({ 
+    var userHandle =  Chatroom.find({ 
             $or:
              [
               {
@@ -98,7 +45,7 @@ setTimeout(function() {
                user2: sent_by
               }
              ]
-           },{last_msg_sent_by:1, user1:1,user2:1,chatroom_id:1,last_msg_time:1},{sort: {last_msg_time: -1}}).observe({
+           },{sort: {last_msg_time: -1}}).observe({
             added: function(newDoc) {
     },
       removed: function(oldDoc) {
