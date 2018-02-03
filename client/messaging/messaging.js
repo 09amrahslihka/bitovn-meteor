@@ -54,7 +54,7 @@ setTimeout(function() {
         // case 1: both user are online
         // case 2: one user idxs online
 
-        if(newDoc.video_session_counts!=oldDoc.video_session_counts){
+        if(newDoc.video_sessoin_counts!=oldDoc.video_session_counts){
                 var userId = Session.get("userId");
               alert("Video Session "+ newDoc.video_session_id);
               alert("User Id :"+userId);
@@ -77,7 +77,7 @@ setTimeout(function() {
              var userId = Session.get("userId");
               if(newDoc.audio_session_id.split("=")[2] == userId){
                 Session.set("mediaType","audio");
-                 Session.set("audioSessionId",newDoc.audio_session_id);
+                 Sessions.et("audioSessionId",newDoc.audio_session_id);
                    // var connection_details1 = UserInfo.find({user_id: userId}).fetch();                  
                    var connection_details2 = UserInfo.find({user_id: newDoc.audio_session_id.split("=")[1]}).fetch();                  
                   var message = connection_details2[0].name +" is calling you";
@@ -154,7 +154,7 @@ setTimeout(function() {
 
         if(connection_details[0].online_status == "online" 
           && Session.get("rightPanelChatRoomId") == newDoc.chatroom_id 
-          && connection_details[0].last_msg_sent_by != Session.get("userId")){
+          && newDoc.last_msg_sent_by != Session.get("userId")){
           // receipient is online
             //alert("Case 1");
           /*  if(check_chatroom[0].mute_status_user1 == "Unmute" && currentUserStatus =="user1"){
@@ -165,7 +165,8 @@ setTimeout(function() {
             }else{
                // nhi bjegi
             }*/
-             
+                alert("Right Panel "+ Session.get("rightPanelChatRoomId"));
+              alert("User Id :"+Session.get("userId"));
               change_last_message_status(newDoc.last_msg_id,"read");
               increase_unread_count(newDoc.chatroom_id,"true")
             // alert("Last message read"); 
