@@ -98,7 +98,7 @@ setTimeout(function() {
                user2: sent_by
               }
              ]
-           },{last_msg_sent_by:1, user1:1,user2:1,chatroom_id:1,last_msg_time:1}).observe({
+           },{last_msg_sent_by:1, user1:1,user2:1,chatroom_id:1,last_msg_time:1},{sort: {last_msg_time: -1}}).observe({
             added: function(newDoc) {
     },
       removed: function(oldDoc) {
@@ -571,7 +571,6 @@ if(query == "" || query == undefined ){
   
   var show_pending = Chatroom.find({ $or: [{ user1: user_id },{ user2: user_id } ] },{sort: {last_msg_time: -1}}).fetch();
   
-  console.log("sss - ");
   console.log(show_pending);
   var length = show_pending.length;
   Session.setPersistent("conversation_count",length);
