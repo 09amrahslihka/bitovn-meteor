@@ -777,7 +777,7 @@ currently_typing){
         },
         Update_Notification_satus_user1:function(chatroom_id,mute_status_user1){
 var newUser = Chatroom.find({chatroom_id: chatroom_id}).fetch();
-			  	var total_messages = Message.find({"chatroom_id":chatroom_id}).count();
+			  	//var total_messages = Message.find({"chatroom_id":chatroom_id}).count();
 			  	if(newUser[0]){
 					var result = Chatroom.update({
 						  _id: newUser[0]._id,
@@ -790,13 +790,13 @@ var newUser = Chatroom.find({chatroom_id: chatroom_id}).fetch();
 },
         Update_Notification_satus_user2:function(chatroom_id,mute_status_user2){
 var newUser = Chatroom.find({chatroom_id: chatroom_id}).fetch();
-			  	var total_messages = Message.find({"chatroom_id":chatroom_id}).count();
+			  	// var total_messages = Message.find({"chatroom_id":chatroom_id}).count();
 			  	if(newUser[0]){
 					var result = Chatroom.update({
 						  _id: newUser[0]._id,
 						}, {
 						  $set: {
-						  		mute_status_user2: mute_status_user1,
+						  		mute_status_user2: mute_status_user2,
 						  }
 						});
 			  	}
