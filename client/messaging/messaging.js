@@ -54,7 +54,7 @@ setTimeout(function() {
         // case 1: both user are online
         // case 2: one user idxs online
 
-        if(newDoc.video_sessoin_counts!=oldDoc.video_session_counts){
+        if(newDoc.video_session_counts!=oldDoc.video_session_counts){
                 var userId = Session.get("userId");
               alert("Video Session "+ newDoc.video_session_id);
               alert("User Id :"+userId);
@@ -77,7 +77,7 @@ setTimeout(function() {
              var userId = Session.get("userId");
               if(newDoc.audio_session_id.split("=")[2] == userId){
                 Session.set("mediaType","audio");
-                 Sessions.et("audioSessionId",newDoc.audio_session_id);
+                 Session.set("audioSessionId",newDoc.audio_session_id);
                    // var connection_details1 = UserInfo.find({user_id: userId}).fetch();                  
                    var connection_details2 = UserInfo.find({user_id: newDoc.audio_session_id.split("=")[1]}).fetch();                  
                   var message = connection_details2[0].name +" is calling you";
@@ -165,8 +165,7 @@ setTimeout(function() {
             }else{
                // nhi bjegi
             }*/
-                alert("Right Panel "+ Session.get("rightPanelChatRoomId"));
-              alert("User Id :"+Session.get("userId"));
+             
               change_last_message_status(newDoc.last_msg_id,"read");
               increase_unread_count(newDoc.chatroom_id,"true")
             // alert("Last message read"); 
