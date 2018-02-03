@@ -150,11 +150,11 @@ setTimeout(function() {
                       }
         }
 
-
-
+        var chatRoomInSession  = Session.get("rightPanelChatRoomId");
+        var newUser = Chatroom.find({chatroom_id: chatRoomInSession}).fetch();
         if(connection_details[0].online_status == "online" 
           && Session.get("rightPanelChatRoomId") == newDoc.chatroom_id 
-          && newDoc.last_msg_sent_by != Session.get("userId")){
+          && newUser[0].last_msg_sent_by != Session.get("userId")){
           // receipient is online
             //alert("Case 1");
           /*  if(check_chatroom[0].mute_status_user1 == "Unmute" && currentUserStatus =="user1"){
