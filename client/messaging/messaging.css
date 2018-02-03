@@ -781,3 +781,114 @@ border: 1px solid #f5f5f5;
 }
 
 body {scrollbar-base-color:#369;}
+
+
+.show-on-hover:hover > ul.dropdown-menu {
+    display: block;    
+}
+
+
+.dropdown-menu {
+   left: -142px !important;
+}
+
+
+.callarea{
+text-align: center;
+font-size: 20px;
+padding-top: 25%;
+}
+
+.acceptcal{
+padding: 8px 20px;
+font-size: 15px;
+border: none !important;
+background-color: #078c33;
+color: #fff;
+}
+
+.rejectcal{
+padding: 8px 20px;
+font-size: 15px;
+border: none;
+background-color: #B0090F !important;
+color: #fff;
+}
+#call_picker_dialog{
+  background-color: #fff !important;
+}
+
+.userone .volume-control{
+  margin-top: 0px !important;
+  margin-left: 20% !important;
+
+}
+
+.userone {
+  margin-left: 80% !important;
+  margin-top: 35% !important;
+  width: 20% !important;
+}
+
+.userone video {
+   width: 200px !important;
+}
+
+.usertwo .volume-control{
+  width: 20% !important;
+  margin-top: 0px !important;
+}
+
+.usertwo video {
+   width: 100% !important;
+   height: auto !important;
+}
+
+.usertwo {
+  width: 100% !important;
+  height: auto !important;
+}
+
+#videos-container{
+background-color: #000 !important;
+margin-top: -3% !important;
+}
+
+.containermain {
+    position: relative;
+}
+
+.userone{
+    position: absolute;
+}
+
+
+.btn-circle {
+  display: none;
+  
+}
+
+.btn_visible_call{
+  display: block;
+
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  padding: 15px 0;
+  font-size: 25px;
+  line-height: 1.428571429;
+  border-radius: 30px;
+  background-color: #900808;
+  color: #fff;
+  border:0px;
+}
+
+
+
+.p_btn{
+z-index: +9999;
+  text-align: center !important;
+  position: absolute !important;
+    margin-top: -10%;
+  margin-left: 50%;
+}

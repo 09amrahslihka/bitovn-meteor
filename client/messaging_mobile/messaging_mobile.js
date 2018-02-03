@@ -30,6 +30,13 @@ Template.messanging_mobile.onDestroyed({
 
 
  Template.messagingpage_mobile.onRendered(function(){
+  if(Session.get("relaodPage")=="true"){
+    setTimeout(function(){
+    Session.set("relaodPage","false");
+    // alert("Reloading page");
+    window.location.reload(true);
+    },1000);
+    }
 
 
       setTimeout(function() {

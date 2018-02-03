@@ -254,6 +254,10 @@ Session.setPersistent("updatedStatus","false");
   
 })*/
 Template.messangingright.events({
+  'click #back_button':function(event){
+    Session.set("relaodPage","true");
+    Router.go("/Messaging_mobile");
+  },
 'click .redirect_click_1': function(event){
     // alert(1);
     event.preventDefault();

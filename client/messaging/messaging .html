@@ -2,6 +2,7 @@
 <template name="messagingpage">
   <head>
   <title>messanging</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" type="text/css">
 </head>
 
 
@@ -135,7 +136,12 @@ else {
   {{#each show_message_details}}
       <span class="pull-right"><p>{{calculate_time_difference last_msg_time}} </p> </span>
       
-      <p class="lisimg_msg">{{last_msg}} 
+      <p class="lisimg_msg">
+      {{#if check_lastmsg_sender}}
+        Me: {{last_msg}} 
+       {{else}}
+       {{sender}}: {{last_msg}} 
+      {{/if}}
 
       
   {{#if check_unread}}
@@ -220,36 +226,39 @@ else {
          </div>
          
 <div class="col m7" style="padding-left: 3px;"> <span class="font_size_19">{{name}}</span><br/> 
-  <button id="call_button">call</button>
-  <button id="audio_call">Audio call</button>       
+
+ <!-- <span id="call_button"><i class="fa fa-video-camera"></i></span>       -->
           {{#if check_connection}}
-            Connected 
+            Connected
           {{else}}
             Not Connected
           {{/if}}
           </div>
        <!-- Modal Structure -->
-
-         <div class="col m4 card card_two">
-
- <ul class="nav navbar-nav col s12 m12 l12" style="padding: 0px;">
-        <li class="dropdown col s12 m12 l12 drop_dwn_tw" style="margin-top: 4px; margin-left: -4%; border-bottom: 0px !important;">
-          <a href="#" class="new_dropdown_dots dropdown-toggle drop_dwn_tw_a" data-toggle="dropdown"><i class="fa fa-ellipsis-v pull-right fa-2x pull-right"></i></a>
-          <ul class="dropdown-menu">
-  {{#each chatroom_around}}
-    {{#if check_mute_user_field}}
-      <li><a href="#" class="mute_button" > {{mute_status_user1}} </a></li>
-    {{else}}
-      <li><a href="#" class="mute_button" > {{mute_status_user2}} </a></li>
-    {{/if}}  
-    {{else}}       
-      <li><a href="#" class="mute_button" > Mute </a></li>    
-  {{/each}}
-         <!--    <li class="divider"></li>
-             <li><a href="#"> Unmute </a></li> -->
+           <div class="col m4 card card_two text-right" style="margin-top: 10px !important;">
+              <span class="btn-group" style="margin-right: 12px;"> <i class="fa fa-phone fa-2x "></i></span>   
+            <span class="btn-group" style="margin-right: 12px;" id="call_button"><i class="fa fa-video-camera fa-2x "></i></span>      
+              
+         
+<div class="btn-group">
+          <span data-toggle="dropdown">
+           <i class="fa fa-ellipsis-v pull-right fa-2x "></i> <span class="caret"></span>
+          </span>
+          <ul class="dropdown-menu" role="menu">
+            {{#each chatroom_around}}
+          {{#if check_mute_user_field}}
+            
+            <li><a href="#" class="mute_button" > {{mute_status_user1}} </a></li>
+          {{else}}
+            <li><a href="#" class="mute_button" > {{mute_status_user2}} </a></li>
+          {{/if}}  
+          {{else}}       
+            <li><a href="#" class="mute_button" > Mute </a></li>    
+        {{/each}}
           </ul>
-        </li>
-      </ul>
+        </div>
+
+
          </div>
         
        </div>
@@ -262,13 +271,13 @@ else {
                     <div class="row msg_container base_sent" style="margin-bottom: 0px;">
                       <div class="col l12 m12 s12" style="padding-right: 0px;">
  <ul class="collection">
-    <div id="call_picker_dialog" class="modal col l2">
+    <div id="call_picker_dialog" class="modal col l7">
     
-    <div class="modal-content ">
-      <p id="call_picker_message">hi</p>
-      <p>
-      <button id="accept_the_call">Acccept</button>
-      <button id="reject_the_call">Reject</button>
+    <div class="">
+      <p id="call_picker_message" class="callarea"></p>
+      <p style="text-align: center;">
+      <button id="accept_the_call" class="acceptcal">Acccept</button>
+      <button id="reject_the_call" class="rejectcal">Reject</button>
       </p>
     </div>
   </div> 

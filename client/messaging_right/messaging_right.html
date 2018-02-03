@@ -10,7 +10,7 @@
  <script>
 $(window).on('beforeunload', function() {
   console.log("beforeunload called");
-    changeUserStatus("offline"); 
+  changeUserStatus("offline"); 
   return 'Your own message goes here...';
 });
 function changeUserStatus(status){
@@ -88,8 +88,10 @@ else {
      <div class="row bor_top wid_row_tp">
 
          <div class="col m1" style="width: 5%;">
-              <a href="/Messaging_mobile"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Angle_left_font_awesome.svg/600px-Angle_left_font_awesome.svg.png" style="width:40px; margin-top: 4px;"  alt="User Avatar">
-              </a>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Angle_left_font_awesome.svg/600px-Angle_left_font_awesome.svg.png" style="width:40px; margin-top: 4px;"  
+              id="back_button"
+              alt="back">
+
             </div>
 
          <div class="col m1"> 
