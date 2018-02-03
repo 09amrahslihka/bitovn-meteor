@@ -728,7 +728,8 @@ currently_typing){
 			updatedCount = 0;
         	}
 			  	if(newUser[0]){
-					var result = Chatroom.update({
+			  		if(updatedCount !=0 ){
+			  			var result = Chatroom.update({
 						  _id: newUser[0]._id,
 						}, {
 						  $set: {
@@ -736,6 +737,15 @@ currently_typing){
                       				unread_msg_count: updatedCount
                        		  }
 						});
+			  		}else{
+			  			var result = Chatroom.update({
+						  _id: newUser[0]._id,
+						}, {
+						  $set: {
+						  			unread_msg_count: updatedCount
+                       		  }
+						});
+			  		}	
 			  	}
 			  	return result;
         },
