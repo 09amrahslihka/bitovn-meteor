@@ -107,7 +107,7 @@ setTimeout(function() {
    var user1 = sent_by;
    var user2 = sent_to;
    // alert(user1+' & '+user2);
-   var check_chatroom = Chatroom.find({ $or: [
+/*   var check_chatroom = Chatroom.find({ $or: [
            {
             $and:
              [
@@ -145,6 +145,20 @@ setTimeout(function() {
         }
         else if(check_chatroom[0].user2 == Session.get("userId")){
                      if(check_chatroom[0].mute_status_user2 == "Mute"){
+                        var notification = new Audio("http://freesound.org/data/previews/235/235911_2391840-lq.mp3");
+                        notification.play();
+                      }
+        }
+*/
+
+        if(newDoc.user1 == Session.get("userId")){
+                    if(newDoc.mute_status_user1 == "Mute"){
+                        var notification = new Audio("http://freesound.org/data/previews/235/235911_2391840-lq.mp3");
+                        notification.play();
+                      }
+        }
+        else if(newDoc.user2 == Session.get("userId")){
+                     if(newDoc.mute_status_user2 == "Mute"){
                         var notification = new Audio("http://freesound.org/data/previews/235/235911_2391840-lq.mp3");
                         notification.play();
                       }
