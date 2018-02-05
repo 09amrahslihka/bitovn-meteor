@@ -117,8 +117,11 @@ else {
 {{#each show_connections}}
 {{#each show_connections_2}}
 
-        <a href="#">
-         <li class="collection-item avatar change_msg_onright" >
+        
+         <li class="collection-item avatar change_msg_onright {{#if highligh_selected}}
+            highligh_selected     
+        {{/if}}
+        " >
 
         <span> <img src={{profile_pic}} alt="No Image" class="circle"  >
         <span class="bottom-left-2">
@@ -152,7 +155,7 @@ else {
   </p>
   {{/each}}    
     </li>
-  </a>
+ 
 
 {{/each}}
 {{/each}}
@@ -236,8 +239,8 @@ else {
           </div>
        <!-- Modal Structure -->
            <div class="col m4 card card_two text-right" style="margin-top: 10px !important;">
-              <span class="btn-group" style="margin-right: 12px;"> <i class="fa fa-phone fa-2x "></i></span>   
-            <span class="btn-group" style="margin-right: 12px;" id="call_button"><i class="fa fa-video-camera fa-2x "></i></span>      
+              <!-- <span class="btn-group" style="margin-right: 12px;"> <i class="fa fa-phone fa-2x "></i></span>   
+            <span class="btn-group" style="margin-right: 12px;" id="call_button"><i class="fa fa-video-camera fa-2x "></i></span>  -->     
               
          
 <div class="btn-group">
@@ -295,7 +298,7 @@ else {
     <li class="collection-item avatar">
       <span>
           {{#if equals delivery_status 'read'}} 
-        <div class="messages messages_us msg_receive text-right green_bg" style="background-color: #338EA7 !important; color: #fff;">
+        <div class="messages messages_us msg_receive text-right green_bg" style="background-color: #f75c4c !important; color: #fff;">
             <p style="text-align: justify; ">  {{msg_text}}  </p>
             <time datetime="2009-11-13T20:00"><span class="time fo_size_time" style="font-size: 10px !important; color: #fff !important;">
                <p  >{{calculate_time_difference sentAt}}</p>

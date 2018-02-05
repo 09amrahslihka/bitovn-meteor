@@ -25,7 +25,7 @@ Session.setPersistent("updatedStatus","false");
  Template.messagingpage.onRendered(function(){
       
 
-setTimeout(function() {
+  setTimeout(function() {
       $("#message_container").animate({ scrollTop: $('#message_container').prop("scrollHeight")}, 1);
       makeGifClear();
       }, 1000);
@@ -617,7 +617,7 @@ show_message_array(){
      var sent_to = Session.get('msgid_forright');
     const t = Template.instance();
     const msg_limit = t.message_show_limit.get(); 
-     if(msg_limit == ""){    //Meteor._sleepForMs(200);
+     if(msg_limit == ""){    
       msg_limit = 1;
       t.message_show_limit.set(msg_limit);
      }
