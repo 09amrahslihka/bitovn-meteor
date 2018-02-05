@@ -617,10 +617,10 @@ show_message_array(){
      var sent_to = Session.get('msgid_forright');
     const t = Template.instance();
     const msg_limit = t.message_show_limit.get(); 
-     if(msg_limit == ""){
+     if(msg_limit == ""){    //Meteor._sleepForMs(200);
       msg_limit = 1;
       t.message_show_limit.set(msg_limit);
-     }  
+     }
      msg_limit = msg_limit * 8;
 
   var result = Message.find({ $or: [
@@ -813,6 +813,19 @@ function popitup(url) {
     return false;
 }
 
+function lock_scroll(scrollLock) {
+    var $window = $(window), previousScrollTop = 0;
+    
+    $window.scroll(function(event) {     
+        if(scrollLock) {
+            $window.scrollTop(previousScrollTop); 
+        }
+    
+        previousScrollTop = $window.scrollTop();
+    });
+    
+}
+
 Template.messanging.events({
   'click #accept_the_call':function(event){
     $('#call_picker_dialog').modal('close');
@@ -971,14 +984,19 @@ Template.messanging.events({
   },
   'scroll #message_container':function(e){
     var elem = $(e.currentTarget);
+    
     if (elem.scrollTop() == 0)
     {
-    const t = Template.instance();
+     
+       const t = Template.instance();
     const msg_limit = t.message_show_limit.get();
     msg_limit = parseInt(msg_limit);
     msg_limit = msg_limit +1; 
     t.message_show_limit.set(msg_limit); 
-    }
+     var offset = $( elem ).offset();
+      $("#message_container").animate({ scrollTop: offset.top+500}, 1);
+
+  }
 /*
     var scrollTop = $(this).scrollTop();
     $('#message_container').each(function() {
