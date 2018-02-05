@@ -658,6 +658,7 @@ return result;
 currently_typing){
         		var newUser = Chatroom.find({chatroom_id: chatroom_id}).fetch();
 			  	var total_messages = Message.find({"chatroom_id":chatroom_id}).count();
+			  	// var total_messages = Message.find({"chatroom_id":chatroom_id}).count();
 			  	if(newUser[0]){
 					var result = Chatroom.update({
 						  _id: newUser[0]._id,
