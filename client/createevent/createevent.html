@@ -1,0 +1,228 @@
+
+<template name="createevent">
+  <head>
+  <title>messanging</title>
+</head>
+
+
+  {{> new_header}}
+  {{> eventcreate}}
+ 
+</template>
+
+
+
+
+
+<template name="eventcreate">
+<div class="page_wh">
+  <div class="body_whole">
+
+        <div class="row ">
+          <div class="col s12 m6 l6"><h5> Create Event</h5> </div>
+          <div class="col s12 m6 l6"><h5> <i class="fa fa-times pull-right"></i> </h5> </div>
+      </div>
+      <div class="row">
+          <div class="col s12 m12 ll2">
+
+            <p class="text-center">
+             <!--  <img src="https://www.jigsawmedical.com/wp-content/uploads/banner_blog.jpg" alt="img" class="img-responsive">   -->
+              <img src="https://www.elegantthemes.com/blog/wp-content/uploads/2017/08/Dad-Blogs-Featured-Image.png" height="300" alt=""  > 
+            </p>
+          </div>
+      </div>
+      
+  <div class="row">
+      <div class="input-field col s12 m12 l12">
+              <p>Event Name</p>
+  <ul id="dropdown2" class="dropdown-content">
+    <li><a href="#!">one<span class="badge">1</span></a></li>
+    <li><a href="#!">two<span class="new badge">1</span></a></li>
+    <li><a href="#!">three</a></li>
+  </ul>
+  <a class="btn dropdown-button" href="#!" data-activates="dropdown2">Dropdown<i class="fa fa-icons right">arrow_drop_down</i></a>
+         <!--      <input value="" id="grp_title" type="text" class="validate frmt_inpt"> -->
+              
+            </div>
+  </div>
+  <div class="row">
+            <div class="input-field col s12 m4 l6">
+              <p>Location</p>
+              <input value="" id="grp_title" type="text" class="validate frmt_inpt">
+              
+            </div>
+            <div class="input-field col s12 m6 l6"><p>Event Type</p>
+               
+                     <div id="edit_edu_start_month" class="ui selection dropdown">
+                                           <input type="hidden" name="test" value=""/>
+                                           <div class="text">Test</div>
+                                           <i class="dropdown icon"></i>
+                                           <div class="menu">
+                                               <div class="item" data-value="">Acedamic</div>
+                                               <div class="item" data-value="Jan">Professional</div>
+                                               <div class="item" data-value="Feb">Trip </div>
+                                               <div class="item" data-value="Mar">Training</div>
+                                               <div class="item" data-value="Apr">Seminar</div>
+                                               <div class="item" data-value="May">Sports</div>
+                                               <div class="item" data-value="Jun">Placement</div>
+                                               <div class="item" data-value="Jul">Cultural</div>
+                                               <div class="item" data-value="Aug">Examination</div>
+                                               <div class="item" data-value="Sep">Sep</div>
+                                               <div class="item" data-value="Oct">Oct</div>
+                                               <div class="item" data-value="Nov">Nov</div>
+                                               <div class="item" data-value="Dec">Dec</div>
+                                           </div>
+                    </div>
+
+            </div>
+  
+   </div>
+        <script type="text/javascript">
+          
+$("#edit_edu_start_month").dropdown("set selected","");
+        </script>
+    
+ <div class="row">
+            <div class="input-field col s12 m4 l6">
+              <p>From Date</p>
+               <input type="text" class="datepicker">
+            </div>
+            <div class="input-field col s12 m6 l6"><p>To Date</p>
+               
+                      <input type="text" class="datepicker">
+
+            </div>
+  
+   </div>
+     
+  <div class="row">
+      <div class="input-field col s12">
+         <p>Description</p>
+          <textarea class="materialize-textarea frmt_inpt" placeholder="Description"></textarea>
+      </div>
+  </div>
+  <div class="row">
+      <div class="  col s12">
+         <p>Access Type</p>
+          <form action="#">
+              <p>
+                <input name="grp_visibility" type="radio" id="grp_visibility_1" checked/>
+                <label for="grp_visibility_1">Public (visible for everyone)</label>
+             
+                <input name="grp_visibility" type="radio" id="grp_visibility_2" />
+                <label for="grp_visibility_2">Private (Only by invite)</label>
+              </p>             
+          </form>
+      </div>
+  </div>
+
+ <div class="row">
+    <div class="col s12 m6 l6"> &nbsp;  </div>
+    <div class="col s12 m6 l6 text-right">
+    <a class="waves-effect waves-light btn save_button" id="save_group" > Save</a>
+    <a class="waves-effect waves-light btn cncl_btm">Cancel</a> 
+            
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    $('.datepicker').pickadate({
+    selectMonths: true, // Creates a dropdown to control month
+    selectYears: 15, // Creates a dropdown of 15 years to control year,
+    today: 'Today',
+    clear: 'Clear',
+    close: 'Ok',
+    closeOnSelect: false // Close upon selecting a date,
+  });
+  </script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+    $('select').material_select();
+  });
+  </script>
+</div>
+</div>
+</template>
+<template name="new_header">
+  
+  <nav class="navbar navbar-inverse navbar-static-top example6">
+
+   <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar6">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand text-hide" href="http://disputebills.com">Brand Text
+        </a>
+      </div>
+      <div id="navbar6" class="navbar-collapse collapse">
+         <ul class="nav navbar-nav navbar-left">
+<li><div class="ui right aligned category search">
+  <div class="ui icon input">
+    <input class="prompt" placeholder="Search animals..." type="text">
+  </div>
+  <div class="results"></div>
+</div></li>
+         </ul>
+        <ul class="nav navbar-nav navbar-right">
+          
+   
+          <li class="active"><a href="#">Home</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Collaborate <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Connection</a></li>
+              <li><a href="#">Group</a></li>
+              <li><a href="#">Event</a></li>
+              </ul>
+          </li>
+ <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Interest <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Blog</a></li>
+              
+              </ul>
+          </li>
+
+
+
+
+          <li><a href="#">Map</a></li>
+          <li><a href="#">Messaging</a></li>
+          <li><a href="#">Notification</a></li>
+            <li><a href="#">A <sup><i class="fa fa-plus"></i></sup></a></li>
+
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Me </a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Profile</a></li>
+              <li><a href="#">Setting</a></li>
+              <li><a href="#">Logout</a></li>
+              </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+ 
+  </nav>
+
+<script type="text/javascript">
+   
+  $('.datepicker').pickadate({
+    selectMonths: true, // Creates a dropdown to control month
+    selectYears: 15, // Creates a dropdown of 15 years to control year,
+    today: 'Today',
+    clear: 'Clear',
+    close: 'Ok',
+    closeOnSelect: false // Close upon selecting a date,
+  });
+        
+ </script>
+
+
+ </template>
+ 
